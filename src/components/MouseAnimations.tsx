@@ -11,10 +11,10 @@ export function MouseAnimations({ mousePosition }: MouseAnimationsProps) {
     <motion.div
       className={styles.cursorWrapper}
       style={{
-        left: mousePosition.x - 10, // Adjusted for smaller size (half of new width)
-        top: mousePosition.y - 10,  // Adjusted for smaller size (half of new height)
-        width: '20px',              // Smaller size
-        height: '20px',             // Smaller size
+        left: mousePosition.x - 12, // Adjusted for medium size (half of new width)
+        top: mousePosition.y - 12,  // Adjusted for medium size (half of new height)
+        width: '24px',              // Medium size
+        height: '24px',             // Medium size
       }}
       animate={{
         rotate: mousePosition.x > 0 ? 15 : -15
@@ -27,7 +27,7 @@ export function MouseAnimations({ mousePosition }: MouseAnimationsProps) {
       }}
     >
       <img
-        src="/images/horseshoe_horse_western_good_luck_icon.png"
+        src="/images/horse-shoe-svgrepo-com.svg"
         alt="Horseshoe Cursor"
         className={styles.cursorImage}
       />

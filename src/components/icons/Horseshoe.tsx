@@ -7,7 +7,7 @@ interface HorseshoeProps {
 export const Horseshoe: React.FC<HorseshoeProps> = ({ className = '' }) => {
   return (
     <img
-      src="/images/horseshoe_horse_western_good_luck_icon.png"
+      src="/images/horse-shoe-svgrepo-com.svg"
       alt="Horseshoe Icon"
       className={className}
       style={{ cursor: 'none' }}
