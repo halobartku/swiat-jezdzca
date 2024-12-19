@@ -9,6 +9,10 @@ export default defineConfig({
   },
   server: {
     port: 3000,
+    fs: {
+      strict: false,
+      allow: ['..']
+    },
     proxy: {
       '/api/fei': {
         target: 'https://data.fei.org/api/v1',
