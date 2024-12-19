@@ -27,7 +27,10 @@ export function MouseAnimations({ mousePosition }: MouseAnimationsProps) {
         restDelta: 0.001
       }}
     >
-      <Horseshoe className={styles.cursorImage} />
+      <Horseshoe 
+        className={styles.cursorImage} 
+        style={{ cursor: 'none' }}
+      />
     </motion.div>
   );
 }
