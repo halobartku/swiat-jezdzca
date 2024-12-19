@@ -43,7 +43,7 @@ export function Home({ onDiscoverClick, onContactClick }: HeroProps) {
   ]
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4">
+    <div className="w-full max-w-7xl mx-auto px-4 pt-16 lg:pt-0">
       <div className="flex flex-col lg:flex-row items-start gap-12">
         {/* Left Side */}
         <motion.div

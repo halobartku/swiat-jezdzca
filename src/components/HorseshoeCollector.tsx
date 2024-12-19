@@ -151,10 +151,13 @@ export function HorseshoeCollector({ horseshoesCollected }: HorseshoeCollectorPr
           <AnimatePresence>
             {showFactUnlock && (
               <motion.div 
-                className="absolute left-full ml-3 top-1/2 -translate-y-1/2 z-[60]"
-                initial={{ opacity: 0, x: -10 }}
+                className={`
+                  absolute top-1/2 -translate-y-1/2 z-[60]
+                  ${isMobile ? 'right-full mr-3' : 'left-full ml-3'}
+                `}
+                initial={{ opacity: 0, x: isMobile ? 10 : -10 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 10 }}
+                exit={{ opacity: 0, x: isMobile ? -10 : 10 }}
               >
                 <motion.div
                   className="text-red-600 font-bold text-sm whitespace-nowrap bg-white/90 px-3 py-1.5 rounded-lg shadow-sm"
