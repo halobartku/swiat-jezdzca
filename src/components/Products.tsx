@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Flag, Target, Award, Package } from 'lucide-react';
+import { Flag, Target, Award, Package, X } from 'lucide-react';
+import { useApp } from '../context/AppContext';
 
 const Products: React.FC = () => {
   const [hoveredImage, setHoveredImage] = useState<string | null>(null);
@@ -65,9 +66,9 @@ const Products: React.FC = () => {
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-4"
+        className="text-center mb-4 px-4"
       >
-        <h2 className="text-2xl font-bold text-primary-text">Nasze Produkty</h2>
+        <h2 className="text-xl md:text-2xl font-bold text-primary-text">Nasze Produkty</h2>
       </motion.div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
@@ -83,17 +84,16 @@ const Products: React.FC = () => {
               <div className="p-1.5 bg-secondary-bg rounded-lg">
                 <product.icon className="w-4 h-4 text-primary" />
               </div>
-              <h3 className="text-base font-semibold text-primary-text">{product.title}</h3>
+              <h3 className="text-sm md:text-base font-semibold text-primary-text line-clamp-1">{product.title}</h3>
             </div>
 
             {/* Image Grid */}
-            <div className="grid grid-cols-3 gap-1.5 aspect-[4/2]">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-1.5 aspect-square md:aspect-[4/2]">
               {product.images.map((imageName, index) => (
                 <div
                   key={index}
                   className="relative bg-secondary-bg rounded-md overflow-hidden group"
-                  onMouseEnter={() => setHoveredImage(`${product.imagePath}/${imageName}`)}
-                  onMouseLeave={() => setHoveredImage(null)}
+                  onClick={() => setHoveredImage(`${product.imagePath}/${imageName}`)}
                 >
                   <div className="aspect-square w-full h-full">
                     <img
@@ -111,35 +111,50 @@ const Products: React.FC = () => {
       </div>
 
       {/* Enlarged Image Preview */}
+      {/* Image Preview Modal */}
       {hoveredImage && (
-        <div className="fixed inset-0 pointer-events-none z-50 flex items-center justify-center bg-black/40">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
+          onClick={() => setHoveredImage(null)}
+        >
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="relative w-auto h-auto max-w-[90vw] max-h-[80vh] bg-white/10 backdrop-blur-sm rounded-lg p-2"
+            exit={{ opacity: 0, scale: 0.8 }}
+            className="relative w-full max-w-4xl bg-white/10 backdrop-blur-sm rounded-lg p-2"
+            onClick={e => e.stopPropagation()}
           >
+            <button
+              onClick={() => setHoveredImage(null)}
+              className="absolute -top-2 -right-2 p-1 bg-white rounded-full shadow-lg z-10"
+            >
+              <X className="w-4 h-4 text-primary" />
+            </button>
             <img
               src={hoveredImage}
               alt="Powiększony podgląd"
-              className="w-auto h-auto max-w-full max-h-[calc(80vh-1rem)] object-contain mx-auto"
+              className="w-auto h-auto max-w-full max-h-[80vh] object-contain mx-auto rounded-lg"
             />
           </motion.div>
-        </div>
+        </motion.div>
       )}
 
       {/* Buttons */}
-      <div className="flex flex-col sm:flex-row justify-center gap-3">
+      <div className="flex flex-col sm:flex-row justify-center gap-3 mt-6 px-4">
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="bg-gradient-to-r from-[#ff4d4d] to-white text-black py-2 px-5 rounded-full text-base font-semibold transition-all duration-300 shadow-md hover:shadow-lg"
+          className="bg-gradient-to-r from-[#ff4d4d] to-white text-black py-2 px-5 rounded-full text-sm md:text-base font-semibold transition-all duration-300 shadow-md hover:shadow-lg whitespace-nowrap"
         >
           Przeglądaj katalog
         </motion.button>
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="bg-gradient-to-r from-[#ff4d4d] to-white text-black py-2 px-5 rounded-full text-base font-semibold transition-all duration-300 shadow-md hover:shadow-lg"
+          className="bg-gradient-to-r from-[#ff4d4d] to-white text-black py-2 px-5 rounded-full text-sm md:text-base font-semibold transition-all duration-300 shadow-md hover:shadow-lg whitespace-nowrap"
         >
           Zapytaj o ofertę
         </motion.button>

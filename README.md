@@ -7,9 +7,10 @@ Nowoczesna, interaktywna strona internetowa dla firmy Świat Jeźdźca, prezentu
 
 - 🏇 Prezentacja profesjonalnego sprzętu jeździeckiego
 - 📱 W pełni responsywny design dla wszystkich urządzeń
-- 🎥 Galeria realizacji z filmami
-- 🔍 Szczegółowy katalog produktów
-- 📊 Mapa realizacji i instalacji
+- 🎥 Galeria realizacji z filmami i interaktywnym podglądem
+- 🔍 Szczegółowy katalog produktów z kategoriami
+- 🎮 Interaktywna gra z kolekcjonowaniem podków
+- 🎁 System nagród i zniżek dla użytkowników
 - 🔒 Zgodność z RODO (GDPR)
 - 🌍 Prezentacja instalacji w całej Polsce
 - ⌨️ Wsparcie nawigacji klawiaturowej
@@ -51,18 +52,15 @@ Nowoczesna, interaktywna strona internetowa dla firmy Świat Jeźdźca, prezentu
    pnpm install
    ```
 
-3. Dodanie wymaganych obrazów:
-   - Utwórz obrazy zastępcze w `/public/images/products/` dla:
-     - competition-jump.jpg
-   - Utwórz obrazy zastępcze w `/public/images/installations/` dla:
-     - warsaw-arena.jpg
-     - poznan-facility.jpg
-     - krakow-center.jpg
-     - wroclaw-academy.jpg
-     - gdansk-venue.jpg
-     - lodz-center.jpg
-   - Dodaj obraz główny:
-     - /public/images/hero-jump.jpg
+3. Struktura zasobów:
+   - Katalog produktów w `/public/images/Products/`:
+     - Akcesoria/
+     - Sponsorskie/
+     - Treningowe/
+     - Turniejowe/
+   - Logo i multimedia:
+     - /public/images/logo dark.png
+     - /public/videos/świat jeźdźca przeszkody konne aluminiowe (1).mp4
 
 4. Uruchomienie serwera deweloperskiego:
    ```bash
@@ -92,13 +90,14 @@ swiat-jezdzca/
 ├── src/
 │   ├── components/    # Komponenty React
 │   ├── context/       # Providery kontekstu React
-│   ├── data/         # Dane statyczne i instalacje
+│   ├── data/         # Dane statyczne i ciekawostki
 │   ├── hooks/        # Własne hooki React
 │   ├── lib/          # Funkcje narzędziowe
 │   ├── types/        # Definicje typów TypeScript
 │   └── utils/        # Funkcje pomocnicze
 ├── public/           # Zasoby statyczne
-│   └── images/       # Obrazy produktów i instalacji
+│   ├── images/       # Obrazy produktów i logo
+│   └── videos/       # Materiały wideo
 └── dist/            # Output buildu produkcyjnego
 ```
 
@@ -112,16 +111,16 @@ swiat-jezdzca/
 - `ErrorBoundary.tsx` - Obsługa błędów
 
 ### Komponenty Produktowe
-- `Products.tsx` - Katalog produktów
-- `Gallery.tsx` - Galeria instalacji
-- `CompetitionMap.tsx` - Mapa realizacji
+- `Products.tsx` - Katalog produktów z kategoriami
+- `Home.tsx` - Strona główna z filmem prezentacyjnym
 - `RequestOffer.tsx` - Formularz zapytania ofertowego
 
 ### Funkcje Interaktywne
 - `BackgroundAnimations.tsx` - Efekty tła
 - `MouseAnimations.tsx` - Animacje myszy
 - `KeyboardInstructions.tsx` - Instrukcje nawigacji klawiaturowej
-- `HorseshoeCollector.tsx` - Interaktywny element kolekcjonowania podków
+- `HorseshoeCollector.tsx` - System kolekcjonowania podków i nagród
+- `HorseshoeSpawner.tsx` - Generator podków do zbierania
 
 ### Prywatność i UX
 - `PrivacyPreferences.tsx` - Preferencje zgodne z RODO
@@ -136,6 +135,14 @@ Szczegółowa dokumentacja dostępna w katalogu `docs/`:
 - `DEPLOYMENT.md` - Procedury wdrożenia
 - `DEVELOPMENT.md` - Wytyczne rozwoju
 - `TESTING.md` - Strategie testowania
+
+## System Nagród (Reward System)
+
+Strona zawiera interaktywny system nagród:
+- Kolekcjonowanie podków podczas przeglądania strony
+- Odblokowywanie ciekawostek jeździeckich co 10 podków
+- Specjalny kod rabatowy 5% przy zebraniu 10 podków
+- Rangi i poziomy doświadczenia dla użytkowników
 
 ## Wdrożenie (Deployment)
 

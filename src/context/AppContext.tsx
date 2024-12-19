@@ -20,7 +20,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768)
+      setIsMobile(window.innerWidth <= 1024) // Increased breakpoint to include tablets
     }
     checkMobile()
     window.addEventListener('resize', checkMobile)

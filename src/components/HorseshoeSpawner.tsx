@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Horseshoe } from './icons/Horseshoe';
 import { useHorseshoe } from '../context/HorseshoeContext';
+import { useApp } from '../context/AppContext';
 
 interface SpawnedHorseshoe {
   id: number;
@@ -14,9 +15,12 @@ export function HorseshoeSpawner() {
   const [horseshoes, setHorseshoes] = useState<SpawnedHorseshoe[]>([]);
   const [lastSpawnTime, setLastSpawnTime] = useState(Date.now());
   const [scrollY, setScrollY] = useState(0);
-  const SPAWN_INTERVAL = 2000; // Spawn a new horseshoe every 2 seconds
-  const MAX_HORSESHOES = 10; // Maximum number of horseshoes on screen
-  const PADDING = 25; // Padding from edges
+  const { isMobile } = useApp();
+  
+  // Adjust spawn parameters based on device
+  const SPAWN_INTERVAL = isMobile ? 2500 : 2000; // Slower spawn on mobile
+  const MAX_HORSESHOES = isMobile ? 6 : 10; // Fewer horseshoes on mobile
+  const PADDING = isMobile ? 40 : 25; // More padding from edges on mobile
 
   // Update scroll position
   useEffect(() => {
@@ -79,7 +83,7 @@ export function HorseshoeSpawner() {
       {visibleHorseshoes.map(horseshoe => (
         <motion.div
           key={horseshoe.id}
-          className="horseshoe fixed w-5 h-5 cursor-none" // Changed to fixed positioning
+          className={`horseshoe fixed ${isMobile ? 'w-8 h-8' : 'w-5 h-5 cursor-none'}`}
           style={{
             left: horseshoe.x,
             top: horseshoe.y - scrollY, // Adjust for scroll position

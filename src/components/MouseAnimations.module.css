@@ -1,15 +1,17 @@
-/* Hide default cursor */
-:global(body) {
-  cursor: none !important;
-}
+/* Hide default cursor on non-mobile devices */
+@media (min-width: 1024px) {
+  :global(body) {
+    cursor: none !important;
+  }
 
-:global(a), 
-:global(button), 
-:global([role="button"]), 
-:global(input), 
-:global(select), 
-:global(textarea) {
-  cursor: none !important;
+  :global(a), 
+  :global(button), 
+  :global([role="button"]), 
+  :global(input), 
+  :global(select), 
+  :global(textarea) {
+    cursor: none !important;
+  }
 }
 
 .cursorWrapper {

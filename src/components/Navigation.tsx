@@ -18,13 +18,13 @@ export function Navigation({ sections, currentSection, onNavigate }: NavigationP
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed right-4 top-4 z-50 p-3 rounded-xl bg-primary-bg/90 text-primary hover:bg-secondary-bg transition-colors md:hidden shadow-lg backdrop-blur-sm"
+        className="fixed right-4 top-4 z-50 p-3 rounded-xl bg-primary-bg/90 text-primary hover:bg-secondary-bg transition-colors lg:hidden shadow-lg backdrop-blur-sm"
       >
         <Menu className="w-6 h-6" />
       </button>
 
       {/* Desktop Navigation */}
-      <div className="fixed right-8 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col gap-6">
+      <div className="fixed right-8 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col gap-6">
         {sections.map((section) => (
           <button
             key={section.id}
@@ -59,7 +59,7 @@ export function Navigation({ sections, currentSection, onNavigate }: NavigationP
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-primary-bg/95 backdrop-blur-md z-40 md:hidden"
+            className="fixed inset-0 bg-primary-bg/95 backdrop-blur-md z-40 lg:hidden"
             onClick={() => setIsOpen(false)}
           >
             <motion.div
@@ -67,10 +67,10 @@ export function Navigation({ sections, currentSection, onNavigate }: NavigationP
               animate={{ y: 0 }}
               exit={{ y: '100%' }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="absolute inset-x-0 top-0 min-h-screen bg-primary-bg"
+              className="fixed inset-x-0 top-0 h-[100dvh] bg-primary-bg overflow-y-auto"
               onClick={e => e.stopPropagation()}
             >
-              <div className="p-4 flex justify-end border-b border-secondary-border">
+              <div className="sticky top-0 p-4 flex justify-end border-b border-secondary-border bg-primary-bg/95 backdrop-blur-sm">
                 <button
                   onClick={() => setIsOpen(false)}
                   className="p-2 rounded-full hover:bg-secondary-bg transition-colors"
@@ -78,7 +78,7 @@ export function Navigation({ sections, currentSection, onNavigate }: NavigationP
                   <X className="w-6 h-6 text-secondary-text" />
                 </button>
               </div>
-              <div className="px-6 py-4">
+              <div className="px-6 py-4 pb-safe">
                 {sections.map((section) => (
                   <button
                     key={section.id}

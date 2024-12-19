@@ -1,6 +1,6 @@
 # Component API Documentation
 
-This document provides detailed API documentation for each component in the Primary Water website.
+This document provides detailed API documentation for each component in the Świat Jeźdźca website.
 
 ## Navigation Component
 
@@ -25,8 +25,8 @@ interface NavigationProps {
 ```tsx
 <Navigation 
   sections={[
-    { id: 0, title: 'Home', icon: Home },
-    { id: 1, title: 'What is Primary Water', icon: HelpCircle }
+    { id: 0, title: 'Strona Główna', icon: HomeIcon },
+    { id: 1, title: 'Produkty', icon: CircleUser }
   ]}
   currentSection={0}
   onNavigate={(index) => {}}
@@ -35,36 +35,16 @@ interface NavigationProps {
 
 ## BackgroundAnimations Component
 
-`BackgroundAnimations.tsx` - Creates floating water bubble animations in the background.
-
-### Implementation Details
-```typescript
-interface Bubble {
-  id: number;
-  x: number;
-  y: number;
-  size: number;
-  duration: number;
-  delay: number;
-  wobbleScale: number;
-  wobbleSpeed: number;
-}
-```
+`BackgroundAnimations.tsx` - Creates subtle background animations.
 
 ### Usage
 ```tsx
 <BackgroundAnimations />
 ```
 
-### Configuration
-- Number of bubbles: 15
-- Size range: 20-60px
-- Animation duration: 15-35s
-- Wobble scale: 30-90
+## Home Component
 
-## Hero Component
-
-`Hero.tsx` - Landing page hero section with call-to-action buttons.
+`Home.tsx` - Landing page with hero section and feature highlights.
 
 ### Props
 ```typescript
@@ -76,52 +56,61 @@ interface HeroProps {
 
 ### Usage
 ```tsx
-<Hero 
+<Home 
   onDiscoverClick={() => scrollToSection(1)}
-  onContactClick={() => scrollToSection(4)}
+  onContactClick={() => scrollToSection(5)}
 />
 ```
 
-## CaseStudyCard Component
+## Products Component
 
-`CaseStudyCard.tsx` - Displays individual case studies with video integration.
+`Products.tsx` - Displays product categories with interactive image galleries.
 
-### Props
+### Implementation
 ```typescript
-interface CaseStudyProps {
+interface Product {
+  icon: LucideIcon;
   title: string;
-  location: string;
-  description: string;
-  imageUrl: string;
-  videoUrl?: string;
+  imagePath: string;
+  images: string[];
 }
 ```
 
 ### Usage
 ```tsx
-<CaseStudyCard
-  title="Desert Water Discovery"
-  location="Sahara Desert"
-  description="Finding water in arid conditions"
-  imageUrl="/images/case-study-1.jpg"
-  videoUrl="https://youtube.com/..."
-/>
+<Products />
 ```
 
-## WaterCollector Component
+## HorseshoeCollector Component
 
-`WaterCollector.tsx` - Interactive game element for collecting water drops.
+`HorseshoeCollector.tsx` - Interactive game element for collecting horseshoes.
 
 ### Props
 ```typescript
-interface WaterCollectorProps {
-  waterCollected: number;
+interface HorseshoeCollectorProps {
+  horseshoesCollected: number;
 }
 ```
 
+### Features
+- Horseshoe collection tracking
+- Progress visualization
+- Equestrian facts unlocking
+- Discount code generation
+- Rank system
+
 ### Usage
 ```tsx
-<WaterCollector waterCollected={150} />
+<HorseshoeCollector horseshoesCollected={150} />
+```
+
+## HorseshoeSpawner Component
+
+`HorseshoeSpawner.tsx` - Generates collectible horseshoes across the page.
+
+### Usage
+```tsx
+<HorseshoeSpawner />
 ```
 
 ## PrivacyPreferences Component
@@ -146,42 +135,28 @@ interface PrivacyPreferencesProps {
 <PrivacyPreferences onClose={() => setShowPrivacyPreferences(false)} />
 ```
 
-## ContactCard Component
+## RequestOffer Component
 
-`ContactCard.tsx` - Contact form and information display.
-
-### Usage
-```tsx
-<ContactCard />
-```
+`RequestOffer.tsx` - Contact form for product inquiries.
 
 ### Features
 - Form validation
-- Email submission
+- Discount code application
 - Error handling
 - Success feedback
 
-## WhatIsPrimaryWater Component
-
-`WhatIsPrimaryWater.tsx` - Information section about primary water.
-
 ### Usage
 ```tsx
-<WhatIsPrimaryWater />
+<RequestOffer />
 ```
 
 ## MouseAnimations Component
 
-`MouseAnimations.tsx` - Cursor-following water drop animations.
+`MouseAnimations.tsx` - Cursor-following animations.
 
 ### Props
 ```typescript
 interface MouseAnimationsProps {
-  waterDrops: Array<{
-    id: number;
-    x: number;
-    y: number;
-  }>;
   mousePosition: {
     x: number;
     y: number;
@@ -191,15 +166,12 @@ interface MouseAnimationsProps {
 
 ### Usage
 ```tsx
-<MouseAnimations
-  waterDrops={waterDrops}
-  mousePosition={mousePosition}
-/>
+<MouseAnimations mousePosition={mousePosition} />
 ```
 
 ## Footer Component
 
-`Footer.tsx` - Site-wide footer with navigation and social links.
+`Footer.tsx` - Site-wide footer with navigation and contact information.
 
 ### Usage
 ```tsx
@@ -208,43 +180,49 @@ interface MouseAnimationsProps {
 
 ## Custom Hooks
 
-### useWaterGame
+### useHorseshoe
 
-Custom hook for managing the water collection game state.
+Custom hook for managing the horseshoe collection game state.
 
 ```typescript
 const {
-  waterDrops,
-  waterCollected,
+  horseshoesCollected,
+  spawnEnabled,
   mousePosition,
-  handleMouseMove
-} = useWaterGame()
+  handleMouseMove,
+  collectHorseshoe,
+  toggleSpawn
+} = useHorseshoe()
 ```
 
 #### Returns
-- `waterDrops`: Array of active water drops
-- `waterCollected`: Total water collected
+- `horseshoesCollected`: Total horseshoes collected
+- `spawnEnabled`: Whether horseshoe spawning is enabled
 - `mousePosition`: Current mouse coordinates
 - `handleMouseMove`: Mouse movement handler
+- `collectHorseshoe`: Collection handler
+- `toggleSpawn`: Toggle spawning on/off
 
 ## Utility Components
 
-### PrivacyPolicy
+### SEO Component
 
-`PrivacyPolicy.tsx` - Privacy policy page component.
+`SEO.tsx` - Handles meta tags and SEO optimization.
 
-### Usage
-```tsx
-<PrivacyPolicy />
+### Props
+```typescript
+interface SEOProps {
+  title: string;
+  description: string;
+}
 ```
 
-### AboutUs
-
-`AboutUs.tsx` - Company information component.
-
 ### Usage
 ```tsx
-<AboutUs />
+<SEO 
+  title="Świat Jeźdźca - Profesjonalny Sprzęt Jeździecki"
+  description="Producent profesjonalnego sprzętu jeździeckiego..."
+/>
 ```
 
 ## Best Practices
@@ -269,6 +247,6 @@ const {
 
 4. **State Management**
    - Keep state as local as possible
-   - Use prop drilling alternatives when needed
+   - Use context for shared state
    - Implement proper state updates
    - Handle side effects properly

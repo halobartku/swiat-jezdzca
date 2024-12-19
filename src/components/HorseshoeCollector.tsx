@@ -6,6 +6,7 @@ import { generateDiscountCode } from '../data/discountWords';
 import LottieAnimation from './LottieAnimation';
 import successAnimation from '../animations/success.json';
 import { useHorseshoe } from '../context/HorseshoeContext';
+import { useApp } from '../context/AppContext';
 
 interface HorseshoeCollectorProps {
   horseshoesCollected: number;
@@ -21,6 +22,7 @@ const getRank = (count: number) => {
 
 export function HorseshoeCollector({ horseshoesCollected }: HorseshoeCollectorProps) {
   const { spawnEnabled, toggleSpawn } = useHorseshoe();
+  const { isMobile } = useApp();
   const [isExpanded, setIsExpanded] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const [showFactUnlock, setShowFactUnlock] = useState(false);
@@ -103,7 +105,10 @@ export function HorseshoeCollector({ horseshoesCollected }: HorseshoeCollectorPr
     <>
       {/* Collector button */}
       <motion.div 
-        className="fixed bottom-8 left-8 z-50 bg-white/80 backdrop-blur-sm rounded-lg shadow-lg p-2 border border-brown-200 flex flex-col gap-2"
+        className={`
+          fixed z-50 bg-white/80 backdrop-blur-sm rounded-lg shadow-lg p-2 border border-brown-200 flex flex-col gap-2
+          ${isMobile ? 'top-4 right-16' : 'bottom-8 left-8'}
+        `}
         initial={false}
         animate={{ 
           scale: isExpanded ? 0.9 : 1,
@@ -193,7 +198,7 @@ export function HorseshoeCollector({ horseshoesCollected }: HorseshoeCollectorPr
             onClick={() => setIsExpanded(false)}
           >
             <motion.div
-              className="bg-white rounded-xl shadow-xl p-4 m-4 max-w-md w-full overflow-hidden"
+            className="bg-white rounded-xl shadow-xl p-4 mx-4 mb-safe mt-4 max-w-md w-full overflow-hidden max-h-[80vh] overflow-y-auto"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
@@ -246,12 +251,12 @@ export function HorseshoeCollector({ horseshoesCollected }: HorseshoeCollectorPr
               </motion.div>
 
               {/* Progress steps */}
-              <div className="mt-3 relative">
+              <div className="mt-3 relative px-2">
                 <div className="flex justify-between items-center">
                   {[...Array(10)].map((_, i) => (
                     <div key={i} className="relative flex flex-col items-center">
                       <div 
-                        className={`w-2 h-2 rounded-full ${i < completedSteps ? 'bg-amber-600' : 'bg-amber-200'}`}
+                        className={`w-2.5 h-2.5 lg:w-2 lg:h-2 rounded-full ${i < completedSteps ? 'bg-amber-600' : 'bg-amber-200'}`}
                       />
                       {i < completedSteps && i + 1 < completedSteps && (
                         <div className="absolute w-full h-0.5 bg-amber-600" style={{

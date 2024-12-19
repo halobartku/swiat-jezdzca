@@ -4,13 +4,23 @@
 
 @layer base {
   html, body {
-    @apply overflow-hidden h-screen;
+    @apply h-screen;
     margin: 0;
     padding: 0;
+    overscroll-behavior: none; /* Prevent bounce/rubber-band effect */
   }
 
   #root {
-    @apply h-screen overflow-hidden;
+    @apply h-screen;
+    overscroll-behavior: none;
+  }
+
+  @media (max-width: 1024px) {
+    html, body, #root {
+      @apply overflow-y-auto overflow-x-hidden;
+      height: auto;
+      min-height: 100vh;
+    }
   }
 }
 

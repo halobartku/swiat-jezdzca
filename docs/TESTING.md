@@ -1,6 +1,6 @@
 # Testing Guide
 
-This guide outlines testing strategies, patterns, and best practices for the Primary Water website.
+This guide outlines testing strategies, patterns, and best practices for the Świat Jeźdźca website.
 
 ## Testing Stack
 
@@ -20,33 +20,25 @@ Unit tests focus on testing individual components and functions in isolation.
 ```typescript
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { CaseStudyCard } from '../components/CaseStudyCard';
+import { Products } from '../components/Products';
 
-describe('CaseStudyCard', () => {
-  const mockProps = {
-    title: 'Test Case Study',
-    location: 'Test Location',
-    description: 'Test Description',
-    imageUrl: '/test-image.jpg',
-    videoUrl: 'https://youtube.com/test'
-  };
-
-  it('renders case study information correctly', () => {
-    render(<CaseStudyCard {...mockProps} />);
+describe('Products', () => {
+  it('renders product categories correctly', () => {
+    render(<Products />);
     
-    expect(screen.getByText(mockProps.title)).toBeInTheDocument();
-    expect(screen.getByText(mockProps.location)).toBeInTheDocument();
-    expect(screen.getByText(mockProps.description)).toBeInTheDocument();
-    expect(screen.getByAltText(mockProps.title)).toHaveAttribute('src', mockProps.imageUrl);
+    expect(screen.getByText('Przeszkody Treningowe')).toBeInTheDocument();
+    expect(screen.getByText('Przeszkody Turniejowe')).toBeInTheDocument();
+    expect(screen.getByText('Przeszkody Sponsorskie')).toBeInTheDocument();
+    expect(screen.getByText('Akcesoria')).toBeInTheDocument();
   });
 
-  it('opens video modal on click', async () => {
-    render(<CaseStudyCard {...mockProps} />);
+  it('shows enlarged image on hover', async () => {
+    render(<Products />);
     
-    const watchButton = screen.getByText(/watch video/i);
-    await userEvent.click(watchButton);
+    const productImage = screen.getAllByRole('img')[0];
+    await userEvent.hover(productImage);
     
-    expect(screen.getByTestId('video-modal')).toBeInTheDocument();
+    expect(screen.getByTestId('enlarged-preview')).toBeInTheDocument();
   });
 });
 ```
@@ -55,27 +47,27 @@ describe('CaseStudyCard', () => {
 
 ```typescript
 import { renderHook, act } from '@testing-library/react';
-import { useWaterGame } from '../hooks/useWaterGame';
+import { useHorseshoe } from '../hooks/useHorseshoe';
 
-describe('useWaterGame', () => {
+describe('useHorseshoe', () => {
   it('initializes with correct default values', () => {
-    const { result } = renderHook(() => useWaterGame());
+    const { result } = renderHook(() => useHorseshoe());
     
-    expect(result.current.waterCollected).toBe(0);
-    expect(result.current.waterDrops).toHaveLength(0);
+    expect(result.current.horseshoesCollected).toBe(0);
+    expect(result.current.spawnEnabled).toBe(false);
   });
 
-  it('updates water collected on drop collection', () => {
-    const { result } = renderHook(() => useWaterGame());
+  it('updates horseshoes collected on collection', () => {
+    const { result } = renderHook(() => useHorseshoe());
     
     act(() => {
-      result.current.handleMouseMove({
+      result.current.collectHorseshoe({
         clientX: 100,
         clientY: 100
       } as React.MouseEvent);
     });
     
-    expect(result.current.waterCollected).toBeGreaterThan(0);
+    expect(result.current.horseshoesCollected).toBe(1);
   });
 });
 ```
@@ -83,13 +75,15 @@ describe('useWaterGame', () => {
 #### Utility Function Testing
 
 ```typescript
-import { formatWaterAmount } from '../lib/utils';
+import { generateDiscountCode } from '../data/discountWords';
 
-describe('formatWaterAmount', () => {
-  it('formats water amount correctly', () => {
-    expect(formatWaterAmount(1000)).toBe('1,000 L');
-    expect(formatWaterAmount(1500.5)).toBe('1,500.5 L');
-    expect(formatWaterAmount(0)).toBe('0 L');
+describe('generateDiscountCode', () => {
+  it('generates unique pairs of words', () => {
+    const code1 = generateDiscountCode();
+    const code2 = generateDiscountCode();
+    
+    expect(code1.word1).not.toBe(code1.word2);
+    expect(code2.word1).not.toBe(code2.word2);
   });
 });
 ```
@@ -101,28 +95,38 @@ Integration tests verify that multiple components work together correctly.
 ```typescript
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router-dom';
-import App from '../App';
+import { HorseshoeProvider } from '../context/HorseshoeContext';
+import { HorseshoeCollector } from '../components/HorseshoeCollector';
+import { HorseshoeSpawner } from '../components/HorseshoeSpawner';
 
-describe('App Integration', () => {
-  it('navigates through sections correctly', async () => {
+describe('Horseshoe Game Integration', () => {
+  it('updates collector when horseshoe is collected', async () => {
     render(
-      <MemoryRouter>
-        <App />
-      </MemoryRouter>
+      <HorseshoeProvider>
+        <HorseshoeCollector horseshoesCollected={0} />
+        <HorseshoeSpawner />
+      </HorseshoeProvider>
     );
     
-    // Navigate to What is Primary Water section
-    const whatIsButton = screen.getByText(/what is primary water/i);
-    await userEvent.click(whatIsButton);
+    // Enable game
+    const gameToggle = screen.getByText('Gra');
+    await userEvent.click(gameToggle);
     
-    expect(screen.getByTestId('what-is-section')).toBeVisible();
+    // Collect horseshoe
+    const horseshoe = screen.getByTestId('horseshoe');
+    await userEvent.click(horseshoe);
     
-    // Navigate to Contact section
-    const contactButton = screen.getByText(/contact/i);
-    await userEvent.click(contactButton);
+    expect(screen.getByText('1')).toBeInTheDocument();
+  });
+
+  it('shows discount code at 10 horseshoes', async () => {
+    render(
+      <HorseshoeProvider initialCount={10}>
+        <HorseshoeCollector horseshoesCollected={10} />
+      </HorseshoeProvider>
+    );
     
-    expect(screen.getByTestId('contact-section')).toBeVisible();
+    expect(screen.getByText(/Gratulacje! Otrzymujesz kod rabatowy 5%/i)).toBeInTheDocument();
   });
 });
 ```
@@ -142,17 +146,22 @@ describe('Navigation Flow', () => {
     // Check hero section
     cy.get('[data-testid="hero-section"]').should('be.visible');
     
-    // Navigate to What is Primary Water
-    cy.get('[data-testid="nav-what-is"]').click();
-    cy.get('[data-testid="what-is-section"]').should('be.visible');
+    // Navigate to Products
+    cy.get('[data-testid="nav-products"]').click();
+    cy.get('[data-testid="product-card"]').should('have.length', 4);
     
-    // Check case studies
-    cy.get('[data-testid="nav-case-studies"]').click();
-    cy.get('[data-testid="case-study-card"]').should('have.length.at.least', 1);
+    // Check product details
+    cy.get('[data-testid="product-card"]').first().trigger('mouseover');
+    cy.get('[data-testid="enlarged-preview"]').should('be.visible');
     
-    // Submit contact form
-    cy.get('[data-testid="nav-contact"]').click();
-    cy.get('[data-testid="contact-form"]').within(() => {
+    // Play horseshoe game
+    cy.get('[data-testid="game-toggle"]').click();
+    cy.get('[data-testid="horseshoe"]').click({ multiple: true });
+    cy.get('[data-testid="horseshoes-collected"]').should('have.text', '1');
+    
+    // Submit offer request
+    cy.get('[data-testid="nav-offer"]').click();
+    cy.get('[data-testid="offer-form"]').within(() => {
       cy.get('input[name="name"]').type('Test User');
       cy.get('input[name="email"]').type('test@example.com');
       cy.get('textarea[name="message"]').type('Test Message');
@@ -172,17 +181,17 @@ describe('Navigation Flow', () => {
 src/
 ├── __tests__/
 │   ├── components/
-│   │   ├── CaseStudyCard.test.tsx
-│   │   ├── Navigation.test.tsx
+│   │   ├── Products.test.tsx
+│   │   ├── HorseshoeCollector.test.tsx
 │   │   └── ...
 │   ├── hooks/
-│   │   └── useWaterGame.test.tsx
+│   │   └── useHorseshoe.test.tsx
 │   └── utils/
-│       └── formatters.test.ts
+│       └── discountWords.test.ts
 ├── cypress/
 │   ├── e2e/
 │   │   ├── navigation.cy.ts
-│   │   └── water-game.cy.ts
+│   │   └── horseshoe-game.cy.ts
 │   └── support/
 │       └── commands.ts
 └── ...
@@ -210,16 +219,13 @@ describe('Component', () => {
 ### 2. Mock Implementation
 
 ```typescript
-// Mock API calls
-const mockFetch = jest.fn();
-global.fetch = mockFetch;
-
-mockFetch.mockImplementation(() => 
-  Promise.resolve({
-    ok: true,
-    json: () => Promise.resolve({ data: 'test' })
+// Mock discount code generation
+jest.mock('../data/discountWords', () => ({
+  generateDiscountCode: () => ({
+    word1: 'TestWord1',
+    word2: 'TestWord2'
   })
-);
+}));
 ```
 
 ### 3. Test Coverage
@@ -266,13 +272,13 @@ jobs:
 ```typescript
 // test-utils.tsx
 import { render } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { HorseshoeProvider } from '../context/HorseshoeContext';
 
 const AllTheProviders = ({ children }) => {
   return (
-    <BrowserRouter>
+    <HorseshoeProvider>
       {children}
-    </BrowserRouter>
+    </HorseshoeProvider>
   );
 };
 
@@ -287,13 +293,11 @@ export { customRender as render };
 
 ```typescript
 // test-utils/generators.ts
-export const generateCaseStudy = (overrides = {}) => ({
+export const generateProduct = (overrides = {}) => ({
   id: Math.random().toString(),
-  title: 'Test Case Study',
-  location: 'Test Location',
-  description: 'Test Description',
-  imageUrl: '/test-image.jpg',
-  videoUrl: 'https://youtube.com/test',
+  title: 'Przeszkoda Treningowa',
+  imagePath: '/images/Products/Treningowe',
+  images: ['test-image.jpg'],
   ...overrides
 });
 ```

@@ -51,24 +51,24 @@ export function Home({ onDiscoverClick, onContactClick }: HeroProps) {
           animate={{ opacity: 1, x: 0 }}
           className="flex-1 max-w-[600px]"
         >
-          <h1 className="text-4xl md:text-6xl font-bold text-primary-text mb-6">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-primary-text mb-4 md:mb-6 leading-tight">
             Aluminiowe Przeszkody Jeździeckie
           </h1>
-          <p className="text-xl text-secondary-text mb-8">
+          <p className="text-base sm:text-lg md:text-xl text-secondary-text mb-6 md:mb-8 max-w-[90%]">
             Tworzymy wysokiej jakości przeszkody jeździeckie spełniające oczekiwania jeźdźców, trenerów i parkour masterów w centrach treningowych i arenach międzynarodowych na całym świecie.
           </p>
           
           <div className="flex flex-wrap gap-4">
             <button
               onClick={onDiscoverClick}
-              className="px-6 py-3 bg-primary hover:bg-accent-hover text-primary-bg rounded-lg transition-colors flex items-center gap-2"
+              className="px-4 sm:px-6 py-2.5 sm:py-3 bg-primary hover:bg-accent-hover text-primary-bg rounded-lg transition-colors flex items-center gap-2 text-sm sm:text-base"
             >
               Zobacz Produkty
               <ChevronRight className="w-5 h-5" />
             </button>
             <button
               onClick={onContactClick}
-              className="px-6 py-3 bg-primary-bg hover:bg-secondary-bg text-primary rounded-lg transition-colors border-2 border-primary"
+              className="px-4 sm:px-6 py-2.5 sm:py-3 bg-primary-bg hover:bg-secondary-bg text-primary rounded-lg transition-colors border-2 border-primary text-sm sm:text-base"
             >
               Zapytaj o Ofertę
             </button>
@@ -87,8 +87,8 @@ export function Home({ onDiscoverClick, onContactClick }: HeroProps) {
                   <feature.icon className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-primary-text">{feature.title}</h3>
-                  <p className="text-sm text-secondary-text">{feature.description}</p>
+                  <h3 className="font-semibold text-primary-text text-sm sm:text-base">{feature.title}</h3>
+                  <p className="text-xs sm:text-sm text-secondary-text">{feature.description}</p>
                 </div>
               </motion.div>
             ))}
@@ -100,7 +100,7 @@ export function Home({ onDiscoverClick, onContactClick }: HeroProps) {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2 }}
-          className="lg:flex-1 w-full lg:w-[500px] self-stretch"
+          className="lg:flex-1 w-full lg:w-[500px] self-stretch px-2 sm:px-4"
         >
           <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-2xl">
             <video
@@ -124,13 +124,13 @@ export function Home({ onDiscoverClick, onContactClick }: HeroProps) {
               <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-2">
                   <PolishFlag className="w-5 h-3" />
-                  <h3 className="font-semibold text-primary-text">
+                  <h3 className="font-semibold text-primary-text text-sm sm:text-base">
                     Polski Produkt
                   </h3>
                 </div>
                 <div className="flex items-center gap-2">
                   <Globe className="w-5 h-5 text-primary" />
-                  <p className="text-sm text-secondary-text">
+                  <p className="text-xs sm:text-sm text-secondary-text">
                     Globalna Marka
                   </p>
                 </div>
@@ -146,7 +146,7 @@ export function Home({ onDiscoverClick, onContactClick }: HeroProps) {
           >
             <div className="flex items-center gap-2 text-primary">
               <Star className="w-5 h-5 text-primary" />
-              <p className="text-sm">
+              <p className="text-xs sm:text-sm">
                 Zaufały nam dziesiątki ośrodków jeździeckich w całej Europie
               </p>
             </div>

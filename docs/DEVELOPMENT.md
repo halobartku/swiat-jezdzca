@@ -1,6 +1,6 @@
 # Development Guide
 
-This guide covers everything you need to know to start developing the Primary Water website.
+This guide covers everything you need to know to start developing the Świat Jeźdźca website.
 
 ## Getting Started
 
@@ -15,8 +15,8 @@ This guide covers everything you need to know to start developing the Primary Wa
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/halobartku/primary-water.git
-cd primary-water
+git clone https://github.com/yourusername/swiat-jezdzca.git
+cd swiat-jezdzca
 ```
 
 2. Install dependencies:
@@ -31,7 +31,7 @@ pnpm install
 npm run dev
 ```
 
-4. Open [http://localhost:5173](http://localhost:5173) in your browser
+4. Open [http://localhost:3001](http://localhost:3001) in your browser
 
 ## Development Workflow
 
@@ -68,14 +68,14 @@ chore: update dependencies
 ```typescript
 // Good
 interface Props {
-  title: string;
-  onClick: () => void;
+  horseshoesCollected: number;
+  onCollect: () => void;
 }
 
 // Bad
 interface Props {
-  title: any;
-  onClick: Function;
+  horseshoesCollected: any;
+  onCollect: Function;
 }
 ```
 
@@ -88,20 +88,20 @@ interface Props {
 
 ```typescript
 // Good
-const Component = ({ title }: Props) => {
-  const [data, setData] = useState<Data | null>(null);
+const HorseshoeCollector = ({ horseshoesCollected }: Props) => {
+  const [discountCode, setDiscountCode] = useState<string | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     let mounted = true;
 
-    const fetchData = async () => {
+    const generateCode = async () => {
       try {
         setLoading(true);
-        const result = await api.getData();
+        const code = await generateDiscountCode();
         if (mounted) {
-          setData(result);
+          setDiscountCode(code);
         }
       } catch (err) {
         if (mounted) {
@@ -114,18 +114,19 @@ const Component = ({ title }: Props) => {
       }
     };
 
-    fetchData();
+    if (horseshoesCollected === 10) {
+      generateCode();
+    }
 
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [horseshoesCollected]);
 
   if (loading) return <LoadingSpinner />;
   if (error) return <ErrorMessage error={error} />;
-  if (!data) return null;
 
-  return <div>{/* Render data */}</div>;
+  return <div>{/* Render collector UI */}</div>;
 };
 ```
 
@@ -139,14 +140,49 @@ const Component = ({ title }: Props) => {
 ```tsx
 // Good
 <div className="
-  flex flex-col items-center
-  space-y-4
-  p-4 md:p-6
-  bg-white rounded-lg shadow-md
+  fixed bottom-8 left-8 z-50
+  bg-white/80 backdrop-blur-sm
+  rounded-lg shadow-lg
+  p-2 border border-brown-200
+  flex flex-col gap-2
 ">
 
 // Bad
-<div className="flex flex-col p-4 bg-white items-center rounded-lg shadow-md space-y-4 md:p-6">
+<div className="fixed p-2 bg-white/80 bottom-8 left-8 z-50 rounded-lg shadow-lg backdrop-blur-sm border border-brown-200 flex flex-col gap-2">
+```
+
+### Game Mechanics Implementation
+
+#### Horseshoe Spawning
+
+```typescript
+const HorseshoeSpawner = () => {
+  const spawnHorseshoe = useCallback(() => {
+    // Calculate random position within viewport
+    const x = Math.random() * window.innerWidth;
+    const y = Math.random() * window.innerHeight;
+    
+    // Ensure horseshoe is within bounds
+    return {
+      x: Math.max(50, Math.min(x, window.innerWidth - 50)),
+      y: Math.max(50, Math.min(y, window.innerHeight - 50))
+    };
+  }, []);
+
+  return <div>{/* Render horseshoes */}</div>;
+};
+```
+
+#### Collection Detection
+
+```typescript
+const detectCollection = (mouseX: number, mouseY: number, horseshoeX: number, horseshoeY: number) => {
+  const distance = Math.sqrt(
+    Math.pow(mouseX - horseshoeX, 2) + 
+    Math.pow(mouseY - horseshoeY, 2)
+  );
+  return distance < 50; // Collection radius in pixels
+};
 ```
 
 ### Performance Optimization
@@ -167,8 +203,8 @@ const AboutUs = React.lazy(() => import('./components/AboutUs'));
 
 ```tsx
 <img
-  src="/images/hero.webp"
-  alt="Hero"
+  src="/images/Products/Treningowe/ALL_001 white-min.png"
+  alt="Przeszkoda treningowa"
   width={800}
   height={600}
   loading="lazy"
@@ -184,14 +220,14 @@ const AboutUs = React.lazy(() => import('./components/AboutUs'));
 ```tsx
 // Good
 <motion.div
-  style={{ transform: 'translateX(100px)' }}
-  animate={{ x: 0 }}
+  style={{ transform: 'translateY(-10px)' }}
+  animate={{ y: 0 }}
 />
 
 // Bad
 <motion.div
-  style={{ left: '100px' }}
-  animate={{ left: 0 }}
+  style={{ bottom: '-10px' }}
+  animate={{ bottom: 0 }}
 />
 ```
 
@@ -203,14 +239,13 @@ Use Jest and React Testing Library:
 
 ```typescript
 import { render, screen } from '@testing-library/react';
-import { Hero } from './Hero';
+import { HorseshoeCollector } from './HorseshoeCollector';
 
-describe('Hero', () => {
-  it('renders call-to-action buttons', () => {
-    render(<Hero onDiscoverClick={() => {}} onContactClick={() => {}} />);
+describe('HorseshoeCollector', () => {
+  it('displays correct rank based on horseshoes collected', () => {
+    render(<HorseshoeCollector horseshoesCollected={50} />);
     
-    expect(screen.getByText('Discover More')).toBeInTheDocument();
-    expect(screen.getByText('Contact Us')).toBeInTheDocument();
+    expect(screen.getByText('Poziom Stacjonata 80cm')).toBeInTheDocument();
   });
 });
 ```
@@ -221,16 +256,16 @@ Test component interactions:
 
 ```typescript
 import { render, fireEvent, screen } from '@testing-library/react';
-import { WaterCollector } from './WaterCollector';
+import { HorseshoeSpawner } from './HorseshoeSpawner';
 
-describe('WaterCollector', () => {
-  it('updates score when collecting water', async () => {
-    render(<WaterCollector />);
+describe('HorseshoeSpawner', () => {
+  it('spawns horseshoe on game start', async () => {
+    render(<HorseshoeSpawner />);
     
-    const dropElement = screen.getByTestId('water-drop');
-    fireEvent.click(dropElement);
+    const toggleButton = screen.getByText('Gra');
+    fireEvent.click(toggleButton);
     
-    expect(await screen.findByText('Score: 1')).toBeInTheDocument();
+    expect(await screen.findByTestId('horseshoe')).toBeInTheDocument();
   });
 });
 ```
@@ -279,7 +314,7 @@ Common issues and solutions:
    - Check for TypeScript errors
 
 2. **Animation Performance**
-   - Reduce particle count on mobile
+   - Reduce horseshoe spawn rate on mobile
    - Implement proper cleanup
    - Use Chrome DevTools Performance tab
 

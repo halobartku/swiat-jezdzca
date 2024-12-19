@@ -1,6 +1,6 @@
 # Deployment Guide
 
-This guide covers the deployment process, environment configuration, and monitoring setup for the Primary Water website.
+This guide covers the deployment process, environment configuration, and monitoring setup for the Świat Jeźdźca website.
 
 ## Deployment Platforms
 
@@ -32,7 +32,6 @@ The project is primarily configured for deployment on Vercel, but can be deploye
    - Navigate to Project Settings > Environment Variables
    - Add required variables:
      ```
-     VITE_API_URL=https://api.example.com
      VITE_ANALYTICS_ID=UA-XXXXXXXXX-X
      ```
 
@@ -58,6 +57,24 @@ The project is primarily configured for deployment on Vercel, but can be deploye
     }
   ],
   "headers": [
+    {
+      "source": "/images/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/videos/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
     {
       "source": "/(.*)",
       "headers": [
@@ -108,6 +125,11 @@ The project is primarily configured for deployment on Vercel, but can be deploye
      from = "/*"
      to = "/index.html"
      status = 200
+
+   [[headers]]
+     for = "/images/*"
+     [headers.values]
+       Cache-Control = "public, max-age=31536000, immutable"
    ```
 
 2. Deployment:
@@ -141,8 +163,8 @@ The project is primarily configured for deployment on Vercel, but can be deploye
 
 2. Build and Run:
    ```bash
-   docker build -t primary-water .
-   docker run -p 80:80 primary-water
+   docker build -t swiat-jezdzca .
+   docker run -p 80:80 swiat-jezdzca
    ```
 
 ## Environment Configuration
@@ -151,19 +173,16 @@ The project is primarily configured for deployment on Vercel, but can be deploye
 
 1. Development (`.env.development`):
    ```env
-   VITE_API_URL=http://localhost:3000
    VITE_ANALYTICS_ID=development
    ```
 
 2. Production (`.env.production`):
    ```env
-   VITE_API_URL=https://api.production.com
    VITE_ANALYTICS_ID=UA-XXXXXXXXX-X
    ```
 
 3. Testing (`.env.test`):
    ```env
-   VITE_API_URL=http://localhost:3000
    VITE_ANALYTICS_ID=testing
    ```
 
@@ -183,13 +202,14 @@ export default defineConfig({
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom', 'react-router-dom'],
-          animations: ['framer-motion']
+          animations: ['framer-motion'],
+          game: ['./src/components/HorseshoeCollector.tsx', './src/components/HorseshoeSpawner.tsx']
         }
       }
     }
   },
   server: {
-    port: 5173,
+    port: 3001,
     strictPort: true
   }
 });
@@ -257,13 +277,13 @@ export default defineConfig({
    onLCP(reportWebVitals);
    ```
 
-2. Custom Performance Metrics:
+2. Game Performance Metrics:
    ```typescript
-   // Measure component render time
+   // Measure horseshoe spawn performance
    const startTime = performance.now();
-   // Component renders
+   // Spawn horseshoe
    const endTime = performance.now();
-   console.log(`Component render time: ${endTime - startTime}ms`);
+   console.log(`Horseshoe spawn time: ${endTime - startTime}ms`);
    ```
 
 ## Security Considerations
@@ -281,7 +301,7 @@ export default defineConfig({
            headers: [
              {
                key: 'Content-Security-Policy',
-               value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';"
+               value: "default-src 'self'; img-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';"
              }
            ]
          }
@@ -351,13 +371,26 @@ export default defineConfig({
    lhci autorun
    ```
 
+### Game Performance Optimization
+
+1. Monitor and optimize:
+   - Horseshoe spawn rate
+   - Animation performance
+   - Collection detection
+   - State updates
+
+2. Mobile Considerations:
+   - Reduce spawn rate on mobile
+   - Optimize touch interactions
+   - Monitor memory usage
+
 ### Troubleshooting
 
 1. Common Issues:
    - Build failures
    - Performance degradation
    - Memory leaks
-   - API connectivity issues
+   - Game state inconsistencies
 
 2. Debugging Tools:
    - Browser DevTools

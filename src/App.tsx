@@ -201,7 +201,10 @@ function MainContent() {
 
   return (
     <div 
-      className="h-screen bg-hero-gradient overflow-hidden flex flex-col"
+      className={`
+        bg-hero-gradient flex flex-col
+        ${isMobile ? 'min-h-screen' : 'h-screen overflow-hidden'}
+      `}
       onMouseMove={handleMouseMove}
       onClick={collectHorseshoe}
     >
@@ -246,8 +249,8 @@ function MainContent() {
         id="main-content"
         ref={containerRef}
         className={`
-          relative z-10 w-full h-full
-          ${isMobile ? 'snap-y snap-mandatory overflow-hidden' : 'snap-x snap-mandatory overflow-hidden'}
+          relative z-10 w-full
+          ${isMobile ? 'min-h-screen' : 'h-full snap-x snap-mandatory overflow-hidden'}
           smooth-scroll
           ${isMobile ? 'flex-col' : 'flex-row'}
           flex
@@ -261,10 +264,9 @@ function MainContent() {
             ref={el => sectionsRef.current[index] = el}
             className={`
               relative
-              ${isMobile ? 'h-screen w-full max-w-full' : 'min-w-full w-screen h-screen flex-shrink-0'}
-              snap-start
+              ${isMobile ? 'w-full py-16' : 'min-w-full w-screen h-screen flex-shrink-0 snap-start'}
               flex items-center justify-center
-              ${isMobile ? 'px-3' : 'px-20'}
+              ${isMobile ? 'px-4 md:px-6' : 'px-20'}
             `}
             initial="initial"
             animate="animate"
