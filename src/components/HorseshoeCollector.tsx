@@ -2,6 +2,7 @@ import React, { useState, useRef, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Horseshoe } from './icons/Horseshoe';
 import { equestrianFacts, type EquestrianFact } from '../data/equestrianFacts';
+import { generateDiscountCode } from '../data/discountWords';
 import LottieAnimation from './LottieAnimation';
 import successAnimation from '../animations/success.json';
 import { useHorseshoe } from '../context/HorseshoeContext';
@@ -23,6 +24,7 @@ export function HorseshoeCollector({ horseshoesCollected }: HorseshoeCollectorPr
   const [isExpanded, setIsExpanded] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const [showFactUnlock, setShowFactUnlock] = useState(false);
+  const [discountCode, setDiscountCode] = useState<{ word1: string; word2: string } | null>(null);
   const prevCountRef = useRef(horseshoesCollected);
   
   const currentFact = useMemo(() => {
@@ -48,6 +50,12 @@ export function HorseshoeCollector({ horseshoesCollected }: HorseshoeCollectorPr
       if (horseshoesCollected % 10 === 0 && horseshoesCollected > 0) {
         setShowFactUnlock(true);
         setShowCelebration(false); // Ensure regular celebration is hidden
+        
+        // Generate discount code only at exactly 10 horseshoes
+        if (horseshoesCollected === 10) {
+          setDiscountCode(generateDiscountCode());
+        }
+        
         const factTimer = setTimeout(() => setShowFactUnlock(false), 3000);
         return () => clearTimeout(factTimer);
       }
@@ -95,7 +103,7 @@ export function HorseshoeCollector({ horseshoesCollected }: HorseshoeCollectorPr
     <>
       {/* Collector button */}
       <motion.div 
-        className="fixed bottom-24 left-8 z-50 bg-white/80 backdrop-blur-sm rounded-lg shadow-lg p-2 border border-brown-200 flex flex-col gap-2"
+        className="fixed bottom-8 left-8 z-50 bg-white/80 backdrop-blur-sm rounded-lg shadow-lg p-2 border border-brown-200 flex flex-col gap-2"
         initial={false}
         animate={{ 
           scale: isExpanded ? 0.9 : 1,
@@ -146,7 +154,7 @@ export function HorseshoeCollector({ horseshoesCollected }: HorseshoeCollectorPr
                 <motion.div
                   className="text-red-600 font-bold text-sm whitespace-nowrap bg-white/90 px-3 py-1.5 rounded-lg shadow-sm"
                 >
-                  Nowa ciekawostka!
+                  {horseshoesCollected === 10 ? 'Otrzymałeś zniżkę!' : 'Nowa ciekawostka!'}
                 </motion.div>
               </motion.div>
             )}
@@ -185,14 +193,14 @@ export function HorseshoeCollector({ horseshoesCollected }: HorseshoeCollectorPr
             onClick={() => setIsExpanded(false)}
           >
             <motion.div
-              className="bg-white rounded-xl shadow-xl p-6 m-4 max-w-md w-full"
+              className="bg-white rounded-xl shadow-xl p-4 m-4 max-w-md w-full overflow-hidden"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={e => e.stopPropagation()}
             >
               {/* Rank display */}
-              <div className="text-center mb-4">
+              <div className="text-center mb-2">
                 <span className={`text-lg font-semibold ${rank.color}`}>
                   {rank.title}
                 </span>
@@ -212,13 +220,33 @@ export function HorseshoeCollector({ horseshoesCollected }: HorseshoeCollectorPr
                 `}>
                   {getCategoryTranslation(currentFact.category)}
                 </span>
-                <p className="text-brown-800 font-medium">
-                  {currentFact.fact}
-                </p>
+              <p className="text-brown-800 font-medium mb-2">
+                {currentFact.fact}
+              </p>
+              
+              {/* Display discount code if it's the 10th horseshoe */}
+              {horseshoesCollected === 10 && discountCode && (
+                <div className="mt-2 p-3 bg-brown-50 rounded-lg border border-brown-200">
+                  <h3 className="text-brown-800 font-semibold mb-2">
+                    Gratulacje! Otrzymujesz kod rabatowy 5%
+                  </h3>
+                  <p className="text-sm text-brown-700 mb-2">
+                    Użyj tych słów podczas składania zamówienia:
+                  </p>
+                  <div className="flex justify-center gap-2 font-bold text-brown-800">
+                    <span>{discountCode.word1}</span>
+                    <span>+</span>
+                    <span>{discountCode.word2}</span>
+                  </div>
+                  <p className="text-xs text-brown-600 mt-2">
+                    Podaj te słowa w formularzu zamówienia lub podczas rozmowy telefonicznej
+                  </p>
+                </div>
+              )}
               </motion.div>
 
               {/* Progress steps */}
-              <div className="mt-6 relative">
+              <div className="mt-3 relative">
                 <div className="flex justify-between items-center">
                   {[...Array(10)].map((_, i) => (
                     <div key={i} className="relative flex flex-col items-center">
@@ -238,12 +266,12 @@ export function HorseshoeCollector({ horseshoesCollected }: HorseshoeCollectorPr
                 </div>
               </div>
               
-              <p className="text-sm text-brown-800/80 mt-4 text-center">
+              <p className="text-sm text-brown-800/80 mt-2 text-center">
                 Zbierz jeszcze {10 - completedSteps} {10 - completedSteps === 1 ? 'podkowę' : 'podków'}, aby poznać kolejną ciekawostkę!
               </p>
 
               {/* Stats */}
-              <div className="mt-4 grid grid-cols-2 gap-2 text-center text-sm">
+              <div className="mt-2 grid grid-cols-2 gap-2 text-center text-sm">
                 <div className="bg-brown-50 rounded-lg p-2">
                   <div className="font-semibold text-brown-800">Zebrane podkowy</div>
                   <div className="text-brown-600">{horseshoesCollected}</div>

@@ -9,7 +9,7 @@ const Products: React.FC = () => {
     {
       icon: Flag,
       title: "Przeszkody Treningowe",
-      imagePath: "/images/products/przeszkody-treningowe",
+      imagePath: "/images/Products/Treningowe",
       images: [
         '20240926_153909.jpg',
         'ALL_001 white-min.png',
@@ -22,7 +22,7 @@ const Products: React.FC = () => {
     {
       icon: Target,
       title: "Przeszkody Turniejowe",
-      imagePath: "/images/products/przeszkody-turniejowe",
+      imagePath: "/images/Products/Turniejowe",
       images: [
         'set-12-min.png',
         'set-18-min.png',
@@ -35,7 +35,7 @@ const Products: React.FC = () => {
     {
       icon: Award,
       title: "Przeszkody Sponsorskie",
-      imagePath: "/images/products/przeszkody-sponsorskie",
+      imagePath: "/images/Products/Sponsorskie",
       images: [
         'biofeed-min.jpg',
         'krismar-min.jpg',
@@ -48,7 +48,7 @@ const Products: React.FC = () => {
     {
       icon: Package,
       title: "Akcesoria",
-      imagePath: "/images/products/akcesoria",
+      imagePath: "/images/Products/Akcesoria",
       images: [
         'ACC_715-min.jpg',
         'heartwood poles-min.jpg',

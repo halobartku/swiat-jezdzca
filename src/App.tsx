@@ -201,7 +201,7 @@ function MainContent() {
 
   return (
     <div 
-      className="min-h-screen bg-hero-gradient overflow-x-hidden flex flex-col"
+      className="h-screen bg-hero-gradient overflow-hidden flex flex-col"
       onMouseMove={handleMouseMove}
       onClick={collectHorseshoe}
     >
@@ -221,7 +221,7 @@ function MainContent() {
       {/* Logo */}
       <div className="fixed left-4 top-4 z-50">
         <img 
-          src="/logo.png"
+          src="/images/logo dark.png"
           alt="Świat Jeźdźca Logo"
           className="h-8 md:h-12 w-auto"
         />
@@ -246,8 +246,8 @@ function MainContent() {
         id="main-content"
         ref={containerRef}
         className={`
-          relative z-10 flex-1 w-full
-          ${isMobile ? 'snap-y snap-mandatory overflow-y-auto overflow-x-hidden' : 'snap-x snap-mandatory overflow-x-auto overflow-y-hidden'}
+          relative z-10 w-full h-full
+          ${isMobile ? 'snap-y snap-mandatory overflow-hidden' : 'snap-x snap-mandatory overflow-hidden'}
           smooth-scroll
           ${isMobile ? 'flex-col' : 'flex-row'}
           flex
@@ -261,10 +261,10 @@ function MainContent() {
             ref={el => sectionsRef.current[index] = el}
             className={`
               relative
-              ${isMobile ? 'min-h-screen w-full max-w-full' : 'min-w-full w-screen h-screen flex-shrink-0'}
+              ${isMobile ? 'h-screen w-full max-w-full' : 'min-w-full w-screen h-screen flex-shrink-0'}
               snap-start
               flex items-center justify-center
-              ${isMobile ? 'py-12 px-3' : 'px-20'}
+              ${isMobile ? 'px-3' : 'px-20'}
             `}
             initial="initial"
             animate="animate"
@@ -274,7 +274,7 @@ function MainContent() {
             aria-label={section.title}
             tabIndex={0}
           >
-            <div className="w-full max-w-[100vw] overflow-x-hidden">
+            <div className="w-full overflow-hidden">
               <ErrorBoundary>
                 <Suspense fallback={<LoadingSpinner />}>
                   {index === 0 && <Home onDiscoverClick={() => scrollToSection(1)} onContactClick={() => scrollToSection(5)} />}
