@@ -1,0 +1,29 @@
+/* Hide default cursor */
+:global(body) {
+  cursor: none !important;
+}
+
+:global(a), 
+:global(button), 
+:global([role="button"]), 
+:global(input), 
+:global(select), 
+:global(textarea) {
+  cursor: none !important;
+}
+
+.cursorWrapper {
+  pointer-events: none;
+  z-index: 9999;
+  position: fixed;
+  width: 32px;
+  height: 32px;
+  transform-origin: center;
+}
+
+.cursorImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: rotate(-15deg);
+}
