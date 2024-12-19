@@ -6,6 +6,8 @@ interface HorseshoeContextType {
   mousePosition: { x: number; y: number };
   handleMouseMove: (e: React.MouseEvent) => void;
   collectHorseshoe: (e: React.MouseEvent) => void;
+  spawnEnabled: boolean;
+  toggleSpawn: () => void;
 }
 
 const HorseshoeContext = createContext<HorseshoeContextType | undefined>(undefined);
@@ -13,6 +15,11 @@ const HorseshoeContext = createContext<HorseshoeContextType | undefined>(undefin
 export function HorseshoeProvider({ children }: { children: React.ReactNode }) {
   const [horseshoesCollected, setHorseshoesCollected] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [spawnEnabled, setSpawnEnabled] = useState(true);
+
+  const toggleSpawn = useCallback(() => {
+    setSpawnEnabled(prev => !prev);
+  }, []);
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
     const { clientX, clientY } = e;
@@ -35,6 +42,8 @@ export function HorseshoeProvider({ children }: { children: React.ReactNode }) {
     mousePosition,
     handleMouseMove,
     collectHorseshoe,
+    spawnEnabled,
+    toggleSpawn,
   };
 
   return (

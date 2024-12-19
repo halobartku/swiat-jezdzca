@@ -10,13 +10,18 @@ interface SpawnedHorseshoe {
 }
 
 export function HorseshoeSpawner() {
-  const { setHorseshoesCollected } = useHorseshoe();
+  const { setHorseshoesCollected, spawnEnabled } = useHorseshoe();
   const [horseshoes, setHorseshoes] = useState<SpawnedHorseshoe[]>([]);
   const [lastSpawnTime, setLastSpawnTime] = useState(Date.now());
-  const SPAWN_INTERVAL = 3000; // Spawn a new horseshoe every 3 seconds
-  const MAX_HORSESHOES = 5; // Maximum number of horseshoes on screen
+  const SPAWN_INTERVAL = 2000; // Spawn a new horseshoe every 2 seconds
+  const MAX_HORSESHOES = 10; // Maximum number of horseshoes on screen
 
   useEffect(() => {
+    if (!spawnEnabled) {
+      setHorseshoes([]); // Clear existing horseshoes when game is disabled
+      return;
+    }
+
     const spawnHorseshoe = () => {
       const now = Date.now();
       if (now - lastSpawnTime >= SPAWN_INTERVAL && horseshoes.length < MAX_HORSESHOES) {
@@ -30,9 +35,9 @@ export function HorseshoeSpawner() {
       }
     };
 
-    const interval = setInterval(spawnHorseshoe, 1000);
+    const interval = setInterval(spawnHorseshoe, 500); // Check more frequently for spawning
     return () => clearInterval(interval);
-  }, [horseshoes.length, lastSpawnTime]);
+  }, [horseshoes.length, lastSpawnTime, spawnEnabled]);
 
   const handleCollect = (id: number, e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent event bubbling

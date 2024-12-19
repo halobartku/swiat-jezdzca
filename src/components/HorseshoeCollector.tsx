@@ -4,6 +4,7 @@ import { Horseshoe } from './icons/Horseshoe';
 import { equestrianFacts, type EquestrianFact } from '../data/equestrianFacts';
 import LottieAnimation from './LottieAnimation';
 import successAnimation from '../animations/success.json';
+import { useHorseshoe } from '../context/HorseshoeContext';
 
 interface HorseshoeCollectorProps {
   horseshoesCollected: number;
@@ -18,6 +19,7 @@ const getRank = (count: number) => {
 };
 
 export function HorseshoeCollector({ horseshoesCollected }: HorseshoeCollectorProps) {
+  const { spawnEnabled, toggleSpawn } = useHorseshoe();
   const [isExpanded, setIsExpanded] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const [showFactUnlock, setShowFactUnlock] = useState(false);
@@ -93,7 +95,7 @@ export function HorseshoeCollector({ horseshoesCollected }: HorseshoeCollectorPr
     <>
       {/* Collector button */}
       <motion.div 
-        className="fixed bottom-24 left-8 z-50 bg-white/80 backdrop-blur-sm rounded-lg shadow-lg p-2 border border-brown-200"
+        className="fixed bottom-24 left-8 z-50 bg-white/80 backdrop-blur-sm rounded-lg shadow-lg p-2 border border-brown-200 flex flex-col gap-2"
         initial={false}
         animate={{ 
           scale: isExpanded ? 0.9 : 1,
@@ -102,15 +104,15 @@ export function HorseshoeCollector({ horseshoesCollected }: HorseshoeCollectorPr
         transition={{ duration: 0.3 }}
       >
         <motion.div 
-          className="flex items-center gap-2 cursor-pointer group relative"
+          className="flex items-center justify-center gap-1.5 cursor-pointer group relative px-2"
           onClick={() => setIsExpanded(!isExpanded)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          <div className="w-5 h-5 text-brown-800 group-hover:text-amber-700 transition-colors">
+          <div className="w-5 h-5 text-brown-800 group-hover:text-amber-700 transition-colors flex items-center">
             <Horseshoe className="w-full h-full horseshoe-collector-icon" />
           </div>
-          <span className="text-lg font-bold text-brown-800 group-hover:text-amber-700 transition-colors">
+          <span className="text-lg font-bold text-brown-800 group-hover:text-amber-700 transition-colors flex items-center">
             {horseshoesCollected}
           </span>
           
@@ -136,21 +138,13 @@ export function HorseshoeCollector({ horseshoesCollected }: HorseshoeCollectorPr
           <AnimatePresence>
             {showFactUnlock && (
               <motion.div 
-                className="absolute -top-12 left-1/2 -translate-x-1/2 w-16 h-16 z-[60]"
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.5 }}
+                className="absolute left-full ml-3 top-1/2 -translate-y-1/2 z-[60]"
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 10 }}
               >
-                <LottieAnimation
-                  animationData={successAnimation}
-                  loop={true}
-                  autoplay={true}
-                />
                 <motion.div
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-amber-600 font-bold text-xs whitespace-nowrap bg-white/90 px-2 py-1 rounded-full"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                  className="text-red-600 font-bold text-sm whitespace-nowrap bg-white/90 px-3 py-1.5 rounded-lg shadow-sm"
                 >
                   Nowa ciekawostka!
                 </motion.div>
@@ -158,6 +152,26 @@ export function HorseshoeCollector({ horseshoesCollected }: HorseshoeCollectorPr
             )}
           </AnimatePresence>
         </motion.div>
+        
+        {/* Game toggle switch */}
+        <div className="flex items-center justify-center gap-2 pt-1 border-t border-brown-200">
+          <span className="text-xs font-medium text-brown-800">Gra</span>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleSpawn();
+            }}
+            className={`relative inline-flex h-4 w-8 items-center rounded-full transition-colors ${
+              spawnEnabled ? 'bg-red-600' : 'bg-gray-300'
+            }`}
+          >
+            <span
+              className={`inline-block h-3 w-3 transform rounded-full bg-white transition-transform ${
+                spawnEnabled ? 'translate-x-4' : 'translate-x-1'
+              }`}
+            />
+          </button>
+        </div>
       </motion.div>
 
       {/* Centered popup */}

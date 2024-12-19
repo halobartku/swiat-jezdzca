@@ -26,4 +26,6 @@
   height: 100%;
   object-fit: contain;
   transform: rotate(-15deg);
+  filter: brightness(0.7) contrast(1.2);
+  -webkit-filter: brightness(0.7) contrast(1.2);
 }
