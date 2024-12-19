@@ -24,8 +24,13 @@
 .cursorImage {
   width: 100%;
   height: 100%;
-  object-fit: contain;
   transform: rotate(-15deg);
-  filter: brightness(0.7) contrast(1.2);
-  -webkit-filter: brightness(0.7) contrast(1.2);
+  color: #6B6C6E;
+  opacity: 0.8;
+}
+
+/* Add specific styles for collector icon */
+:global(.horseshoe-collector-icon) {
+  color: currentColor;
+  opacity: 1;
 }
