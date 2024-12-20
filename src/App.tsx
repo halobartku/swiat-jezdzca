@@ -6,6 +6,7 @@ import { HelmetProvider } from 'react-helmet-async'
 import { BackgroundAnimations } from './components/BackgroundAnimations'
 import { MouseAnimations } from './components/MouseAnimations'
 import { HorseshoeCollector } from './components/HorseshoeCollector'
+import { HorseshoeInfoPopup } from './components/HorseshoeInfoPopup'
 import { HorseshoeSpawner } from './components/HorseshoeSpawner'
 import { Navigation } from './components/Navigation'
 import { Home } from './components/Home'
@@ -231,6 +232,7 @@ function MainContent() {
       </div>
 
       <BackgroundAnimations />
+      <HorseshoeInfoPopup />
       <MouseAnimations mousePosition={mousePosition} />
       <HorseshoeCollector horseshoesCollected={horseshoesCollected} />
       <HorseshoeSpawner />

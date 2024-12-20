@@ -13,11 +13,11 @@ interface HorseshoeCollectorProps {
 }
 
 const getRank = (count: number) => {
-  if (count < 50) return { title: 'Poziom Cavaletti 40cm', color: 'text-brown-600' };
-  if (count < 100) return { title: 'Poziom Stacjonata 80cm', color: 'text-copper-600' };
-  if (count < 200) return { title: 'Poziom Oxer 120cm', color: 'text-bronze-600' };
-  if (count < 300) return { title: 'Poziom Szereg 160cm', color: 'text-amber-600' };
-  return { title: 'Poziom Olimpijski 200cm', color: 'text-brown-800' };
+  if (count < 50) return { title: 'Poziom Cavaletti 40cm', color: 'text-primary' };
+  if (count < 100) return { title: 'Poziom Stacjonata 80cm', color: 'text-primary' };
+  if (count < 200) return { title: 'Poziom Oxer 120cm', color: 'text-primary' };
+  if (count < 300) return { title: 'Poziom Szereg 160cm', color: 'text-primary' };
+  return { title: 'Poziom Olimpijski 200cm', color: 'text-primary' };
 };
 
 export function HorseshoeCollector({ horseshoesCollected }: HorseshoeCollectorProps) {
@@ -107,15 +107,15 @@ export function HorseshoeCollector({ horseshoesCollected }: HorseshoeCollectorPr
   const getCategoryStyle = (category: string) => {
     switch (category) {
       case 'history':
-        return 'bg-brown-100 text-brown-800 border border-brown-800/20';
+        return 'bg-secondary-bg text-primary-text border border-primary/20';
       case 'sport':
-        return 'bg-copper-100 text-copper-800 border border-copper-800/20';
+        return 'bg-secondary-bg text-primary-text border border-primary/20';
       case 'training':
-        return 'bg-bronze-100 text-bronze-800 border border-bronze-800/20';
+        return 'bg-secondary-bg text-primary-text border border-primary/20';
       case 'equipment':
-        return 'bg-amber-100 text-amber-800 border border-amber-800/20';
+        return 'bg-secondary-bg text-primary-text border border-primary/20';
       default:
-        return 'bg-brown-100 text-brown-800 border border-brown-800/20';
+        return 'bg-secondary-bg text-primary-text border border-primary/20';
     }
   };
 
@@ -144,7 +144,7 @@ export function HorseshoeCollector({ horseshoesCollected }: HorseshoeCollectorPr
       {/* Collector button */}
       <motion.div 
         className={`
-          fixed z-50 bg-white/80 backdrop-blur-sm rounded-lg shadow-lg p-2 border border-brown-200 flex flex-col gap-2
+          fixed z-50 bg-primary-bg/80 backdrop-blur-sm rounded-lg shadow-lg p-2 border border-primary/20 flex flex-col gap-2
           ${isMobile ? 'top-4 right-16' : 'bottom-8 left-8'}
         `}
         initial={false}
@@ -160,10 +160,10 @@ export function HorseshoeCollector({ horseshoesCollected }: HorseshoeCollectorPr
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          <div className="w-5 h-5 text-brown-800 group-hover:text-amber-700 transition-colors flex items-center">
+          <div className="w-5 h-5 text-primary-text group-hover:text-primary transition-colors flex items-center">
             <Horseshoe className="w-full h-full horseshoe-collector-icon" />
           </div>
-          <span className="text-lg font-bold text-brown-800 group-hover:text-amber-700 transition-colors flex items-center">
+          <span className="text-lg font-bold text-primary-text group-hover:text-primary transition-colors flex items-center">
             {horseshoesCollected}
           </span>
           
@@ -210,8 +210,8 @@ export function HorseshoeCollector({ horseshoesCollected }: HorseshoeCollectorPr
         </motion.div>
         
         {/* Game toggle switch */}
-        <div className="flex items-center justify-center gap-2 pt-1 border-t border-brown-200">
-          <span className="text-xs font-medium text-brown-800">Gra</span>
+        <div className="flex items-center justify-center gap-2 pt-1 border-t border-primary/20">
+          <span className="text-xs font-medium text-primary-text">Gra</span>
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -241,7 +241,7 @@ export function HorseshoeCollector({ horseshoesCollected }: HorseshoeCollectorPr
             onClick={() => setIsExpanded(false)}
           >
             <motion.div
-              className="bg-white rounded-xl shadow-xl p-4 mx-4 mb-safe mt-4 max-w-md w-full overflow-hidden max-h-[80vh] overflow-y-auto"
+              className="bg-primary-bg rounded-xl shadow-xl p-4 mx-4 mb-safe mt-4 max-w-md w-full overflow-hidden max-h-[80vh] overflow-y-auto"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
@@ -254,7 +254,7 @@ export function HorseshoeCollector({ horseshoesCollected }: HorseshoeCollectorPr
             >
               {/* Rank display */}
               <div className="text-center mb-2">
-                <span className={`text-lg font-semibold ${rank.color}`}>
+                <span className="text-lg font-semibold text-primary-text">
                   {rank.title}
                 </span>
               </div>
@@ -267,25 +267,25 @@ export function HorseshoeCollector({ horseshoesCollected }: HorseshoeCollectorPr
                 `}>
                   {getCategoryTranslation(displayedFact.category)}
                 </span>
-                <p className="text-brown-800 font-medium mb-2">
+                <p className="text-primary-text font-medium mb-2">
                   {displayedFact.fact}
                 </p>
                 
                 {/* Display 5% discount code between 10-20 horseshoes */}
                 {horseshoesCollected >= 10 && horseshoesCollected < 20 && discountCode5 && (
-                  <div className="mt-2 p-3 bg-brown-50 rounded-lg border border-brown-200">
-                    <h3 className="text-brown-800 font-semibold mb-2">
+                  <div className="mt-2 p-3 bg-secondary-bg rounded-lg border border-primary/20">
+                    <h3 className="text-primary-text font-semibold mb-2">
                       Gratulacje! Otrzymujesz kod rabatowy 5%
                     </h3>
-                    <p className="text-sm text-brown-700 mb-2">
+                    <p className="text-sm text-secondary-text mb-2">
                       Użyj tych słów podczas składania zamówienia:
                     </p>
-                    <div className="flex justify-center gap-2 font-bold text-brown-800">
+                    <div className="flex justify-center gap-2 font-bold text-primary-text">
                       <span>{discountCode5.word1}</span>
                       <span>+</span>
                       <span>{discountCode5.word2}</span>
               </div>
-                    <p className="text-xs text-brown-600 mt-2">
+                    <p className="text-xs text-secondary-text mt-2">
                       Podaj te słowa w formularzu zamówienia lub podczas rozmowy telefonicznej
                     </p>
                   </div>
@@ -293,19 +293,19 @@ export function HorseshoeCollector({ horseshoesCollected }: HorseshoeCollectorPr
 
                 {/* Display 10% discount code between 50-60 horseshoes */}
                 {horseshoesCollected >= 50 && horseshoesCollected < 60 && discountCode10 && (
-                  <div className="mt-2 p-3 bg-brown-50 rounded-lg border border-brown-200">
-                    <h3 className="text-brown-800 font-semibold mb-2">
+                  <div className="mt-2 p-3 bg-secondary-bg rounded-lg border border-primary/20">
+                    <h3 className="text-primary-text font-semibold mb-2">
                       Gratulacje! Otrzymujesz kod rabatowy 10%
                     </h3>
-                    <p className="text-sm text-brown-700 mb-2">
+                    <p className="text-sm text-secondary-text mb-2">
                       Użyj tych słów podczas składania zamówienia:
                     </p>
-                    <div className="flex justify-center gap-2 font-bold text-brown-800">
+                    <div className="flex justify-center gap-2 font-bold text-primary-text">
                       <span>{discountCode10.word1}</span>
                       <span>+</span>
                       <span>{discountCode10.word2}</span>
                     </div>
-                    <p className="text-xs text-brown-600 mt-2">
+                    <p className="text-xs text-secondary-text mt-2">
                       Podaj te słowa w formularzu zamówienia lub podczas rozmowy telefonicznej
                     </p>
                   </div>
@@ -321,37 +321,29 @@ export function HorseshoeCollector({ horseshoesCollected }: HorseshoeCollectorPr
                         <Horseshoe 
                           className={`w-full h-full transition-colors ${
                             i < completedSteps 
-                              ? 'text-brown-800 filter brightness-110' 
-                              : 'text-gray-300'
+                              ? 'text-primary filter brightness-110' 
+                              : 'text-secondary-text/30'
                           }`}
                         />
                       </div>
-                      {i < completedSteps && i + 1 < completedSteps && (
-                        <div className="absolute w-full h-0.5 bg-brown-800" style={{
-                          left: '50%',
-                          top: '10px',
-                          transform: 'translateY(-50%)',
-                          zIndex: -1
-                        }} />
-                      )}
                     </div>
                   ))}
                 </div>
               </div>
               
-              <p className="text-sm text-brown-800/80 mt-2 text-center">
+              <p className="text-sm text-secondary-text mt-2 text-center">
                 Zbierz jeszcze {10 - completedSteps} {10 - completedSteps === 1 ? 'podkowę' : 'podków'}, aby poznać kolejną ciekawostkę!
               </p>
 
               {/* Stats */}
               <div className="mt-2 grid grid-cols-2 gap-2 text-center text-sm">
-                <div className="bg-brown-50 rounded-lg p-2">
-                  <div className="font-semibold text-brown-800">Zebrane podkowy</div>
-                  <div className="text-brown-600">{horseshoesCollected}</div>
+                <div className="bg-secondary-bg rounded-lg p-2">
+                  <div className="font-semibold text-primary-text">Zebrane podkowy</div>
+                  <div className="text-secondary-text">{horseshoesCollected}</div>
                 </div>
-                <div className="bg-brown-50 rounded-lg p-2">
-                  <div className="font-semibold text-brown-800">Poznane ciekawostki</div>
-                  <div className="text-brown-600">{Math.floor(horseshoesCollected / 10)}</div>
+                <div className="bg-secondary-bg rounded-lg p-2">
+                  <div className="font-semibold text-primary-text">Poznane ciekawostki</div>
+                  <div className="text-secondary-text">{Math.floor(horseshoesCollected / 10)}</div>
                 </div>
               </div>
             </motion.div>
