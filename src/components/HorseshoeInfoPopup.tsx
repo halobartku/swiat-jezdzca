@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useHorseshoe } from '../context/HorseshoeContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export function HorseshoeInfoPopup() {
@@ -15,7 +16,12 @@ export function HorseshoeInfoPopup() {
     }
   }, []);
 
-  const handleClose = () => {
+  const { disableSpawn } = useHorseshoe();
+
+  const handleClose = (startGame: boolean) => {
+    if (!startGame) {
+      disableSpawn();
+    }
     setIsVisible(false);
     localStorage.setItem('hasSeenHorseshoeInfo', 'true');
   };
@@ -28,7 +34,7 @@ export function HorseshoeInfoPopup() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          onClick={handleClose}
+          onClick={() => handleClose(false)}
         >
           <motion.div
           className="bg-primary-bg rounded-xl shadow-xl p-6 mx-4 max-w-sm w-full"
@@ -44,11 +50,13 @@ export function HorseshoeInfoPopup() {
           >
             {/* Header with icon */}
             <div className="flex items-center justify-center mb-4">
-              <img 
-                src="/images/horse-shoe-svgrepo-com.svg" 
-                alt="Podkowa"
-                className="w-16 h-16"
-              />
+              <div className="w-16 h-16 [&_svg]:w-full [&_svg]:h-full [&_svg_*]:stroke-primary [&_svg_*]:stroke-2">
+                <img 
+                  src="/images/horse-shoe-svgrepo-com.svg" 
+                  alt="Podkowa"
+                  className="w-full h-full"
+                />
+              </div>
             </div>
 
             {/* Title */}
@@ -70,13 +78,21 @@ export function HorseshoeInfoPopup() {
               </ul>
             </div>
 
-            {/* Close button */}
-            <button
-              onClick={handleClose}
-              className="mt-4 w-full bg-primary hover:bg-accent-hover text-primary-bg py-2 px-4 rounded-lg transition-colors"
-            >
-              Rozpocznij zbieranie!
-            </button>
+            {/* Buttons */}
+            <div className="mt-4 grid grid-cols-2 gap-4">
+              <button
+                onClick={() => handleClose(true)}
+                className="bg-primary hover:bg-accent-hover text-primary-bg py-2 px-4 rounded-lg transition-colors"
+              >
+                Rozpocznij zbieranie
+              </button>
+              <button
+                onClick={() => handleClose(false)}
+                className="bg-secondary-bg hover:bg-accent-bg text-primary-text py-2 px-4 rounded-lg transition-colors"
+              >
+                Nie gram
+              </button>
+            </div>
           </motion.div>
         </motion.div>
       )}
