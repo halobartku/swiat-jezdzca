@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Button } from './ui/button';
 
 interface FormData {
   name: string;
@@ -204,12 +205,9 @@ ${formData.message}
           </div>
 
           <div className="flex justify-center">
-            <button
-              type="submit"
-              className="px-8 py-3 bg-gradient-to-r from-[#ff4d4d] to-white text-black font-medium rounded-full transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-            >
+            <Button type="submit" size="large">
               Wyślij Zapytanie
-            </button>
+            </Button>
           </div>
         </form>
       </div>

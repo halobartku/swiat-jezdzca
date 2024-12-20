@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { ChevronRight, Shield, Award, Wrench, Star, Users, Target, Globe } from 'lucide-react'
 import { PolishFlag } from './icons/PolishFlag'
+import { Button } from './ui/button'
 
 interface HeroProps {
   onDiscoverClick: () => void
@@ -58,19 +59,21 @@ export function Home({ onDiscoverClick, onContactClick }: HeroProps) {
           </p>
           
           <div className="flex flex-wrap gap-4">
-            <button
+            <Button
+              size="large"
               onClick={onDiscoverClick}
-              className="px-8 py-3 bg-gradient-to-r from-[#ff4d4d] to-white text-black font-medium rounded-full transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 flex items-center gap-2"
+              className="flex items-center gap-2"
             >
               Zobacz Produkty
               <ChevronRight className="w-5 h-5" />
-            </button>
-            <button
+            </Button>
+            <Button
+              size="large"
+              variant="reversed"
               onClick={onContactClick}
-              className="px-8 py-3 bg-gradient-to-r from-white to-[#ff4d4d] text-black font-medium rounded-full transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
             >
               Zapytaj o Ofertę
-            </button>
+            </Button>
           </div>
 
           <div className="mt-12 grid grid-cols-2 md:grid-cols-3 gap-6">

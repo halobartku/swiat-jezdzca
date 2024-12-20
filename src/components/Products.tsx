@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Flag, Target, Award, Package, X } from 'lucide-react';
+import { Button } from './ui/button';
 
 const Products: React.FC = () => {
   const [hoveredImage, setHoveredImage] = useState<string | null>(null);
@@ -143,20 +144,12 @@ const Products: React.FC = () => {
 
       {/* Buttons */}
       <div className="flex flex-col sm:flex-row justify-center gap-3 mt-6 px-4">
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="bg-gradient-to-r from-[#ff4d4d] to-white text-black py-2 px-5 rounded-full text-sm md:text-base font-semibold transition-all duration-300 shadow-md hover:shadow-lg whitespace-nowrap"
-        >
+        <Button>
           Przeglądaj katalog
-        </motion.button>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="bg-gradient-to-r from-[#ff4d4d] to-white text-black py-2 px-5 rounded-full text-sm md:text-base font-semibold transition-all duration-300 shadow-md hover:shadow-lg whitespace-nowrap"
-        >
+        </Button>
+        <Button>
           Zapytaj o ofertę
-        </motion.button>
+        </Button>
       </div>
     </div>
   );

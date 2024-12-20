@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { questions, riderTypeDetails, type RiderType } from '../data/riderTypes'
+import { Button } from './ui/button'
 
 export default function Game() {
   const [currentQuestion, setCurrentQuestion] = useState(-1)
@@ -91,12 +92,9 @@ export default function Game() {
             <p className="text-xl text-secondary-text mb-8">
               Odkryj swój unikalny styl jeździecki! Ten quiz pomoże Ci zrozumieć Twoje naturalne predyspozycje i wskaże najlepszą ścieżkę rozwoju.
             </p>
-            <button
-              onClick={startQuiz}
-              className="px-6 py-3 bg-primary hover:bg-accent-hover text-primary-bg rounded-lg transition-colors flex items-center gap-2"
-            >
+            <Button onClick={startQuiz} size="large">
               Rozpocznij Quiz
-            </button>
+            </Button>
           </div>
           <div className="lg:flex-1 w-full lg:w-[500px]">
             <div className="bg-secondary-bg rounded-2xl p-6 shadow-lg">
@@ -246,12 +244,9 @@ export default function Game() {
             </div>
 
             <div className="text-center mt-8">
-              <button
-                onClick={restartQuiz}
-                className="px-6 py-3 bg-primary hover:bg-accent-hover text-primary-bg rounded-lg transition-colors"
-              >
+              <Button onClick={restartQuiz} size="large">
                 Spróbuj ponownie
-              </button>
+              </Button>
             </div>
           </div>
         </motion.div>

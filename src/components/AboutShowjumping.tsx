@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Wrench, Target, Shield, Palette, ArrowRight, Star } from 'lucide-react'
+import { Button } from './ui/button'
 
 interface InfoCard {
   title: string
@@ -174,13 +175,9 @@ const AboutShowjumping: React.FC = () => {
                 </motion.div>
               ))}
             </div>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="w-full bg-gradient-to-r from-[#ff4d4d] to-white text-black py-2.5 px-6 rounded-full text-base font-semibold transition-all duration-300 shadow-md hover:shadow-lg"
-            >
+            <Button className="w-full">
               Rozpocznij Swoją Przygodę
-            </motion.button>
+            </Button>
           </motion.div>
         </div>
       </div>
