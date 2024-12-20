@@ -54,6 +54,22 @@ interface HeroProps {
 }
 ```
 
+### Features
+- Hero section with main message
+- Feature grid with icons and descriptions
+- Video showcase with overlay
+- Gradient buttons with hover effects
+- Responsive design
+
+### Styling
+- Gradient buttons:
+  - "Zobacz Produkty": red to white gradient
+  - "Zapytaj o Ofertę": white to red gradient
+- Rounded-full button design
+- Shadow effects with hover states
+- Focus rings for accessibility
+- Consistent spacing and typography
+
 ### Usage
 ```tsx
 <Home 
@@ -79,6 +95,50 @@ interface Product {
 ### Usage
 ```tsx
 <Products />
+```
+
+## RequestOffer Component
+
+`RequestOffer.tsx` - Contact form for product inquiries with background image and multiple choice selection.
+
+### Features
+- Form validation
+- Multiple product type selection
+- Background image with overlay
+- Native email client integration
+- Success feedback with dismissible popup
+- Responsive design
+
+### Implementation
+```typescript
+interface FormData {
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+  productTypes: string[];
+}
+
+const productTypeOptions = {
+  training: 'Przeszkody Treningowe',
+  competition: 'Przeszkody Turniejowe',
+  sponsor: 'Przeszkody Sponsorskie',
+  accessories: 'Akcesoria',
+  other: 'Inne'
+};
+```
+
+### Styling
+- Uses McDonald Świat Jeźdźca image as background
+- Semi-transparent black overlay with backdrop blur
+- Semi-transparent white input backgrounds (90% opacity)
+- White text for labels with dark text for inputs
+- Gradient button with hover effects
+- Consistent spacing and typography
+
+### Usage
+```tsx
+<RequestOffer />
 ```
 
 ## HorseshoeCollector Component
@@ -133,21 +193,6 @@ interface PrivacyPreferencesProps {
 ### Usage
 ```tsx
 <PrivacyPreferences onClose={() => setShowPrivacyPreferences(false)} />
-```
-
-## RequestOffer Component
-
-`RequestOffer.tsx` - Contact form for product inquiries.
-
-### Features
-- Form validation
-- Discount code application
-- Error handling
-- Success feedback
-
-### Usage
-```tsx
-<RequestOffer />
 ```
 
 ## MouseAnimations Component
@@ -268,3 +313,10 @@ interface SEOProps {
    - Use context for shared state
    - Implement proper state updates
    - Handle side effects properly
+
+5. **Styling Patterns**
+   - Use consistent gradient patterns for buttons
+   - Implement proper hover and focus states
+   - Maintain consistent spacing and typography
+   - Use semi-transparent overlays for readability
+   - Follow mobile-first responsive design

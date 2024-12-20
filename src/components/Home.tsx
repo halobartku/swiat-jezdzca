@@ -60,14 +60,14 @@ export function Home({ onDiscoverClick, onContactClick }: HeroProps) {
           <div className="flex flex-wrap gap-4">
             <button
               onClick={onDiscoverClick}
-              className="px-4 sm:px-6 py-2.5 sm:py-3 bg-primary hover:bg-accent-hover text-primary-bg rounded-lg transition-colors flex items-center gap-2 text-sm sm:text-base"
+              className="px-8 py-3 bg-gradient-to-r from-[#ff4d4d] to-white text-black font-medium rounded-full transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 flex items-center gap-2"
             >
               Zobacz Produkty
               <ChevronRight className="w-5 h-5" />
             </button>
             <button
               onClick={onContactClick}
-              className="px-4 sm:px-6 py-2.5 sm:py-3 bg-primary-bg hover:bg-secondary-bg text-primary rounded-lg transition-colors border-2 border-primary text-sm sm:text-base"
+              className="px-8 py-3 bg-gradient-to-r from-white to-[#ff4d4d] text-black font-medium rounded-full transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
             >
               Zapytaj o Ofertę
             </button>

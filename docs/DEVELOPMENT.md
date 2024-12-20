@@ -136,9 +136,10 @@ const HorseshoeCollector = ({ horseshoesCollected }: Props) => {
 - Use semantic class names
 - Maintain consistent spacing
 - Group related classes
+- Implement consistent button patterns
 
 ```tsx
-// Good
+// Good - Grouped classes with consistent patterns
 <div className="
   fixed bottom-8 left-8 z-50
   bg-white/80 backdrop-blur-sm
@@ -147,8 +148,64 @@ const HorseshoeCollector = ({ horseshoesCollected }: Props) => {
   flex flex-col gap-2
 ">
 
-// Bad
+// Bad - Unorganized classes
 <div className="fixed p-2 bg-white/80 bottom-8 left-8 z-50 rounded-lg shadow-lg backdrop-blur-sm border border-brown-200 flex flex-col gap-2">
+```
+
+#### Gradient Button Pattern
+
+Use consistent gradient patterns for buttons across the site:
+
+```tsx
+// Primary gradient button
+<button className="
+  px-8 py-3
+  bg-gradient-to-r from-[#ff4d4d] to-white
+  text-black font-medium
+  rounded-full
+  transition-all duration-300
+  shadow-md hover:shadow-lg
+  focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2
+">
+  Primary Action
+</button>
+
+// Secondary gradient button (reversed)
+<button className="
+  px-8 py-3
+  bg-gradient-to-r from-white to-[#ff4d4d]
+  text-black font-medium
+  rounded-full
+  transition-all duration-300
+  shadow-md hover:shadow-lg
+  focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2
+">
+  Secondary Action
+</button>
+```
+
+#### Background Image with Overlay
+
+Implement background images with proper overlay and text readability:
+
+```tsx
+// Container with background image
+<div 
+  className="relative overflow-hidden rounded-lg"
+  style={{
+    backgroundImage: 'url("/path/to/image.jpg")',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center'
+  }}
+>
+  {/* Semi-transparent overlay */}
+  <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
+  
+  {/* Content */}
+  <div className="relative z-10">
+    <h2 className="text-white">Content goes here</h2>
+  </div>
+</div>
 ```
 
 ### Game Mechanics Implementation
@@ -256,6 +313,58 @@ const AboutUs = React.lazy(() => import('./components/AboutUs'));
   style={{ bottom: '-10px' }}
   animate={{ bottom: 0 }}
 />
+```
+
+#### Form Handling with Multiple Choice
+
+Implement multiple choice selection in forms:
+
+```typescript
+// Form data interface
+interface FormData {
+  name: string;
+  email: string;
+  selections: string[];
+}
+
+// Component implementation
+const Form = () => {
+  const [formData, setFormData] = useState<FormData>({
+    name: '',
+    email: '',
+    selections: []
+  });
+
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      selections: checked 
+        ? [...prev.selections, value]
+        : prev.selections.filter(item => item !== value)
+    }));
+  };
+
+  return (
+    <form>
+      {/* Multiple choice section */}
+      <div className="grid grid-cols-2 gap-2">
+        {options.map(option => (
+          <label key={option.value} className="flex items-center space-x-2 p-2 rounded hover:bg-white/10">
+            <input
+              type="checkbox"
+              value={option.value}
+              checked={formData.selections.includes(option.value)}
+              onChange={handleCheckboxChange}
+              className="w-4 h-4"
+            />
+            <span>{option.label}</span>
+          </label>
+        ))}
+      </div>
+    </form>
+  );
+};
 ```
 
 ### Testing
