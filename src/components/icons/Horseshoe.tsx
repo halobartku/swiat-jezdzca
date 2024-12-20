@@ -10,7 +10,7 @@ export const Horseshoe: React.FC<HorseshoeProps> = ({ className = '', style }) =
     <svg
       width="100%"
       height="100%"
-      viewBox="-2.5 0 63 63"
+      viewBox="-2.5 -2.5 65 65"
       className={className}
       style={style}
       xmlns="http://www.w3.org/2000/svg"
