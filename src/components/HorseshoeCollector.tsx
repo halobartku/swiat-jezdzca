@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Horseshoe } from './icons/Horseshoe';
 import { equestrianFacts, type EquestrianFact } from '../data/equestrianFacts';

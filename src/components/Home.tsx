@@ -1,4 +1,3 @@
-import React from 'react'
 import { motion } from 'framer-motion'
 import { ChevronRight, Shield, Award, Wrench, Star, Users, Target, Globe } from 'lucide-react'
 import { PolishFlag } from './icons/PolishFlag'

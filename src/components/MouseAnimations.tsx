@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import styles from './MouseAnimations.module.css';
 import { Horseshoe } from './icons/Horseshoe';

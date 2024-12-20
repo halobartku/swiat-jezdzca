@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Flag, Target, Award, Package, X } from 'lucide-react';
-import { useApp } from '../context/AppContext';
 
 const Products: React.FC = () => {
   const [hoveredImage, setHoveredImage] = useState<string | null>(null);

@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Horseshoe } from './icons/Horseshoe';
 
 export function HorseshoeInfoPopup() {
   const [isVisible, setIsVisible] = useState(false);
