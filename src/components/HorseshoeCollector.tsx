@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Horseshoe } from './icons/Horseshoe';
 import { equestrianFacts, type EquestrianFact } from '../data/equestrianFacts';
@@ -26,13 +26,39 @@ export function HorseshoeCollector({ horseshoesCollected }: HorseshoeCollectorPr
   const [isExpanded, setIsExpanded] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const [showFactUnlock, setShowFactUnlock] = useState(false);
-  const [discountCode, setDiscountCode] = useState<{ word1: string; word2: string } | null>(null);
+  const [discountCode5, setDiscountCode5] = useState<{ word1: string; word2: string } | null>(null);
+  const [discountCode10, setDiscountCode10] = useState<{ word1: string; word2: string } | null>(null);
   const prevCountRef = useRef(horseshoesCollected);
   
-  const currentFact = useMemo(() => {
-    const factIndex = Math.floor(horseshoesCollected / 10) % equestrianFacts.length;
-    return equestrianFacts[factIndex];
-  }, [horseshoesCollected]);
+  const [shownFactIds, setShownFactIds] = useState<number[]>([]);
+  const [displayedFact, setDisplayedFact] = useState<EquestrianFact | null>(null);
+  
+  const getRandomFact = useCallback(() => {
+    // Get available facts (excluding recently shown ones)
+    const availableFacts = equestrianFacts.filter(fact => !shownFactIds.includes(fact.id));
+    
+    // If all facts have been shown, reset the history
+    if (availableFacts.length === 0) {
+      setShownFactIds([]);
+      return equestrianFacts[Math.floor(Math.random() * equestrianFacts.length)];
+    }
+    
+    // Get a random fact from available ones
+    const randomFact = availableFacts[Math.floor(Math.random() * availableFacts.length)];
+    
+    // Update shown facts history
+    setShownFactIds(prev => [...prev, randomFact.id]);
+    
+    return randomFact;
+  }, [shownFactIds]);
+
+  // Initialize first fact
+  useEffect(() => {
+    if (!displayedFact) {
+      setDisplayedFact(equestrianFacts[0]);
+    }
+  }, []);
+
 
   useEffect(() => {
     // Clear fact unlock celebration when moving past a multiple of 10
@@ -53,9 +79,19 @@ export function HorseshoeCollector({ horseshoesCollected }: HorseshoeCollectorPr
         setShowFactUnlock(true);
         setShowCelebration(false); // Ensure regular celebration is hidden
         
-        // Generate discount code only at exactly 10 horseshoes
+        // Get new random fact at milestone
+        const newFact = getRandomFact();
+        setDisplayedFact(newFact);
+        
+        // Generate discount codes at specific milestones
         if (horseshoesCollected === 10) {
-          setDiscountCode(generateDiscountCode());
+          setDiscountCode5(generateDiscountCode());
+        } else if (horseshoesCollected === 20) {
+          setDiscountCode5(null);
+        } else if (horseshoesCollected === 50) {
+          setDiscountCode10(generateDiscountCode());
+        } else if (horseshoesCollected === 60) {
+          setDiscountCode10(null);
         }
         
         const factTimer = setTimeout(() => setShowFactUnlock(false), 3000);
@@ -66,7 +102,7 @@ export function HorseshoeCollector({ horseshoesCollected }: HorseshoeCollectorPr
     prevCountRef.current = horseshoesCollected;
   }, [horseshoesCollected]);
 
-  const rank = useMemo(() => getRank(horseshoesCollected), [horseshoesCollected]);
+  const rank = getRank(horseshoesCollected);
 
   const getCategoryStyle = (category: string) => {
     switch (category) {
@@ -100,6 +136,8 @@ export function HorseshoeCollector({ horseshoesCollected }: HorseshoeCollectorPr
 
   // Calculate completed steps (0-10)
   const completedSteps = horseshoesCollected % 10;
+
+  if (!displayedFact) return null;
 
   return (
     <>
@@ -162,7 +200,9 @@ export function HorseshoeCollector({ horseshoesCollected }: HorseshoeCollectorPr
                 <motion.div
                   className="text-red-600 font-bold text-sm whitespace-nowrap bg-white/90 px-3 py-1.5 rounded-lg shadow-sm"
                 >
-                  {horseshoesCollected === 10 ? 'Otrzymałeś zniżkę!' : 'Nowa ciekawostka!'}
+                  {horseshoesCollected === 10 ? 'Otrzymałeś zniżkę 5%!' : 
+                   horseshoesCollected === 50 ? 'Otrzymałeś zniżkę 10%!' : 
+                   'Nowa ciekawostka!'}
                 </motion.div>
               </motion.div>
             )}
@@ -201,10 +241,15 @@ export function HorseshoeCollector({ horseshoesCollected }: HorseshoeCollectorPr
             onClick={() => setIsExpanded(false)}
           >
             <motion.div
-            className="bg-white rounded-xl shadow-xl p-4 mx-4 mb-safe mt-4 max-w-md w-full overflow-hidden max-h-[80vh] overflow-y-auto"
+              className="bg-white rounded-xl shadow-xl p-4 mx-4 mb-safe mt-4 max-w-md w-full overflow-hidden max-h-[80vh] overflow-y-auto"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ 
+                type: "spring",
+                stiffness: 300,
+                damping: 30
+              }}
               onClick={e => e.stopPropagation()}
             >
               {/* Rank display */}
@@ -215,56 +260,76 @@ export function HorseshoeCollector({ horseshoesCollected }: HorseshoeCollectorPr
               </div>
 
               {/* Current fact */}
-              <motion.div
-                key={currentFact.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                className="text-center"
-              >
+              <div className="text-center">
                 <span className={`
                   inline-block px-3 py-1 rounded-full text-xs font-medium mb-2
-                  ${getCategoryStyle(currentFact.category)}
+                  ${getCategoryStyle(displayedFact.category)}
                 `}>
-                  {getCategoryTranslation(currentFact.category)}
+                  {getCategoryTranslation(displayedFact.category)}
                 </span>
-              <p className="text-brown-800 font-medium mb-2">
-                {currentFact.fact}
-              </p>
-              
-              {/* Display discount code if it's the 10th horseshoe */}
-              {horseshoesCollected === 10 && discountCode && (
-                <div className="mt-2 p-3 bg-brown-50 rounded-lg border border-brown-200">
-                  <h3 className="text-brown-800 font-semibold mb-2">
-                    Gratulacje! Otrzymujesz kod rabatowy 5%
-                  </h3>
-                  <p className="text-sm text-brown-700 mb-2">
-                    Użyj tych słów podczas składania zamówienia:
-                  </p>
-                  <div className="flex justify-center gap-2 font-bold text-brown-800">
-                    <span>{discountCode.word1}</span>
-                    <span>+</span>
-                    <span>{discountCode.word2}</span>
+                <p className="text-brown-800 font-medium mb-2">
+                  {displayedFact.fact}
+                </p>
+                
+                {/* Display 5% discount code between 10-20 horseshoes */}
+                {horseshoesCollected >= 10 && horseshoesCollected < 20 && discountCode5 && (
+                  <div className="mt-2 p-3 bg-brown-50 rounded-lg border border-brown-200">
+                    <h3 className="text-brown-800 font-semibold mb-2">
+                      Gratulacje! Otrzymujesz kod rabatowy 5%
+                    </h3>
+                    <p className="text-sm text-brown-700 mb-2">
+                      Użyj tych słów podczas składania zamówienia:
+                    </p>
+                    <div className="flex justify-center gap-2 font-bold text-brown-800">
+                      <span>{discountCode5.word1}</span>
+                      <span>+</span>
+                      <span>{discountCode5.word2}</span>
+              </div>
+                    <p className="text-xs text-brown-600 mt-2">
+                      Podaj te słowa w formularzu zamówienia lub podczas rozmowy telefonicznej
+                    </p>
                   </div>
-                  <p className="text-xs text-brown-600 mt-2">
-                    Podaj te słowa w formularzu zamówienia lub podczas rozmowy telefonicznej
-                  </p>
-                </div>
-              )}
-              </motion.div>
+                )}
 
-              {/* Progress steps */}
+                {/* Display 10% discount code between 50-60 horseshoes */}
+                {horseshoesCollected >= 50 && horseshoesCollected < 60 && discountCode10 && (
+                  <div className="mt-2 p-3 bg-brown-50 rounded-lg border border-brown-200">
+                    <h3 className="text-brown-800 font-semibold mb-2">
+                      Gratulacje! Otrzymujesz kod rabatowy 10%
+                    </h3>
+                    <p className="text-sm text-brown-700 mb-2">
+                      Użyj tych słów podczas składania zamówienia:
+                    </p>
+                    <div className="flex justify-center gap-2 font-bold text-brown-800">
+                      <span>{discountCode10.word1}</span>
+                      <span>+</span>
+                      <span>{discountCode10.word2}</span>
+                    </div>
+                    <p className="text-xs text-brown-600 mt-2">
+                      Podaj te słowa w formularzu zamówienia lub podczas rozmowy telefonicznej
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* Progress horseshoes */}
               <div className="mt-3 relative px-2">
                 <div className="flex justify-between items-center">
                   {[...Array(10)].map((_, i) => (
                     <div key={i} className="relative flex flex-col items-center">
-                      <div 
-                        className={`w-2.5 h-2.5 lg:w-2 lg:h-2 rounded-full ${i < completedSteps ? 'bg-amber-600' : 'bg-amber-200'}`}
-                      />
+                      <div className="w-5 h-5">
+                        <Horseshoe 
+                          className={`w-full h-full transition-colors ${
+                            i < completedSteps 
+                              ? 'text-brown-800 filter brightness-110' 
+                              : 'text-gray-300'
+                          }`}
+                        />
+                      </div>
                       {i < completedSteps && i + 1 < completedSteps && (
-                        <div className="absolute w-full h-0.5 bg-amber-600" style={{
+                        <div className="absolute w-full h-0.5 bg-brown-800" style={{
                           left: '50%',
-                          top: '4px',
+                          top: '10px',
                           transform: 'translateY(-50%)',
                           zIndex: -1
                         }} />

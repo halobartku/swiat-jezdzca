@@ -8,6 +8,7 @@ interface SpawnedHorseshoe {
   id: number;
   x: number;
   y: number;
+  spawnTime: number;
 }
 
 export function HorseshoeSpawner() {
@@ -18,9 +19,10 @@ export function HorseshoeSpawner() {
   const { isMobile } = useApp();
   
   // Adjust spawn parameters based on device
-  const SPAWN_INTERVAL = isMobile ? 2500 : 2000; // Slower spawn on mobile
+  const SPAWN_INTERVAL = isMobile ? 2250 : 1800; // Slower spawn on mobile
   const MAX_HORSESHOES = isMobile ? 6 : 10; // Fewer horseshoes on mobile
   const PADDING = isMobile ? 40 : 25; // More padding from edges on mobile
+  const RIGHT_PADDING = isMobile ? 40 : 180; // Much larger padding on the right for desktop to avoid navigation hover effects
 
   // Update scroll position
   useEffect(() => {
@@ -36,7 +38,7 @@ export function HorseshoeSpawner() {
     const viewportHeight = window.innerHeight;
     
     return {
-      x: Math.random() * (viewportWidth - PADDING * 2) + PADDING,
+      x: Math.random() * (viewportWidth - (RIGHT_PADDING + PADDING * 2)), // Keep horseshoes away from right navigation
       y: Math.random() * (viewportHeight - PADDING * 2) + PADDING + scrollY
     };
   }, [scrollY]);
@@ -55,6 +57,7 @@ export function HorseshoeSpawner() {
           id: now,
           x,
           y,
+          spawnTime: now,
         };
         setHorseshoes(prev => [...prev, newHorseshoe]);
         setLastSpawnTime(now);
@@ -64,6 +67,21 @@ export function HorseshoeSpawner() {
     const interval = setInterval(spawnHorseshoe, 500); // Check more frequently for spawning
     return () => clearInterval(interval);
   }, [horseshoes.length, lastSpawnTime, spawnEnabled, getRandomPosition]);
+
+  // Remove horseshoes that are older than 15 seconds
+  useEffect(() => {
+    if (!spawnEnabled) return;
+
+    const cleanup = setInterval(() => {
+      const now = Date.now();
+      setHorseshoes(prev => prev.filter(horseshoe => {
+        const age = now - horseshoe.spawnTime;
+        return age < 15000; // 15 seconds in milliseconds
+      }));
+    }, 1000); // Check every second
+
+    return () => clearInterval(cleanup);
+  }, [spawnEnabled]);
 
   const handleCollect = (id: number, e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent event bubbling
@@ -83,7 +101,7 @@ export function HorseshoeSpawner() {
       {visibleHorseshoes.map(horseshoe => (
         <motion.div
           key={horseshoe.id}
-          className={`horseshoe fixed ${isMobile ? 'w-8 h-8' : 'w-5 h-5 cursor-none'}`}
+          className={`horseshoe fixed ${isMobile ? 'w-8 h-8' : 'w-7 h-7 cursor-none'}`}
           style={{
             left: horseshoe.x,
             top: horseshoe.y - scrollY, // Adjust for scroll position
