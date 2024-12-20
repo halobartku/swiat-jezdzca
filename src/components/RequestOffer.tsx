@@ -6,8 +6,16 @@ interface FormData {
   email: string;
   phone: string;
   message: string;
-  productType: string;
+  productTypes: string[];
 }
+
+const productTypeOptions = {
+  training: 'Przeszkody Treningowe',
+  competition: 'Przeszkody Turniejowe',
+  sponsor: 'Przeszkody Sponsorskie',
+  accessories: 'Akcesoria',
+  other: 'Inne'
+};
 
 const RequestOffer = () => {
   const [formData, setFormData] = useState<FormData>({
@@ -15,23 +23,58 @@ const RequestOffer = () => {
     email: '',
     phone: '',
     message: '',
-    productType: 'training'
+    productTypes: []
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send the form data to your backend
-    console.log('Form submitted:', formData);
-    // For now, just show an alert
-    alert('Dziękujemy za wysłanie zapytania. Skontaktujemy się z Państwem wkrótce.');
+    setShowSuccess(true);
+    
+    const timer = setTimeout(() => {
+      const selectedTypes = formData.productTypes
+        .map(type => productTypeOptions[type as keyof typeof productTypeOptions])
+        .join(', ');
+
+      const emailBody = `
+Nowe zapytanie ofertowe:
+
+Imię i Nazwisko: ${formData.name}
+Email: ${formData.email}
+Telefon: ${formData.phone}
+Rodzaj Przeszkód: ${selectedTypes}
+
+Wiadomość:
+${formData.message}
+      `.trim();
+
+      const mailtoLink = `mailto:biuro@swiatjezdzca.pl?subject=Zapytanie Ofertowe - ${formData.name}&body=${encodeURIComponent(emailBody)}`;
+      window.location.href = mailtoLink;
+      setShowSuccess(false);
+    }, 1500);
+
+    return () => clearTimeout(timer);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const target = e.target;
+    const { name, value } = target;
+    
+    if (target instanceof HTMLInputElement && target.type === 'checkbox') {
+      const checked = target.checked;
+      setFormData(prev => ({
+        ...prev,
+        productTypes: checked 
+          ? [...prev.productTypes, value]
+          : prev.productTypes.filter(type => type !== value)
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    }
   };
 
   return (
@@ -39,16 +82,37 @@ const RequestOffer = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="w-full max-w-4xl mx-auto p-6 bg-white/10 backdrop-blur-lg rounded-lg shadow-xl"
+      className="w-full max-w-4xl mx-auto p-6 bg-primary-bg rounded-lg shadow-md hover:shadow-lg transition-all"
     >
-      <h2 className="text-3xl font-bold text-center mb-8 text-white">
+      <h2 className="text-3xl font-bold text-center mb-8 text-primary-text">
         Zapytanie Ofertowe
       </h2>
+
+      {showSuccess && (
+        <div 
+          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 cursor-pointer"
+          onClick={() => setShowSuccess(false)}
+        >
+          <div 
+            className="bg-white p-6 rounded-lg shadow-xl text-center relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button 
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+              onClick={() => setShowSuccess(false)}
+            >
+              ✕
+            </button>
+            <h3 className="text-xl font-semibold text-gray-800 mb-2">Dziękujemy!</h3>
+            <p className="text-gray-600">Za chwilę otworzy się Twój klient pocztowy...</p>
+          </div>
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-white mb-2">
+            <label htmlFor="name" className="block text-sm font-medium text-primary-text mb-2">
               Imię i Nazwisko
             </label>
             <input
@@ -58,13 +122,13 @@ const RequestOffer = () => {
               required
               value={formData.name}
               onChange={handleChange}
-              className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 rounded-lg bg-secondary-bg border border-gray-200 text-primary-text placeholder-secondary-text focus:outline-none focus:ring-2 focus:ring-primary"
               placeholder="Jan Kowalski"
             />
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-white mb-2">
+            <label htmlFor="email" className="block text-sm font-medium text-primary-text mb-2">
               Email
             </label>
             <input
@@ -74,14 +138,14 @@ const RequestOffer = () => {
               required
               value={formData.email}
               onChange={handleChange}
-              className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 rounded-lg bg-secondary-bg border border-gray-200 text-primary-text placeholder-secondary-text focus:outline-none focus:ring-2 focus:ring-primary"
               placeholder="jan@example.com"
             />
           </div>
         </div>
 
         <div>
-          <label htmlFor="phone" className="block text-sm font-medium text-white mb-2">
+          <label htmlFor="phone" className="block text-sm font-medium text-primary-text mb-2">
             Telefon
           </label>
           <input
@@ -90,31 +154,34 @@ const RequestOffer = () => {
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 rounded-lg bg-secondary-bg border border-gray-200 text-primary-text placeholder-secondary-text focus:outline-none focus:ring-2 focus:ring-primary"
             placeholder="+48 123 456 789"
           />
         </div>
 
         <div>
-          <label htmlFor="productType" className="block text-sm font-medium text-white mb-2">
+          <label className="block text-sm font-medium text-primary-text mb-2">
             Rodzaj Przeszkód
           </label>
-          <select
-            id="productType"
-            name="productType"
-            value={formData.productType}
-            onChange={handleChange}
-            className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            <option value="training">Przeszkody Treningowe</option>
-            <option value="competition">Przeszkody Turniejowe</option>
-            <option value="sponsor">Przeszkody Sponsorskie</option>
-            <option value="accessories">Akcesoria</option>
-          </select>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            {Object.entries(productTypeOptions).map(([value, label]) => (
+              <label key={value} className="flex items-center space-x-2 p-2 rounded hover:bg-secondary-bg/50 cursor-pointer">
+                <input
+                  type="checkbox"
+                  name="productTypes"
+                  value={value}
+                  checked={formData.productTypes.includes(value)}
+                  onChange={handleChange}
+                  className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"
+                />
+                <span className="text-primary-text">{label}</span>
+              </label>
+            ))}
+          </div>
         </div>
 
         <div>
-          <label htmlFor="message" className="block text-sm font-medium text-white mb-2">
+          <label htmlFor="message" className="block text-sm font-medium text-primary-text mb-2">
             Wiadomość
           </label>
           <textarea
@@ -124,7 +191,7 @@ const RequestOffer = () => {
             required
             value={formData.message}
             onChange={handleChange}
-            className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 rounded-lg bg-secondary-bg border border-gray-200 text-primary-text placeholder-secondary-text focus:outline-none focus:ring-2 focus:ring-primary"
             placeholder="Opisz swoje potrzeby..."
           />
         </div>
@@ -132,7 +199,7 @@ const RequestOffer = () => {
         <div className="flex justify-center">
           <button
             type="submit"
-            className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="px-8 py-3 bg-gradient-to-r from-[#ff4d4d] to-white text-black font-medium rounded-full transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
           >
             Wyślij Zapytanie
           </button>
