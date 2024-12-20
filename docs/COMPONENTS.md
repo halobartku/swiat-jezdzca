@@ -180,6 +180,22 @@ interface MouseAnimationsProps {
 
 ## Custom Hooks
 
+### HorseshoeInfoPopup Component
+
+`HorseshoeInfoPopup.tsx` - Initial popup that explains the horseshoe collection game.
+
+### Features
+- One-time display on first visit
+- Game activation/deactivation options
+- Animated transitions
+- Responsive design
+- Persistent user preference storage
+
+### Usage
+```tsx
+<HorseshoeInfoPopup />
+```
+
 ### useHorseshoe
 
 Custom hook for managing the horseshoe collection game state.
@@ -191,7 +207,8 @@ const {
   mousePosition,
   handleMouseMove,
   collectHorseshoe,
-  toggleSpawn
+  toggleSpawn,
+  disableSpawn
 } = useHorseshoe()
 ```
 
@@ -202,6 +219,7 @@ const {
 - `handleMouseMove`: Mouse movement handler
 - `collectHorseshoe`: Collection handler
 - `toggleSpawn`: Toggle spawning on/off
+- `disableSpawn`: Disable horseshoe spawning
 
 ## Utility Components
 

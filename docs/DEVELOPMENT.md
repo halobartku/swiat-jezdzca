@@ -153,6 +153,33 @@ const HorseshoeCollector = ({ horseshoesCollected }: Props) => {
 
 ### Game Mechanics Implementation
 
+#### Game Initialization
+
+The game starts with the HorseshoeInfoPopup component, which explains the mechanics and lets users choose to participate:
+
+```typescript
+const HorseshoeInfoPopup = () => {
+  // Show popup only on first visit
+  const [isVisible, setIsVisible] = useState(false);
+  const { disableSpawn } = useHorseshoe();
+
+  useEffect(() => {
+    const hasSeenPopup = localStorage.getItem('hasSeenHorseshoeInfo');
+    if (!hasSeenPopup) {
+      setIsVisible(true);
+    }
+  }, []);
+
+  const handleClose = (startGame: boolean) => {
+    if (!startGame) {
+      disableSpawn(); // Disable game if user chooses not to play
+    }
+    setIsVisible(false);
+    localStorage.setItem('hasSeenHorseshoeInfo', 'true');
+  };
+};
+```
+
 #### Horseshoe Spawning
 
 ```typescript

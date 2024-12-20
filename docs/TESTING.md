@@ -92,6 +92,75 @@ describe('generateDiscountCode', () => {
 
 Integration tests verify that multiple components work together correctly.
 
+#### Testing Game Initialization
+
+```typescript
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { HorseshoeProvider } from '../context/HorseshoeContext';
+import { HorseshoeInfoPopup } from '../components/HorseshoeInfoPopup';
+
+describe('HorseshoeInfoPopup', () => {
+  beforeEach(() => {
+    // Clear localStorage before each test
+    localStorage.clear();
+  });
+
+  it('shows popup on first visit only', () => {
+    const { rerender } = render(
+      <HorseshoeProvider>
+        <HorseshoeInfoPopup />
+      </HorseshoeProvider>
+    );
+    
+    // Should be visible on first render
+    expect(screen.getByText('Zbieraj podkowy i znajdź zniżki!')).toBeInTheDocument();
+    
+    // Simulate closing popup
+    userEvent.click(screen.getByText('Rozpocznij zbieranie'));
+    
+    // Rerender component
+    rerender(
+      <HorseshoeProvider>
+        <HorseshoeInfoPopup />
+      </HorseshoeProvider>
+    );
+    
+    // Should not be visible on subsequent visits
+    expect(screen.queryByText('Zbieraj podkowy i znajdź zniżki!')).not.toBeInTheDocument();
+  });
+
+  it('disables game when user clicks "Nie gram"', async () => {
+    render(
+      <HorseshoeProvider>
+        <HorseshoeInfoPopup />
+      </HorseshoeProvider>
+    );
+    
+    // Click "Nie gram"
+    await userEvent.click(screen.getByText('Nie gram'));
+    
+    // Verify game is disabled
+    expect(screen.queryByTestId('horseshoe')).not.toBeInTheDocument();
+  });
+
+  it('keeps game enabled when user clicks "Rozpocznij zbieranie"', async () => {
+    render(
+      <HorseshoeProvider>
+        <HorseshoeInfoPopup />
+        <HorseshoeSpawner />
+      </HorseshoeProvider>
+    );
+    
+    // Click "Rozpocznij zbieranie"
+    await userEvent.click(screen.getByText('Rozpocznij zbieranie'));
+    
+    // Verify game remains enabled
+    expect(screen.getByTestId('horseshoe')).toBeInTheDocument();
+  });
+});
+```
+
 ```typescript
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
