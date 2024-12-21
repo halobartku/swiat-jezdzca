@@ -29,7 +29,7 @@ const Footer = lazy(() => import('./components/Footer'))
 const PrivacyPolicy = lazy(() => import('./components/PrivacyPolicy'))
 const Products = lazy(() => import('./components/Products'))
 const RequestOffer = lazy(() => import('./components/RequestOffer'))
-const Game = lazy(() => import('./components/Game'))
+const Game = lazy(() => import('./components/Quiz/Game'))
 
 // Page transition variants
 const pageTransition = {
