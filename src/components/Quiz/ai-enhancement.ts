@@ -87,39 +87,12 @@ ${items.map(({ question, answer }) =>
 
 Na podstawie powyższych danych przygotuj:
 
-1. Szczegółową analizę obecnego stanu jeździeckiego w następującym formacie:
+1. Ogólną analizę profilu jeździeckiego (maksymalnie 300 znaków):
+Zwięzła, spójna wypowiedź opisująca obecny stan jeździecki, podejście do treningu i główne cechy jeźdźca.
 
-Podejście do Treningu:
-• [obecne podejście do treningu]
-• [aktualne nawyki treningowe]
-• [stosunek do rozwoju]
+-Lista 4-6 kluczowych mocnych stron.
 
-Relacje z Końmi:
-• [obecny sposób interakcji z końmi]
-• [aktualne zrozumienie zachowań koni]
-• [obecny poziom komunikacji]
-
-Cele i Aspiracje:
-• [obecne cele krótkoterminowe]
-• [aktualne zainteresowania]
-• [bieżące priorytety]
-
-Styl Zarządzania:
-• [obecny sposób organizacji]
-• [aktualne podejście do planowania]
-• [bieżący styl zarządzania czasem]
-
-Aspekty Techniczne:
-• [obecny poziom umiejętności]
-• [aktualne mocne strony techniczne]
-• [obszary wymagające uwagi]
-
-WAŻNE:
-- Każda sekcja musi zawierać dokładnie 3 punkty
-- Opisuj tylko obecny stan, nie dawaj rekomendacji
-- Używaj konkretnych obserwacji z odpowiedzi
-- Unikaj zwrotów typu "zalecane jest" czy "powinieneś"
-
+-Lista 3-5 głównych obszarów wymagających rozwoju.
 2. Lista 5-7 spersonalizowanych rekomendacji, w tym:
    - Konkretne kroki rozwojowe
    - Sugestie treningowe
@@ -142,7 +115,6 @@ Mierniki postępu:
 • [konkretny miernik 1]
 • [konkretny miernik 2]
 • [konkretny miernik 3]
-
 WAŻNE: 
 1. Zachowaj dokładnie tę strukturę i formatowanie
 2. Każda sekcja musi zawierać dokładnie 3 punkty
@@ -155,8 +127,7 @@ WAŻNE:
    - 3-5 obszarów wymagających rozwoju
    - Praktyczne sugestie wykorzystania mocnych stron
    - Strategie rozwoju słabszych obszarów
-
-5. Długoterminową, realistyczną wizję rozwoju (2-3 lata) w następującym dokładnym formacie:
+5. Długoterminową wizję rozwoju (2-3 lata) w następującym dokładnym formacie:
 
 Ścieżka rozwoju:
 • [kluczowy etap rozwoju 1]
@@ -177,7 +148,7 @@ WAŻNE:
 1. Zachowaj dokładnie tę strukturę i formatowanie
 2. Każdy punkt musi być pełnym, konkretnym zdaniem
 3. Używaj znaku punktowania (•)
-4. Każda sekcja musi zawierać 3 punkty
+4. Każda sekcja musi zawierać wskazaną liczbę punktów
 5. Sekcje muszą być oddzielone pustą linią
 6. Nie dodawaj żadnych innych sekcji
 
@@ -192,7 +163,7 @@ WAŻNE: Odpowiedź musi być w języku polskim.
 Format odpowiedzi: Odpowiedź musi być w formacie JSON zgodnym z następującą strukturą:
 
 {
-  "personalizedAnalysis": "szczegółowa analiza profilu",
+  "personalizedAnalysis": "ogólna analiza profilu (max 300 znaków)",
   "detailedRecommendations": ["rekomendacja 1", "rekomendacja 2"],
   "customizedTrainingPlan": "plan treningowy",
   "strengthsAndWeaknesses": {
@@ -208,6 +179,61 @@ WAŻNE:
 3. Używaj polskich znaków (ą, ę, ś, etc.)
 4. Zachowaj spójny, profesjonalny ton wypowiedzi
     `;
+  }
+
+  async generateChatResponse(message: string, context: {
+    riderType: RiderType;
+    analysis: string;
+    recommendations: string[];
+    trainingPlan: string;
+    strengths: string[];
+    improvements: string[];
+    vision: string;
+  }): Promise<string> {
+    const prompt = `
+Jako doświadczony trener jeździectwa, odpowiedz na pytanie jeźdźca, biorąc pod uwagę następujący kontekst:
+
+PROFIL JEŹDŹCA:
+Typ: ${context.riderType}
+
+ANALIZA:
+${context.analysis}
+
+REKOMENDACJE:
+${context.recommendations.join('\n')}
+
+PLAN TRENINGOWY:
+${context.trainingPlan}
+
+MOCNE STRONY:
+${context.strengths.join('\n')}
+
+OBSZARY DO ROZWOJU:
+${context.improvements.join('\n')}
+
+WIZJA DŁUGOTERMINOWA:
+${context.vision}
+
+PYTANIE JEŹDŹCA:
+${message}
+
+Odpowiedz w sposób:
+1. Profesjonalny ale przyjazny
+2. Konkretny i praktyczny
+3. Dostosowany do poziomu i typu jeźdźca
+4. Uwzględniający kontekst polskiego jeździectwa
+5. Zawierający praktyczne wskazówki
+
+Odpowiedź powinna być w języku polskim i nie przekraczać 250 słów.`
+
+    try {
+      const result = await this.model.generateContent(prompt)
+      const response = await result.response
+      return response.text()
+    } catch (error) {
+      console.error('Error generating chat response:', error)
+      throw error
+    }
   }
 
   private parseAIResponse(response: string): AIEnhancedResult {

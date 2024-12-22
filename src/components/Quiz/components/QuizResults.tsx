@@ -7,6 +7,7 @@ import { ResultsAnalysis } from './ResultsAnalysis'
 import { ResultsTraining } from './ResultsTraining'
 import { ResultsRecommendations } from './ResultsRecommendations'
 import { ResultsVision } from './ResultsVision'
+import { ResultsChat } from './ResultsChat'
 import type { RiderType } from '../../../data/riderTypes'
 
 interface QuizResultsProps {
@@ -41,9 +42,9 @@ export function QuizResults({
   const typeInfo = riderTypeDetails[result]
 
   return (
-    <div className="w-full max-w-[1200px] mx-auto px-6 my-4">
+    <div className="w-full max-w-[1200px] mx-auto px-2 sm:px-6 my-4">
       <motion.div
-        className="bg-secondary-bg/95 backdrop-blur-sm rounded-lg shadow-lg border border-primary/10 h-[650px]"
+        className="bg-secondary-bg/95 backdrop-blur-sm rounded-lg shadow-lg border border-primary/10 min-h-[650px]"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
@@ -62,7 +63,7 @@ export function QuizResults({
 
         {/* Tab Content */}
         <div className="p-2 bg-[radial-gradient(#f8f9fa_1px,transparent_1px)] [background-size:16px_16px] flex-grow overflow-y-auto">
-          <div className="max-w-[1100px] mx-auto space-y-2 bg-white/95 p-3 rounded-lg shadow-sm">
+          <div className="max-w-[1100px] mx-auto space-y-2 bg-white/95 p-2 sm:p-3 rounded-lg shadow-sm">
             {activeTab === 'profile' && (
               <ResultsProfile
                 scores={scores}
@@ -93,6 +94,13 @@ export function QuizResults({
             {activeTab === 'vision' && (
               <ResultsVision
                 longTermVision={aiResult.longTermVision}
+              />
+            )}
+
+            {activeTab === 'chat' && (
+              <ResultsChat
+                result={result}
+                aiResult={aiResult}
               />
             )}
           </div>
