@@ -36,7 +36,7 @@ export function QuizResults({
   scores,
   riderTypeDetails,
   aiResult,
-  onRestart
+  onRestart,
 }: QuizResultsProps) {
   const [activeTab, setActiveTab] = useState<TabId>('profile')
   const typeInfo = riderTypeDetails[result]
@@ -50,7 +50,13 @@ export function QuizResults({
         exit={{ opacity: 0, y: -20 }}
       >
         {/* Header */}
-        <div className="text-center py-2 px-4 border-b border-primary/10 bg-white/50">
+        <div className="text-center py-2 px-4 border-b border-primary/10 bg-white/50 relative">
+          <Button
+            onClick={onRestart}
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-sm"
+          >
+            Rozpocznij ponownie
+          </Button>
           <div className="flex items-center justify-center gap-2 mb-1">
             <span className="text-xl">{typeInfo.icon}</span>
             <h1 className="text-base font-bold text-primary-text">{typeInfo.title}</h1>

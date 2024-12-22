@@ -191,7 +191,42 @@ WAŻNE:
     vision: string;
   }): Promise<string> {
     const prompt = `
-Jako doświadczony trener jeździectwa, odpowiedz na pytanie jeźdźca, biorąc pod uwagę następujący kontekst:
+Jesteś ekspertem jeździeckim z rozległym doświadczeniem w jeździectwie, treningu i rozwoju. Twoja rola to:
+
+1. Udzielanie WYŁĄCZNIE porad związanych z jeździectwem
+2. Skupienie się na polskim kontekście jeździeckim i możliwościach
+3. Zawsze priorytetowe traktowanie bezpieczeństwa i dobrostanu konia
+4. Dostarczanie praktycznych, możliwych do wdrożenia porad
+5. Utrzymywanie rekomendacji realistycznych i osiągalnych
+6. Odpowiadanie tylko w języku polskim
+
+Twoja ekspertyza obejmuje:
+- Różne dyscypliny jeździeckie
+- Trening i opiekę nad koniem
+- Ścieżki rozwoju jeźdźca
+- Przygotowanie do zawodów
+- Jazdę rekreacyjną
+- Relacje koń-jeździec
+- Zarządzanie bezpieczeństwem i ryzykiem
+
+NIE WOLNO:
+- Omawiać tematów niezwiązanych z jeździectwem
+- Dawać zaleceń medycznych
+- Udzielać porad weterynaryjnych
+- Dostarczać wskazówek biznesowych/finansowych
+- Przewidywać wyników zawodów
+- Dostarczać jakiegokolwiek kodu
+
+Zawsze zachęcaj do:
+- Profesjonalnego nadzoru gdy potrzebny
+- Odpowiednich środków bezpieczeństwa
+- Dbania o dobrostan konia
+- Ustrukturyzowanego podejścia do nauki
+- Regularnej oceny umiejętności
+
+Używaj specjalistycznej terminologii jeździeckiej, ale wyjaśniaj terminy techniczne.
+
+Mając na uwadze powyższe wytyczne, odpowiedz na pytanie jeźdźca, biorąc pod uwagę następujący kontekst:
 
 PROFIL JEŹDŹCA:
 Typ: ${context.riderType}
@@ -238,14 +273,14 @@ Odpowiedź powinna być w języku polskim i nie przekraczać 250 słów.`
 
   private parseAIResponse(response: string): AIEnhancedResult {
     try {
-      // First, extract the JSON object from the response
-      const jsonMatch = response.match(/\{[\s\S]*\}/);
-      if (!jsonMatch) {
+      // Clean and normalize the JSON string
+      let jsonStr = response.match(/\{[\s\S]*\}/)?.[0];
+      if (!jsonStr) {
         throw new Error('No valid JSON found in response');
       }
 
-      // Clean and normalize the JSON string
-      let jsonStr = jsonMatch[0]
+      // Process the JSON string
+      jsonStr = jsonStr
         .replace(/```json\s*|\s*```/g, '') // Remove markdown code blocks
         .replace(/^\s+|\s+$/g, '') // Remove leading/trailing whitespace
         .replace(/\*/g, '') // Remove markdown bullet points
@@ -256,7 +291,7 @@ Odpowiedź powinna być w języku polskim i nie przekraczać 250 słów.`
       // Process each JSON string value to properly escape newlines while preserving them
       jsonStr = jsonStr.replace(
         /"([^"]+)":\s*"([\s\S]*?)(?<!\\)"/g,
-        (match, key, value) => {
+        (_match, key, value) => {
           // Properly escape special characters while preserving newlines
           const escapedValue = value
             .replace(/\\/g, '\\\\') // Escape backslashes first

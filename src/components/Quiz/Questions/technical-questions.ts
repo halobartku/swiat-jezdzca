@@ -1,3 +1,5 @@
+import type { Question } from './quiz-base-types';
+
 export const technicalQuestions: Question[] = [
   {
     id: 'training_approach',
