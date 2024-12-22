@@ -135,7 +135,14 @@ export default function Game() {
       console.log('AI Enhanced Result:', aiEnhancedResult);
       setAiResult(aiEnhancedResult)
     } catch (err) {
-      setError('Przepraszamy, wystąpił błąd podczas analizy wyników. Prosimy spróbować ponownie za chwilę.')
+      let errorMessage = 'Przepraszamy, wystąpił błąd podczas analizy wyników. Prosimy spróbować ponownie za chwilę.';
+      
+      // Check for specific API key error
+      if (err instanceof Error && err.message.includes('API key not valid')) {
+        errorMessage = 'Przepraszamy, usługa analizy jest obecnie niedostępna. Prosimy spróbować ponownie później lub skontaktować się z administratorem.';
+      }
+      
+      setError(errorMessage)
       console.error('Error calculating result:', err)
     } finally {
       setIsLoading(false)

@@ -16,11 +16,27 @@ export function ErrorScreen({ error, onRetry }: ErrorScreenProps) {
           className="bg-red-500/10 border border-red-500/20 rounded-2xl p-6 mb-8"
         >
           <span className="text-4xl mb-4 block">⚠️</span>
-          <h2 className="text-2xl font-semibold text-red-500 mb-4">Wystąpił błąd</h2>
+          <h2 className="text-2xl font-semibold text-red-500 mb-4">
+            {error.includes('usługa analizy jest obecnie niedostępna') 
+              ? 'Usługa niedostępna'
+              : 'Wystąpił błąd'
+            }
+          </h2>
           <p className="text-secondary-text mb-6">{error}</p>
-          <Button onClick={onRetry} size="large" className="bg-red-500 hover:bg-red-600">
-            Spróbuj ponownie
-          </Button>
+          {error.includes('usługa analizy jest obecnie niedostępna') ? (
+            <div className="space-y-4">
+              <p className="text-sm text-secondary-text">
+                Możesz spróbować ponownie później lub skontaktować się z nami, jeśli problem będzie się powtarzał.
+              </p>
+              <Button onClick={onRetry} size="large" className="bg-red-500 hover:bg-red-600">
+                Spróbuj ponownie
+              </Button>
+            </div>
+          ) : (
+            <Button onClick={onRetry} size="large" className="bg-red-500 hover:bg-red-600">
+              Spróbuj ponownie
+            </Button>
+          )}
         </motion.div>
       </div>
     </div>
