@@ -394,3 +394,233 @@ interface SEOProps {
    - Maintain consistent spacing and typography
    - Use semi-transparent overlays for readability
    - Follow mobile-first responsive design
+
+## Quiz Components
+
+### Game Component
+
+`Game.tsx` - Main quiz game controller component.
+
+### Props
+```typescript
+interface GameProps {
+  onComplete: (result: RiderType) => void;
+}
+```
+
+### Features
+- Question progression management
+- Score calculation
+- Result determination
+- Progress tracking
+- Error handling
+
+### Usage
+```tsx
+<Game onComplete={(result) => handleQuizComplete(result)} />
+```
+
+### QuizQuestion Component
+
+`QuizQuestion.tsx` - Individual quiz question display and interaction.
+
+### Props
+```typescript
+interface QuizQuestionProps {
+  question: Question;
+  onAnswer: (answer: Answer) => void;
+  currentIndex: number;
+  totalQuestions: number;
+}
+```
+
+### Features
+- Answer selection handling
+- Progress indication
+- Question category display
+- Answer validation
+
+### Usage
+```tsx
+<QuizQuestion
+  question={currentQuestion}
+  onAnswer={handleAnswer}
+  currentIndex={questionIndex}
+  totalQuestions={totalQuestions}
+/>
+```
+
+### ResultsChat Component
+
+`ResultsChat.tsx` - AI-powered chat interface for personalized training consultation.
+
+### Props
+```typescript
+interface ResultsChatProps {
+  result: RiderType;
+  aiResult: {
+    personalizedAnalysis: string;
+    detailedRecommendations: string[];
+    customizedTrainingPlan: string;
+    strengthsAndWeaknesses: {
+      strengths: string[];
+      areasForImprovement: string[];
+    };
+    longTermVision: string;
+  };
+}
+```
+
+### Features
+- Real-time AI chat interaction
+- Context-aware responses based on quiz results
+- Professional technical consultation
+- Discipline-specific training advice
+- Message history management
+- Loading states and error handling
+
+### Styling
+- Clean, professional interface
+- Consistent with main site design
+- Mobile-first responsive layout
+- Message bubbles with proper spacing
+- Loading animations
+- Subtle gradients and shadows
+- Semi-transparent backgrounds
+
+### Navigation
+- Compact navigation tabs
+- Active tab indication with thin red underline
+- Icon and text alignment
+- Hover effects for better interaction
+- Clear visual hierarchy
+
+### Usage
+```tsx
+<ResultsChat 
+  result="trainer"
+  aiResult={{
+    personalizedAnalysis: "...",
+    detailedRecommendations: ["...", "..."],
+    customizedTrainingPlan: "...",
+    strengthsAndWeaknesses: {
+      strengths: ["...", "..."],
+      areasForImprovement: ["...", "..."]
+    },
+    longTermVision: "..."
+  }}
+/>
+```
+
+### QuizResults Component
+
+`QuizResults.tsx` - Displays comprehensive quiz results with multiple tabs.
+
+### Features
+- Profile overview
+- Technical analysis
+- Training plan recommendations
+- Vision and goals
+- Interactive chat consultation
+
+### Styling
+- Tab-based navigation
+- Professional data visualization
+- Clear section hierarchy
+- Consistent spacing and typography
+- Mobile-responsive layout
+
+### Usage
+```tsx
+<QuizResults 
+  result={quizResult}
+  scores={scores}
+  riderTypeDetails={riderTypeDetails}
+  onRestart={() => {}}
+/>
+```
+
+### ResultsProfile Component
+
+`ResultsProfile.tsx` - Displays user's rider profile based on quiz results.
+
+### Props
+```typescript
+interface ResultsProfileProps {
+  result: RiderType;
+  scores: CategoryScores;
+}
+```
+
+### Features
+- Profile type display
+- Score breakdown
+- Strength analysis
+- Development areas
+- Visual representation of results
+
+### Usage
+```tsx
+<ResultsProfile result={riderType} scores={categoryScores} />
+```
+
+### ResultsAnalysis Component
+
+`ResultsAnalysis.tsx` - Provides detailed analysis of quiz responses.
+
+### Props
+```typescript
+interface ResultsAnalysisProps {
+  result: RiderType;
+  aiResult: AIAnalysis;
+}
+```
+
+### Features
+- Response pattern analysis
+- Skill level assessment
+- Development recommendations
+- Technical insights
+- Visual data presentation
+
+### Usage
+```tsx
+<ResultsAnalysis result={riderType} aiResult={analysisData} />
+```
+
+### ResultsVision Component
+
+`ResultsVision.tsx` - Presents long-term development vision.
+
+### Props
+```typescript
+interface ResultsVisionProps {
+  result: RiderType;
+  aiResult: {
+    longTermVision: string;
+    milestones: string[];
+  };
+}
+```
+
+### Features
+- Long-term goals visualization
+- Development milestones
+- Achievement tracking
+- Progress indicators
+- Interactive timeline
+
+### Usage
+```tsx
+<ResultsVision result={riderType} aiResult={visionData} />
+```
+
+6. **Quiz Component Best Practices**
+   - Maintain professional tone in UI
+   - Use consistent spacing in navigation
+   - Implement proper loading states
+   - Handle errors gracefully
+   - Keep chat context organized
+   - Use appropriate icons for navigation
+   - Follow mobile-first design principles
+   - Implement proper accessibility features
