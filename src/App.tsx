@@ -1,5 +1,5 @@
 import { useRef, useEffect, Suspense, lazy } from 'react'
-import { Mail, Info, HelpCircle, Home as HomeIcon, Trophy, CircleUser } from 'lucide-react'
+import { Mail, Handshake, HelpCircle, Home as HomeIcon, Trophy, Goal } from 'lucide-react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { HelmetProvider } from 'react-helmet-async'
@@ -23,7 +23,7 @@ import { LoadingSpinner } from './components/LoadingSpinner'
 import { useKeyboardNavigation } from './hooks/useKeyboardNavigation'
 
 // Lazy load components
-const AboutUs = lazy(() => import('./components/AboutUs'))
+const Cooperation = lazy(() => import('./components/Cooperation'))
 const AboutShowjumping = lazy(() => import('./components/AboutShowjumping'))
 const Footer = lazy(() => import('./components/Footer'))
 const PrivacyPolicy = lazy(() => import('./components/PrivacyPolicy'))
@@ -62,9 +62,9 @@ function MainContent() {
   const lastAccumulatorReset = useRef(Date.now())
   const sections: NavItem[] = [
     { id: 0, title: 'Strona Główna', icon: HomeIcon },
-    { id: 1, title: 'Produkty', icon: CircleUser },
-    { id: 2, title: 'O Sprzęcie', icon: HelpCircle },
-    { id: 3, title: 'O Nas', icon: Info },
+    { id: 1, title: 'Produkty', icon: Goal },
+    { id: 2, title: 'Współpraca', icon: Handshake },
+    { id: 3, title: 'O Sprzęcie', icon: HelpCircle },
     { id: 4, title: 'Gra', icon: Trophy },
     { id: 5, title: 'Zapytanie', icon: Mail },
   ]
@@ -283,8 +283,8 @@ function MainContent() {
                 <Suspense fallback={<LoadingSpinner />}>
                   {index === 0 && <Home onDiscoverClick={() => scrollToSection(1)} onContactClick={() => scrollToSection(5)} />}
                   {index === 1 && <Products />}
-                  {index === 2 && <AboutShowjumping />}
-                  {index === 3 && <AboutUs />}
+                  {index === 2 && <Cooperation />}
+                  {index === 3 && <AboutShowjumping />}
                   {index === 4 && <Game />}
                   {index === 5 && <RequestOffer />}
                 </Suspense>
