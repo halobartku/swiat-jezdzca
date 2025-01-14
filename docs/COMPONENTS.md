@@ -62,21 +62,55 @@ interface HeroProps {
 - Gradient buttons with hover effects
 - Responsive design
 
-### Styling
-- Gradient buttons:
-  - "Zobacz Produkty": red to white gradient
-  - "Zapytaj o Ofertę": white to red gradient
-- Rounded-full button design
-- Shadow effects with hover states
-- Focus rings for accessibility
-- Consistent spacing and typography
-
 ### Usage
 ```tsx
 <Home 
   onDiscoverClick={() => scrollToSection(1)}
   onContactClick={() => scrollToSection(5)}
 />
+```
+
+## AboutUs Component
+
+`AboutUs.tsx` - Company information and values presentation page.
+
+### Implementation
+```typescript
+interface ValueCard {
+  title: string;
+  description: string;
+  impact: string;
+  icon: React.ElementType;
+}
+```
+
+### Features
+- Company introduction section
+- Value cards grid showcasing company strengths:
+  - Polish Product Quality
+  - Design Team Expertise
+  - Individual Approach
+  - European Market Presence
+- Priorities section with numbered steps
+- Contact button with email integration
+
+### Styling
+- Responsive grid layout (1 column on mobile, 2 columns on desktop)
+- Interactive card animations with hover effects
+- Icon rotations on hover
+- Consistent spacing and typography
+- Shadow effects and transitions
+- Semi-transparent backgrounds for cards
+
+### Layout
+- Two-column desktop layout with main content and sidebar
+- Flex layout for vertical content distribution
+- Mobile-first responsive design
+- Precise spacing for optimal alignment
+
+### Usage
+```tsx
+<AboutUs />
 ```
 
 ## Cooperation Component

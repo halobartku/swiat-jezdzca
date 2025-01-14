@@ -1,4 +1,4 @@
-# Primary Water Documentation
+# Świat Jeźdźca Documentation
 
 ## Table of Contents
 
@@ -11,32 +11,31 @@
 
 ## Architecture Overview
 
-The Primary Water website is built using a modern React stack with TypeScript for type safety. The architecture follows these key principles:
+The Świat Jeźdźca website is built using a modern React stack with TypeScript for type safety. The architecture follows these key principles:
 
 ### Directory Structure
 ```
-primary-water/
+swiat-jezdzca/
 ├── src/
 │   ├── components/     # React components
 │   │   ├── AboutUs.tsx           # Company information
-│   │   ├── BackgroundAnimations  # Water bubble animations
-│   │   ├── CaseStudyCard        # Case study display
-│   │   ├── ContactCard          # Contact form
-│   │   ├── PrivacyPreferences       # GDPR compliance
+│   │   ├── BackgroundAnimations  # Background effects
+│   │   ├── Cooperation          # Partnership section
 │   │   ├── Footer              # Site footer
-│   │   ├── Hero               # Landing section
-│   │   ├── MouseAnimations    # Cursor effects
-│   │   ├── Navigation        # Site navigation
-│   │   ├── PrivacyPolicy    # Privacy information
-│   │   ├── WaterCard       # Water info display
-│   │   ├── WaterCollector # Game component
-│   │   └── WhatIsPrimaryWater # Information section
-│   ├── data/          # Static content
-│   ├── hooks/         # Custom React hooks
-│   ├── lib/           # Utility functions
-│   └── types/         # TypeScript definitions
-├── public/            # Static assets
-└── docs/             # Documentation
+│   │   ├── Home               # Landing section
+│   │   ├── HorseshoeCollector # Game component
+│   │   ├── HorseshoeSpawner  # Game mechanics
+│   │   ├── MouseAnimations  # Cursor effects
+│   │   ├── Navigation     # Site navigation
+│   │   ├── Products     # Product showcase
+│   │   ├── RequestOffer # Contact form
+│   │   └── Quiz/       # Interactive quiz system
+│   ├── context/      # React context providers
+│   ├── hooks/       # Custom React hooks
+│   ├── lib/        # Utility functions
+│   └── types/     # TypeScript definitions
+├── public/       # Static assets
+└── docs/       # Documentation
 ```
 
 ### Tech Stack Details
@@ -68,67 +67,23 @@ The navigation component (`Navigation.tsx`) implements:
 
 ### Animation Components
 
-#### Hero Section
-The hero component (`Hero.tsx`) features:
-- Letter-by-letter animation of the "Primary Water" title
-- Responsive text sizing (3xl on mobile, 7xl on tablet, 8xl on desktop)
-- Single-line display across all screen sizes
-- Spring-based animations with configurable parameters
+#### Home Section
+The home component (`Home.tsx`) features:
+- Dynamic content presentation
+- Responsive text sizing
+- Call-to-action buttons
+- Smooth transitions and hover effects
 
-```typescript
-// Animation configuration
-const letterVariants = {
-  hidden: { 
-    opacity: 0,
-    y: 50,
-    rotateX: -90
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    rotateX: 0,
-    transition: {
-      type: "spring",
-      damping: 12,
-      stiffness: 100
-    }
-  }
-}
-```
-
-#### BackgroundAnimations
-Implements the floating water bubble effect:
-- Performance optimized with reduced particle count
-- Configurable animation parameters
-- Uses Framer Motion for smooth transitions
-
-```typescript
-// Key configuration
-const bubbleConfig = {
-  count: 15,          // Number of bubbles
-  sizeRange: 20-60px, // Bubble size range
-  duration: 15-35s,   // Animation duration
-  wobbleScale: 30-90  // Movement range
-}
-```
-
-#### MouseAnimations
-Cursor-following water drop effect:
-- Tracks mouse movement
-- Creates trailing effect
-- Performance optimized for smooth animation
-
-### Interactive Elements
-
-#### WaterCollector
+#### HorseshoeCollector
 Game component for user engagement:
-- Tracks collected water drops
+- Tracks collected horseshoes
 - Updates score in real-time
 - Uses custom hook for state management
+- Unlocks equestrian facts
 
 ```typescript
 // Hook usage
-const { waterDrops, waterCollected, mousePosition, handleMouseMove } = useWaterGame()
+const { horseshoesCollected, mousePosition, handleMouseMove } = useHorseshoe()
 ```
 
 ## State Management
@@ -136,8 +91,8 @@ const { waterDrops, waterCollected, mousePosition, handleMouseMove } = useWaterG
 The application uses React's built-in state management with hooks:
 - Component-level state with useState
 - Complex state logic in custom hooks
-- Shared state through prop passing
-- Context for theme and user preferences
+- Shared state through context providers
+- Persistent state for game progress
 
 ### Key State Patterns
 
@@ -149,23 +104,18 @@ const [currentSection, setCurrentSection] = useState(0)
 const [isMobile, setIsMobile] = useState(false)
 
 // Game state
-const [waterCollected, setWaterCollected] = useState(0)
+const [horseshoesCollected, setHorseshoesCollected] = useState(0)
 ```
 
 ## Animation System
 
 The animation system is built on Framer Motion with performance optimizations:
 
-### Text Animations
-- Letter-by-letter spring animations in Hero section
-- Staggered animation timing for visual appeal
-- Optimized for mobile with responsive sizing
+### Component Animations
+- Smooth transitions for page sections
+- Interactive hover effects
+- Staggered animations for lists
 - Hardware-accelerated transforms
-
-### Background Animations
-- Reduced particle count for performance
-- Optimized animation properties
-- Hardware acceleration enabled
 
 ### Mouse Animations
 - Debounced mouse tracking
@@ -193,9 +143,9 @@ The animation system is built on Framer Motion with performance optimizations:
 
 ### Optimization Techniques
 1. **Animation Performance**
-   - Limited particle count
    - Optimized animation properties
    - Hardware acceleration
+   - Efficient state updates
 
 2. **Asset Loading**
    - Image optimization
@@ -230,7 +180,7 @@ The application is configured for Vercel deployment:
 
 ### GDPR Compliance
 - Privacy Preferences management
-- Privacy Preferences implementation
+- Cookie consent implementation
 - User data handling
 
 ### Best Practices

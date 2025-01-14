@@ -1,83 +1,82 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Wrench, Target, Shield, Palette, ArrowRight, Star } from 'lucide-react'
+import { History, Heart, Trophy, Users, ArrowRight, Mail } from 'lucide-react'
 import { Button } from './ui/button'
 
-interface InfoCard {
+interface ValueCard {
   title: string
-  benefit: string
-  emotion: string
+  description: string
+  impact: string
   icon: React.ElementType
 }
 
-const infoCards: InfoCard[] = [
+const valueCards: ValueCard[] = [
   {
-    title: 'Łatwość Użytkowania',
-    benefit: 'Szybkie rozstawienie i prosta obsługa',
-    emotion: 'Skup się na jeździe, nie na przygotowaniach',
-    icon: Wrench
+    title: 'Polski Produkt',
+    description: 'Najwyższa jakość wykonania i materiałów',
+    impact: 'Duma z polskiego rzemiosła',
+    icon: Trophy
   },
   {
-    title: 'Wszechstronność',
-    benefit: 'Od podstaw po zaawansowane kombinacje',
-    emotion: 'Rozwijaj się w swoim tempie',
-    icon: Target
+    title: 'Zespół Projektowy',
+    description: 'Własny interdyscyplinarny zespół projektowy',
+    impact: 'Od koncepcji do realizacji pod jednym dachem',
+    icon: Users
   },
   {
-    title: 'Bezpieczeństwo i Komfort',
-    benefit: 'Stabilna konstrukcja i ergonomiczne rozwiązania',
-    emotion: 'Trenuj z pewnością i spokojem',
-    icon: Shield
+    title: 'Indywidualne Podejście',
+    description: 'Każdy projekt dostosowany do potrzeb klienta',
+    impact: 'Twoja wizja, nasze wykonanie',
+    icon: Heart
   },
   {
-    title: 'Innowacyjny Design',
-    benefit: 'Nowoczesna estetyka i funkcjonalność',
-    emotion: 'Wyróżnij się stylem na parkurze',
-    icon: Palette
+    title: 'Zasięg Europejski',
+    description: 'Obecność i uznanie na rynku europejskim',
+    impact: 'Międzynarodowe standardy jakości',
+    icon: History
   }
 ]
 
-const roadmap = [
+const milestones = [
   {
     step: 1,
-    title: 'Łatwy Start',
-    description: 'Szybki montaż i gotowość do treningu w kilka minut'
+    title: 'Jakość',
+    description: 'Precyzja wykonania i najlepsze materiały'
   },
   {
     step: 2,
-    title: 'Komfortowy Trening',
-    description: 'Intuicyjna regulacja i stabilna konstrukcja'
+    title: 'Satysfakcja',
+    description: 'Zadowolenie klienta naszym priorytetem'
   },
   {
     step: 3,
-    title: 'Długotrwała Satysfakcja',
-    description: 'Niezawodny sprzęt na lata treningów'
+    title: 'Rozwój',
+    description: 'Ciągłe doskonalenie i innowacje'
   }
 ]
 
-const AboutShowjumping: React.FC = () => {
-  const [hoveredStar, setHoveredStar] = useState<number | null>(null);
-
+const AboutUs: React.FC = () => {
   return (
     <div className="w-full max-w-7xl mx-auto px-6 py-8">
-      <div className="flex flex-col lg:flex-row gap-10">
+      <div className="flex flex-col lg:flex-row gap-8">
         <div className="flex-1">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center lg:text-left mb-10"
+            className="text-center lg:text-left mb-8"
           >
             <h2 className="text-3xl font-bold text-primary-text mb-4">
-              O Sprzęcie Jeździeckim
+              O Nas
             </h2>
             <p className="text-xl text-secondary-text">
-              Twój komfort i rozwój są dla nas priorytetem. Tworzymy sprzęt, który nie tylko spełnia 
-              najwyższe standardy, ale przede wszystkim ułatwia codzienne treningi.
+              Młoda, dynamiczna firma z pasją do jeździectwa i designu. 
+              Łączymy polską jakość wykonania z innowacyjnym podejściem, 
+              tworząc sprzęt jeździecki na najwyższym europejskim poziomie.
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {infoCards.map((card, index) => (
+            {valueCards.map((card, index) => (
               <motion.div
                 key={card.title}
                 initial={{ opacity: 0, y: 20 }}
@@ -97,18 +96,18 @@ const AboutShowjumping: React.FC = () => {
                     {card.title}
                   </h3>
                 </div>
-                <p className="text-base text-secondary-text mb-2">
-                  {card.benefit}
+                <p className="text-base text-secondary-text mb-3">
+                  {card.description}
                 </p>
                 <p className="text-base font-medium text-primary italic">
-                  {card.emotion}
+                  {card.impact}
                 </p>
               </motion.div>
             ))}
           </div>
         </div>
 
-        <div className="lg:w-[380px]">
+        <div className="lg:w-[340px] lg:flex lg:flex-col lg:justify-between lg:mt-[40px]">
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -116,10 +115,10 @@ const AboutShowjumping: React.FC = () => {
             className="bg-secondary-bg rounded-lg p-6 mb-6"
           >
             <h3 className="text-xl font-semibold text-primary-text mb-6">
-              Droga do Sukcesu
+              Nasze Priorytety
             </h3>
             <div className="space-y-6">
-              {roadmap.map((item, index) => (
+              {milestones.map((item, index) => (
                 <motion.div
                   key={item.step}
                   initial={{ opacity: 0, x: 20 }}
@@ -146,43 +145,25 @@ const AboutShowjumping: React.FC = () => {
             </div>
           </motion.div>
 
-          <motion.div
+          <motion.a
+            href="mailto:kontakt@swiatjezdzca.pl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
-            className="bg-secondary-bg rounded-lg p-6 text-center"
+            className="bg-secondary-bg rounded-lg p-5 text-center block hover:shadow-lg transition-shadow"
           >
-            <p className="text-base text-primary-text mb-4">
-              Jak oceniasz nasze rozwiązania?
+            <p className="text-base text-primary-text mb-3">
+              Chcesz dowiedzieć się więcej?
             </p>
-            <div className="flex justify-center gap-2 mb-4">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <motion.div
-                  key={star}
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 0.9 }}
-                  onHoverStart={() => setHoveredStar(star)}
-                  onHoverEnd={() => setHoveredStar(null)}
-                  className="cursor-pointer"
-                >
-                  <Star
-                    className={`w-8 h-8 ${
-                      star <= (hoveredStar || 0)
-                        ? 'text-primary fill-primary'
-                        : 'text-secondary-text'
-                    }`}
-                  />
-                </motion.div>
-              ))}
-            </div>
-            <Button className="w-full">
-              Rozpocznij Swoją Przygodę
+            <Button className="w-full flex items-center justify-center gap-2">
+              <Mail className="w-5 h-5" />
+              Skontaktuj się z nami
             </Button>
-          </motion.div>
+          </motion.a>
         </div>
       </div>
     </div>
   )
 }
 
-export default AboutShowjumping;
+export default AboutUs

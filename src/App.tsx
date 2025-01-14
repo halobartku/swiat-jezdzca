@@ -24,7 +24,7 @@ import { useKeyboardNavigation } from './hooks/useKeyboardNavigation'
 
 // Lazy load components
 const Cooperation = lazy(() => import('./components/Cooperation'))
-const AboutShowjumping = lazy(() => import('./components/AboutShowjumping'))
+const AboutUs = lazy(() => import('./components/AboutUs'))
 const Footer = lazy(() => import('./components/Footer'))
 const PrivacyPolicy = lazy(() => import('./components/PrivacyPolicy'))
 const Products = lazy(() => import('./components/Products'))
@@ -64,7 +64,7 @@ function MainContent() {
     { id: 0, title: 'Strona Główna', icon: HomeIcon },
     { id: 1, title: 'Produkty', icon: Goal },
     { id: 2, title: 'Współpraca', icon: Handshake },
-    { id: 3, title: 'O Sprzęcie', icon: HelpCircle },
+    { id: 3, title: 'O Nas', icon: HelpCircle },
     { id: 4, title: 'Gra', icon: Trophy },
     { id: 5, title: 'Zapytanie', icon: Mail },
   ]
@@ -284,7 +284,7 @@ function MainContent() {
                   {index === 0 && <Home onDiscoverClick={() => scrollToSection(1)} onContactClick={() => scrollToSection(5)} />}
                   {index === 1 && <Products />}
                   {index === 2 && <Cooperation />}
-                  {index === 3 && <AboutShowjumping />}
+                  {index === 3 && <AboutUs />}
                   {index === 4 && <Game />}
                   {index === 5 && <RequestOffer />}
                 </Suspense>
