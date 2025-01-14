@@ -23,7 +23,7 @@ Nowoczesna, interaktywna strona internetowa dla firmy Świat Jeźdźca, prezentu
 - **Routing**: React Router v6 (z flagami v7)
 - **Style**: Tailwind CSS z PostCSS
 - **Animacje**: Framer Motion
-- **Ikony**: Lucide React
+- **Ikony**: Lucide React (HomeIcon, Goal, Handshake, HelpCircle, Trophy, Mail)
 - **Narzędzie Build**: Vite
 - **Deployment**: Vercel
 - **Monitoring Wydajności**: Vercel Speed Insights
@@ -105,14 +105,15 @@ swiat-jezdzca/
 
 ### Komponenty Podstawowe
 - `App.tsx` - Główny komponent aplikacji z routingiem i layoutem
-- `Navigation.tsx` - Responsywny pasek nawigacji
+- `Navigation.tsx` - Responsywny pasek nawigacji z ikonami sekcji
 - `Footer.tsx` - Stopka strony
 - `SEO.tsx` - Komponent optymalizacji dla wyszukiwarek
 - `ErrorBoundary.tsx` - Obsługa błędów
 
-### Komponenty Produktowe
+### Komponenty Produktowe i Współpraca
 - `Products.tsx` - Katalog produktów z kategoriami
 - `Home.tsx` - Strona główna z filmem prezentacyjnym
+- `Cooperation.tsx` - Proces współpracy i opinie klientów
 - `RequestOffer.tsx` - Formularz zapytania ofertowego
 
 ### Funkcje Interaktywne

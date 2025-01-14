@@ -26,7 +26,8 @@ interface NavigationProps {
 <Navigation 
   sections={[
     { id: 0, title: 'Strona Główna', icon: HomeIcon },
-    { id: 1, title: 'Produkty', icon: CircleUser }
+    { id: 1, title: 'Produkty', icon: Goal },
+    { id: 2, title: 'Współpraca', icon: Handshake }
   ]}
   currentSection={0}
   onNavigate={(index) => {}}
@@ -76,6 +77,45 @@ interface HeroProps {
   onDiscoverClick={() => scrollToSection(1)}
   onContactClick={() => scrollToSection(5)}
 />
+```
+
+## Cooperation Component
+
+`Cooperation.tsx` - Displays company process and client testimonials.
+
+### Features
+- Process visualization with icons and descriptions
+- Auto-playing testimonial carousel
+- Star ratings for testimonials
+- Responsive design for all screen sizes
+- Smooth animations and transitions
+
+### Implementation
+```typescript
+interface Testimonial {
+  name: string;
+  role: string;
+  quote: string;
+  rating: number;
+}
+
+interface ProcessStep {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+}
+```
+
+### Styling
+- Gradient background for process section
+- Animated transitions for testimonials
+- Interactive navigation controls
+- Consistent spacing and typography
+- Hover effects on process icons
+
+### Usage
+```tsx
+<Cooperation />
 ```
 
 ## Products Component
