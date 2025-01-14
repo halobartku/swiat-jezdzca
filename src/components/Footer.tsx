@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 
 const Footer: React.FC = () => {
   const [isMobile, setIsMobile] = useState(false)
@@ -16,10 +16,11 @@ const Footer: React.FC = () => {
   }, [])
 
   return (
-    <motion.footer
+    <footer
       className={`
-        fixed bottom-0 left-0 right-0 z-60
+        fixed bottom-0 left-0 right-0 z-10
         bg-primary-bg/80 backdrop-blur-sm border-t border-secondary-border
+        pointer-events-auto
         ${isMobile ? 'pb-[env(safe-area-inset-bottom,0px)]' : ''}
       `}
       style={{
@@ -30,7 +31,7 @@ const Footer: React.FC = () => {
         willChange: 'transform'
       }}
     >
-      <div className="max-w-7xl mx-auto px-4 py-1.5 flex justify-center md:justify-between items-center">
+      <div className="max-w-7xl mx-auto px-4 py-1.5 flex justify-center md:justify-between items-center pointer-events-auto">
         <div className={`flex flex-col md:flex-row md:items-center gap-1 md:gap-3 ${isMobile ? '' : 'mb-1 md:mb-0'}`}>
           <p className="text-xs text-primary text-center md:text-left whitespace-nowrap">
             &copy; {new Date().getFullYear()} Świat Jeźdźca
@@ -39,21 +40,21 @@ const Footer: React.FC = () => {
           <span className="hidden md:inline text-secondary-border">|</span>
           <a 
             href="mailto:kontakt@swiat-jezdzca.pl"
-            className="hidden md:inline text-xs text-primary hover:text-accent-hover transition-colors text-center md:text-left"
+            className="hidden md:inline text-xs text-primary hover:text-accent-hover transition-colors text-center md:text-left cursor-pointer"
           >
             kontakt@swiat-jezdzca.pl
           </a>
         </div>
-        <nav className="hidden md:block text-center md:text-left">
-          <a 
-            href="/privacy" 
-            className="text-xs text-primary hover:text-accent-hover transition-colors"
+        <nav className="hidden md:block text-center md:text-left pointer-events-auto">
+          <Link 
+            to="/privacy" 
+            className="text-xs text-primary hover:text-accent-hover transition-colors cursor-pointer"
           >
             Privacy Policy
-          </a>
+          </Link>
         </nav>
       </div>
-    </motion.footer>
+    </footer>
   )
 }
 

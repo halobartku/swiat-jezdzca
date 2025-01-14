@@ -4,10 +4,10 @@ import { ArrowLeft } from 'lucide-react'
 
 const PrivacyPolicy: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-secondary-bg via-accent-bg to-secondary-bg">
+    <div className="min-h-screen bg-gradient-to-b from-secondary-bg via-accent-bg to-secondary-bg cursor-auto">
       <Link 
         to="/"
-        className="fixed top-4 left-4 z-50 flex items-center gap-2 text-primary hover:text-accent-hover transition-colors"
+        className="fixed top-4 left-4 z-50 flex items-center gap-2 text-primary hover:text-accent-hover transition-colors cursor-pointer"
       >
         <ArrowLeft className="w-5 h-5" />
         Powrót do Strony Głównej
@@ -16,7 +16,7 @@ const PrivacyPolicy: React.FC = () => {
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-4xl mx-auto px-4 py-16 pb-32 md:pb-16"
+        className="max-w-4xl mx-auto px-4 py-16 pb-32 md:pb-16 pointer-events-auto cursor-auto"
       >
         <h1 className="text-4xl font-bold text-primary-text mb-12">Polityka Prywatności</h1>
         
@@ -35,7 +35,7 @@ const PrivacyPolicy: React.FC = () => {
               <p>ul. Przykładowa 123</p>
               <p>00-000 Warszawa</p>
               <p>Polska</p>
-              <p>Email: <a href="mailto:kontakt@swiat-jezdzca.pl" className="text-primary hover:text-accent-hover">kontakt@swiat-jezdzca.pl</a></p>
+              <p>Email: <a href="mailto:kontakt@swiat-jezdzca.pl" className="text-primary hover:text-accent-hover cursor-pointer">kontakt@swiat-jezdzca.pl</a></p>
               <p>NIP: 0000000000</p>
               <p>REGON: 000000000</p>
             </div>
@@ -108,7 +108,7 @@ const PrivacyPolicy: React.FC = () => {
             <h2 className="text-2xl font-semibold text-primary-text mb-4">9. Kontakt</h2>
             <p className="text-secondary-text">
               Jeśli masz pytania dotyczące tej polityki prywatności lub naszych praktyk w zakresie prywatności, skontaktuj się z nami pod adresem{' '}
-              <a href="mailto:kontakt@swiat-jezdzca.pl" className="text-primary hover:text-accent-hover">
+              <a href="mailto:kontakt@swiat-jezdzca.pl" className="text-primary hover:text-accent-hover cursor-pointer">
                 kontakt@swiat-jezdzca.pl
               </a>
             </p>
