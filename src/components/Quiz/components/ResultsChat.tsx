@@ -47,15 +47,26 @@ export function ResultsChat({ result, aiResult }: ResultsChatProps) {
       .slice(0, 2)
       .map(r => r.toLowerCase())
 
-    return `Cześć! 👋 Widzę, że Twoimi mocnymi stronami są ${strengths}. To świetne predyspozycje do rozwoju w jeździectwie!
+    return `Witam w systemie konsultacji technicznej. Na podstawie analizy Twojego profilu mogę doradzić w zakresie:
 
-Na podstawie Twoich odpowiedzi, szczególnie polecałbym Ci skupić się na: ${recommendations[0]}. Chętnie pomogę Ci zaplanować kolejne kroki rozwoju! 😊
+Dyscypliny olimpijskie:
+• Skoki przez przeszkody
+• Ujeżdżenie
+• WKKW
 
-Może zacznijmy od tego, co najbardziej Cię interesuje? Na przykład możemy porozmawiać o:
-• ${recommendations[0]}
-• ${recommendations[1]}
-• ${aiResult.customizedTrainingPlan.split('\n')[0].toLowerCase()}
-• lub czymkolwiek innym, co Cię ciekawi!`
+Dyscypliny nieolimpijskie:
+• Working Equitation
+• Rajdy długodystansowe
+• Reining
+• Woltyżerka
+
+Obszary konsultacji:
+• Technika jeździecka
+• Planowanie treningów
+• Przygotowanie do zawodów
+• Rozwój w wybranej dyscyplinie
+
+W czym mogę pomóc?`
   }
 
   const [messages, setMessages] = useState<Message[]>([
@@ -83,38 +94,103 @@ Może zacznijmy od tego, co najbardziej Cię interesuje? Na przykład możemy po
     if (!aiEnhancer) {
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: 'Przepraszam, nie mogę teraz odpowiedzieć. Spróbuj odświeżyć stronę.'
+        content: 'System niedostępny. Proszę odświeżyć stronę.'
       }])
       setIsLoading(false)
       return
     }
 
     try {
+      // Get previous messages excluding the latest user message
+      const previousMessages = messages.map(msg => 
+        `${msg.role === 'user' ? 'Użytkownik' : 'System'}: ${msg.content}`
+      ).join('\n\n');
+
       const response = await aiEnhancer.generateChatResponse(
-        `Użytkownik pyta: "${userMessage}"
+        `Zapytanie: "${userMessage}"
 
-Kontekst rozmowy:
-- Profil jeźdźca: ${result}
-- Mocne strony: ${aiResult.strengthsAndWeaknesses.strengths.join(', ')}
-- Obszary do rozwoju: ${aiResult.strengthsAndWeaknesses.areasForImprovement.join(', ')}
-- Rekomendacje: ${aiResult.detailedRecommendations.join(', ')}
+HISTORIA KONWERSACJI:
+${previousMessages}
+
+ZASADY KONTEKSTU:
+1. Zawsze odnosić się do poprzednich odpowiedzi gdy użytkownik o nie pyta
+2. Zachować spójność z wcześniej podanymi informacjami
+3. Wyjaśniać wszelkie niejasności dotyczące poprzednich odpowiedzi
+4. Nie powtarzać tych samych informacji bez potrzeby
+5. Przy pytaniach o wyjaśnienie kontekstu, odnieść się do konkretnej części poprzedniej odpowiedzi
+
+OBSŁUGA DYSCYPLIN:
+
+1. Dyscypliny olimpijskie:
+   A. Skoki przez przeszkody:
+      • Parametry techniczne: wysokość, szerokość, dystanse
+      • Technika: najazd, odbicie, lądowanie
+      • Praca na dystansach i liniach
+      • Rozgrzewka ukierunkowana na skoki
+
+   B. Ujeżdżenie:
+      • Precyzja ruchów i przejść
+      • Praca nad zebraniem i przepuszczalnością
+      • Rozwój piruetów i pasaży
+      • Doskonalenie programów technicznych
+
+   C. WKKW:
+      • Kompleksowe przygotowanie kondycyjne
+      • Praca w terenie i na przeszkodach stałych
+      • Technika skoków polowych
+      • Balans między dyscyplinami
+
+2. Dyscypliny nieolimpijskie:
+   A. Working Equitation:
+      • Elementy pracy z bydłem
+      • Zwinność i precyzja
+      • Techniki specjalistyczne
+      • Rozgrzewka ukierunkowana
+
+   B. Rajdy długodystansowe:
+      • Kondycja i wytrzymałość
+      • Praca w terenie
+      • Zarządzanie tempem
+      • Specyfika rozgrzewki
+
+   C. Reining:
+      • Techniki zatrzymań i slidingu
+      • Praca nad spinem
+      • Precyzja ruchów
+      • Specjalistyczna rozgrzewka
+
+   D. Woltyżerka:
+      • Elementy gimnastyczne
+      • Koordynacja ruchowa
+      • Praca nad równowagą
+      • Specyficzne ćwiczenia
+
+3. Zasady ogólne dla wszystkich dyscyplin:
+   • Dostosować parametry do poziomu zaawansowania
+   • Uwzględnić specjalistyczny sprzęt
+   • Zachować bezpieczeństwo wykonania
+   • Progresja trudności ćwiczeń
+
+KONTEKST TECHNICZNY:
+- Poziom: ${result}
+- Analiza techniczna: ${aiResult.personalizedAnalysis}
+- Rekomendowane obszary: ${aiResult.detailedRecommendations.join('; ')}
 - Plan treningowy: ${aiResult.customizedTrainingPlan}
-- Wizja długoterminowa: ${aiResult.longTermVision}
+- Mocne strony: ${aiResult.strengthsAndWeaknesses.strengths.join('; ')}
+- Obszary do rozwoju: ${aiResult.strengthsAndWeaknesses.areasForImprovement.join('; ')}
+- Plan długoterminowy: ${aiResult.longTermVision}
 
-Odpowiedz w naturalny, konwersacyjny sposób, jakbyś był doświadczonym, przyjaznym trenerem rozmawiającym z młodszym kolegą. 
+Odpowiedź powinna:
+1. Uwzględniać powyższy kontekst techniczny
+2. Zachować format odpowiedni do typu zapytania
+3. Zawierać konkretne parametry i wymiary
+4. Być spójna z planem treningowym
+5. Uwzględniać poziom zaawansowania
 
-Wskazówki:
-1. Zacznij od krótkiej, empatycznej reakcji na pytanie
-2. Zadaj 1-2 pytania pomocnicze, aby lepiej zrozumieć sytuację
-3. Podziel się swoją wiedzą w kontekście profilu i wyników użytkownika
-4. Zakończ zachęcającym pytaniem, które poprowadzi rozmowę dalej
-
-Pamiętaj:
-- Używaj naturalnego, swobodnego języka
-- Dodawaj emotikony dla lepszego wyrazu emocji 😊
-- Dziel dłuższe wypowiedzi na krótsze akapity
-- Nawiązuj do konkretnych wyników i rekomendacji z testu
-- Bądź wspierający i zachęcający do dialogu`,
+WAŻNE: Dla pytań o żywienie koni:
+- Poinformować o braku kompetencji w tym zakresie
+- Przekierować do ekspertów: https://horseandpony.eu/
+- Podać kontakt: sklep@horseandpony.eu`,
         {
           riderType: result,
           analysis: aiResult.personalizedAnalysis,
@@ -130,7 +206,7 @@ Pamiętaj:
       console.error('Chat error:', error)
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: 'Przepraszam, wystąpił błąd. Spróbuj ponownie za chwilę.'
+        content: 'Błąd systemu. Proszę spróbować ponownie.'
       }])
     } finally {
       setIsLoading(false)
@@ -142,11 +218,10 @@ Pamiętaj:
       {/* Header */}
       <div className="bg-white/50 rounded-t-lg p-2 border-b border-primary/10">
         <div className="flex items-center gap-2 mb-0.5">
-          <span className="text-lg">👨‍🏫</span>
-          <h3 className="text-sm font-semibold text-primary-text">Trener</h3>
+          <h3 className="text-sm font-semibold text-primary-text">Konsultacja Techniczna</h3>
         </div>
         <p className="text-xs text-secondary-text/80">
-          Twój wirtualny trener pomoże Ci w rozwoju jeździeckim na podstawie wyników testu
+          Analiza techniczna na podstawie profilu jeździeckiego
         </p>
       </div>
 
@@ -173,7 +248,7 @@ Pamiętaj:
           <div className="flex justify-start">
             <div className="bg-white/95 text-gray-800 p-2.5 rounded-lg shadow-sm animate-pulse">
               <p className="text-sm flex items-center gap-2">
-                <span>Trener pisze</span>
+                <span>Generowanie odpowiedzi</span>
                 <span className="inline-flex space-x-1">
                   <span className="animate-bounce">.</span>
                   <span className="animate-bounce" style={{ animationDelay: '0.2s' }}>.</span>
@@ -192,7 +267,7 @@ Pamiętaj:
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Zadaj pytanie swojemu trenerowi..."
+            placeholder="Wprowadź zapytanie techniczne..."
             className="flex-grow p-2 rounded-lg border border-gray-200 bg-white/95 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors text-sm"
             disabled={isLoading}
           />
