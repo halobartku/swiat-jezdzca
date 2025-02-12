@@ -89,7 +89,7 @@ export function Home({ onDiscoverClick, onContactClick }: HeroProps) {
                   <feature.icon className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-primary-text text-sm sm:text-base">{feature.title}</h3>
+                  <h2 className="font-semibold text-primary-text text-sm sm:text-base">{feature.title}</h2>
                   <p className="text-xs sm:text-sm text-secondary-text">{feature.description}</p>
                 </div>
               </motion.div>

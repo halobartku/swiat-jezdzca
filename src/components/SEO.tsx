@@ -10,8 +10,8 @@ interface SEOProps {
 
 export function SEO({
   title = 'Świat Jeźdźca | Profesjonalny Sprzęt Jeździecki',
-  description = 'Producent profesjonalnego sprzętu jeździeckiego. Tworzymy wysokiej jakości przeszkody dla ośrodków jeździeckich na całym świecie. Certyfikowane przeszkody treningowe, turniejowe i sponsorskie.',
-  keywords = 'przeszkody jeździeckie, sprzęt jeździecki, przeszkody konne, przeszkody treningowe, przeszkody turniejowe, przeszkody sponsorskie, akcesoria jeździeckie, producent przeszkód, wyposażenie ośrodków jeździeckich',
+  description = 'Producent profesjonalnego sprzętu jeździeckiego. Tworzymy wysokiej jakości przeszkody dla ośrodków jeździeckich na całym świecie. Przeszkody treningowe, turniejowe i sponsorskie.',
+keywords = 'przeszkody jeździeckie, przeszkody dla koni, tanie przeszkody jeździeckie, sprzęt jeździecki, przeszkody konne, przeszkody treningowe, przeszkody turniejowe, przeszkody sponsorskie, akcesoria jeździeckie, producent przeszkód, wyposażenie ośrodków jeździeckich, sprzedaż przeszkód jeździeckich, sklep z przeszkodami dla koni, польские препятствия для конного спорта, оборудование для конного спорта, konkurы, выездка, тренировочные препятствия, турнирные препятствия, спонсорские препятствия, Warszawa, Kraków, Łódź, Wrocław, Poznań, Gdańsk, Szczecin, Bydgoszcz, Lublin, Katowice, Białystok, Gdynia, Częstochowa, Radom, Sosnowiec, Toruń, Kielce, Gliwice, Zabrze, Bytom, Rzeszów, Olsztyn, Bielsko-Biała, Ruda Śląska, Rybnik, Tychy, Opole, Gorzów Wielkopolski, Elbląg, Płock, Dąbrowa Górnicza, Wałbrzych, Włocławek, Zielona Góra, Tarnów, Chorzów, Koszalin, Kalisz, Legnica, Grudziądz, Jaworzno, Słupsk, Jastrzębie-Zdrój, Nowy Sącz, Jelenia Góra, Siedlce, Mysłowice, Konin, Piła, Piotrków Trybunalski',
   image = '/images/logo dark.png',
   url = 'https://swiatjezdzca.pl'
 }: SEOProps) {
