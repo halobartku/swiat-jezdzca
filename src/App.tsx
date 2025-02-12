@@ -65,7 +65,7 @@ function MainContent() {
     { id: 1, title: 'Produkty', icon: Goal },
     { id: 2, title: 'Współpraca', icon: Handshake },
     { id: 3, title: 'O Nas', icon: HelpCircle },
-    { id: 4, title: 'Gra', icon: Trophy },
+    { id: 4, title: 'Quiz', icon: Trophy },
     { id: 5, title: 'Zapytanie', icon: Mail },
   ]
 

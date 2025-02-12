@@ -164,5 +164,5 @@ Ten projekt jest licencjonowany na podstawie licencji MIT - szczegóły w pliku 
 ## Kontakt (Contact)
 
 Świat Jeźdźca
-- Email: kontakt@swiatjezdzca.pl
+- Email: biuro@swiatjezdzca.pl
 - Adres: Polska

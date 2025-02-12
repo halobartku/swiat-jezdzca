@@ -146,7 +146,7 @@ const AboutUs: React.FC = () => {
           </motion.div>
 
           <motion.a
-            href="mailto:kontakt@swiatjezdzca.pl"
+            href="mailto:biuro@swiatjezdzca.pl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}

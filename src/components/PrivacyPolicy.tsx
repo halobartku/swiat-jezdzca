@@ -35,7 +35,7 @@ const PrivacyPolicy: React.FC = () => {
               <p>ul. Przykładowa 123</p>
               <p>00-000 Warszawa</p>
               <p>Polska</p>
-              <p>Email: <a href="mailto:kontakt@swiatjezdzca.pl" className="text-primary hover:text-accent-hover cursor-pointer">kontakt@swiatjezdzca.pl</a></p>
+              <p>Email: <a href="mailto:biuro@swiatjezdzca.pl" className="text-primary hover:text-accent-hover cursor-pointer">biuro@swiatjezdzca.pl</a></p>
               <p>NIP: 0000000000</p>
               <p>REGON: 000000000</p>
             </div>
@@ -108,8 +108,8 @@ const PrivacyPolicy: React.FC = () => {
             <h2 className="text-2xl font-semibold text-primary-text mb-4">9. Kontakt</h2>
             <p className="text-secondary-text">
               Jeśli masz pytania dotyczące tej polityki prywatności lub naszych praktyk w zakresie prywatności, skontaktuj się z nami pod adresem{' '}
-              <a href="mailto:kontakt@swiatjezdzca.pl" className="text-primary hover:text-accent-hover cursor-pointer">
-                kontakt@swiatjezdzca.pl
+              <a href="mailto:biuro@swiatjezdzca.pl" className="text-primary hover:text-accent-hover cursor-pointer">
+                biuro@swiatjezdzca.pl
               </a>
             </p>
           </section>
