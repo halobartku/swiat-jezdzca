@@ -38,14 +38,7 @@ export function ResultsChat({ result, aiResult }: ResultsChatProps) {
   }, [])
 
   const getInitialMessage = () => {
-    const strengths = aiResult.strengthsAndWeaknesses.strengths
-      .slice(0, 2)
-      .map(s => s.toLowerCase())
-      .join(' i ')
 
-    const recommendations = aiResult.detailedRecommendations
-      .slice(0, 2)
-      .map(r => r.toLowerCase())
 
     return `Witam w systemie konsultacji technicznej. Na podstawie analizy Twojego profilu mogę doradzić w zakresie:
 
@@ -214,29 +207,29 @@ WAŻNE: Dla pytań o żywienie koni:
   }
 
   return (
-    <div className="flex flex-col h-[450px] w-full bg-white/50 rounded-lg overflow-hidden">
+    <div className="flex flex-col h-[450px] w-full bg-background/95 rounded-lg border border-border shadow-sm overflow-hidden">
       {/* Header */}
-      <div className="bg-white/50 rounded-t-lg p-2 border-b border-primary/10">
-        <div className="flex items-center gap-2 mb-0.5">
-          <h3 className="text-sm font-semibold text-primary-text">Konsultacja Techniczna</h3>
+      <div className="bg-muted/50 p-4 border-b border-border">
+        <div className="flex items-center gap-2 mb-1">
+          <h3 className="text-base font-semibold text-foreground">Konsultacja Techniczna</h3>
         </div>
-        <p className="text-xs text-secondary-text/80">
+        <p className="text-sm text-muted-foreground">
           Analiza techniczna na podstawie profilu jeździeckiego
         </p>
       </div>
 
       {/* Messages */}
-      <div className="flex-1 min-h-0 overflow-y-auto p-2.5 space-y-2.5 bg-[radial-gradient(#f8f9fa_1px,transparent_1px)] [background-size:16px_16px] bg-white/30">
+      <div className="flex-1 min-h-0 overflow-y-auto p-4 space-y-4 bg-[radial-gradient(var(--background)_1px,transparent_1px)] [background-size:16px_16px]">
         {messages.map((message, index) => (
           <div
             key={index}
             className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
           >
             <div
-              className={`max-w-[70%] p-2 rounded-lg shadow-sm ${
+              className={`max-w-[70%] p-3 rounded-xl border ${
                 message.role === 'user'
-                  ? 'bg-primary text-white ml-auto'
-                  : 'bg-white/95 text-gray-800'
+                  ? 'bg-primary text-primary-foreground border-primary/30 ml-auto'
+                  : 'bg-card text-card-foreground border-border'
               }`}
             >
               <p className="text-sm whitespace-pre-wrap leading-relaxed">{message.content}</p>
@@ -246,7 +239,7 @@ WAŻNE: Dla pytań o żywienie koni:
         <div ref={messagesEndRef} />
         {isLoading && (
           <div className="flex justify-start">
-            <div className="bg-white/95 text-gray-800 p-2.5 rounded-lg shadow-sm animate-pulse">
+            <div className="bg-card text-card-foreground p-3 rounded-xl border border-border animate-pulse">
               <p className="text-sm flex items-center gap-2">
                 <span>Generowanie odpowiedzi</span>
                 <span className="inline-flex space-x-1">
@@ -261,20 +254,20 @@ WAŻNE: Dla pytań o żywienie koni:
       </div>
 
       {/* Input Form */}
-      <form onSubmit={handleSubmit} className="flex-shrink-0 p-2 bg-white/50 rounded-b-lg border-t border-primary/10">
+      <form onSubmit={handleSubmit} className="flex-shrink-0 p-4 bg-muted/50 border-t border-border">
         <div className="flex gap-2">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Wprowadź zapytanie techniczne..."
-            className="flex-grow p-2 rounded-lg border border-gray-200 bg-white/95 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors text-sm"
+            className="flex-grow p-2.5 rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 transition-colors text-sm"
             disabled={isLoading}
           />
           <Button
             type="submit"
             disabled={isLoading || !input.trim()}
-            className="px-4 py-2 bg-primary hover:bg-primary/90 text-white font-medium rounded-lg transition-colors text-sm"
+            className="px-4 py-2.5 bg-primary hover:bg-primary/90 text-primary-foreground font-medium rounded-lg transition-colors text-sm shadow-sm"
           >
             Wyślij
           </Button>

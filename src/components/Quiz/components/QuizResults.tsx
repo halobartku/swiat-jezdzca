@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Button } from '../../ui/button'
+import { Card } from '../../ui/card'
 import { ResultsTabs, type TabId } from './ResultsTabs'
 import { ResultsProfile } from './ResultsProfile'
 import { ResultsAnalysis } from './ResultsAnalysis'
@@ -43,76 +44,80 @@ export function QuizResults({
 
   return (
     <div className="w-full max-w-[1200px] mx-auto px-2 sm:px-6 my-4">
-      <motion.div
-        className="bg-secondary-bg/95 backdrop-blur-sm rounded-lg shadow-lg border border-primary/10 min-h-[650px]"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -20 }}
-      >
-        {/* Header */}
-        <div className="text-center py-2 px-4 border-b border-primary/10 bg-white/50 relative">
-          <Button
-            onClick={onRestart}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-sm"
-          >
-            Rozpocznij ponownie
-          </Button>
-          <div className="flex items-center justify-center gap-2 mb-1">
-            <span className="text-xl">{typeInfo.icon}</span>
-            <h1 className="text-base font-bold text-primary-text">{typeInfo.title}</h1>
+      <Card className="bg-primary-bg">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+        >
+          {/* Header */}
+          <div className="flex items-center justify-between py-2 px-4 border-b border-primary/10 relative flex-wrap">
+            <div className="flex items-center justify-center gap-2 mb-1">
+              <div className="w-10 h-10 rounded-full bg-primary-bg flex items-center justify-center shadow-lg">
+                <span className="text-xl text-primary">{typeInfo.icon}</span>
+              </div>
+              <h1 className="text-base font-bold text-primary-text">{typeInfo.title}</h1>
+            </div>
+            <p className="text-xs text-secondary-text max-w-[300px] mx-auto leading-snug"></p>
+            <Button
+              onClick={onRestart}
+              className="text-sm"
+              variant="primary"
+            >
+              Rozpocznij ponownie
+            </Button>
           </div>
-          <p className="text-xs text-secondary-text max-w-[480px] mx-auto leading-snug">{typeInfo.description}</p>
-        </div>
 
-        {/* Tabs */}
-        <ResultsTabs activeTab={activeTab} onTabChange={setActiveTab} />
+          {/* Tabs */}
+          <ResultsTabs activeTab={activeTab} onTabChange={setActiveTab} />
 
-        {/* Tab Content */}
-        <div className="p-2 bg-[radial-gradient(#f8f9fa_1px,transparent_1px)] [background-size:16px_16px] flex-grow overflow-y-auto">
-          <div className="max-w-[1100px] mx-auto space-y-2 bg-white/95 p-2 sm:p-3 rounded-lg shadow-sm">
-            {activeTab === 'profile' && (
-              <ResultsProfile
-                scores={scores}
-                result={result}
-                riderTypeDetails={riderTypeDetails}
-              />
-            )}
+          {/* Tab Content */}
+          <div className="p-2 flex-grow overflow-y-auto">
+            <div className="max-w-[1100px] mx-auto space-y-2 p-2 sm:p-3">
+              {activeTab === 'profile' && (
+                <ResultsProfile
+                  scores={scores}
+                  result={result}
+                  riderTypeDetails={riderTypeDetails}
+                />
+              )}
 
-            {activeTab === 'analysis' && (
-              <ResultsAnalysis
-                personalizedAnalysis={aiResult.personalizedAnalysis}
-                strengthsAndWeaknesses={aiResult.strengthsAndWeaknesses}
-              />
-            )}
+              {activeTab === 'analysis' && (
+                <ResultsAnalysis
+                  personalizedAnalysis={aiResult.personalizedAnalysis}
+                  strengthsAndWeaknesses={aiResult.strengthsAndWeaknesses}
+                />
+              )}
 
-            {activeTab === 'training' && (
-              <ResultsTraining
-                customizedTrainingPlan={aiResult.customizedTrainingPlan}
-              />
-            )}
+              {activeTab === 'training' && (
+                <ResultsTraining
+                  customizedTrainingPlan={aiResult.customizedTrainingPlan}
+                />
+              )}
 
-            {activeTab === 'recommendations' && (
-              <ResultsRecommendations
-                detailedRecommendations={aiResult.detailedRecommendations}
-              />
-            )}
+              {activeTab === 'recommendations' && (
+                <ResultsRecommendations
+                  detailedRecommendations={aiResult.detailedRecommendations}
+                />
+              )}
 
-            {activeTab === 'vision' && (
-              <ResultsVision
-                longTermVision={aiResult.longTermVision}
-              />
-            )}
+              {activeTab === 'vision' && (
+                <ResultsVision
+                  longTermVision={aiResult.longTermVision}
+                />
+              )}
 
-            {activeTab === 'chat' && (
-              <ResultsChat
-                result={result}
-                aiResult={aiResult}
-              />
-            )}
+              {activeTab === 'chat' && (
+                <ResultsChat
+                  result={result}
+                  aiResult={aiResult}
+                />
+              )}
+            </div>
           </div>
-        </div>
 
-      </motion.div>
+        </motion.div>
+      </Card>
     </div>
   )
 }

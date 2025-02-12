@@ -213,6 +213,12 @@ ZASADY ODPOWIEDZI:
    • Kontekst jeźdźca musi być wykorzystany w odpowiedzi
    • Poprzednie odpowiedzi muszą być spójne z nowymi
    • Nie można prosić o powtórzenie informacji
+   • Typ: ${context.riderType}
+   • Mocne strony: ${context.strengths.join(', ')}
+   • Obszary do rozwoju: ${context.improvements.join(', ')}
+   • Typ: ${context.riderType}
+   • Mocne strony: ${context.strengths.join(', ')}
+   • Obszary do rozwoju: ${context.improvements.join(', ')}
 
 4. STRUKTURA ODPOWIEDZI:
    • Używaj tylko zdefiniowanych formatów odpowiedzi
