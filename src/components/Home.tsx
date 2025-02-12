@@ -13,12 +13,12 @@ export function Home({ onDiscoverClick, onContactClick }: HeroProps) {
     {
       icon: Shield,
       title: "Bezpieczeństwo",
-      description: "Certyfikaty FEI"
+      description: "Najwyższa Jakość Materiałów"
     },
     {
       icon: Award,
-      title: "Jakość Premium",
-      description: "Klasa Zawodowa"
+      title: "Jakość",
+      description: "Dla Każdego Jeźdźca"
     },
     {
       icon: Wrench,
@@ -28,12 +28,12 @@ export function Home({ onDiscoverClick, onContactClick }: HeroProps) {
     {
       icon: Star,
       title: "Doświadczenie",
-      description: "20+ Lat na Rynku"
+      description: "50+ Lat w Branży Produkcyjnej" 
     },
     {
       icon: Users,
       title: "Obsługa",
-      description: "Wsparcie 24/7"
+      description: "Profesjonalne Wsparcie"
     },
     {
       icon: Target,

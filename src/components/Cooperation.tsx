@@ -27,7 +27,7 @@ const Cooperation: React.FC = () => {
     {
       icon: Truck,
       title: "Dostawa",
-      description: "Transport i profesjonalny montaż"
+      description: "Transport prosto do klienta"
     },
     {
       icon: Headphones,
@@ -39,64 +39,63 @@ const Cooperation: React.FC = () => {
   const testimonials = [
     // Original testimonials
     {
-      name: "Anna Kowalska",
-      role: "Trener Kadry Narodowej",
-      quote: "Sprzęt od Świat Jeźdźca spełnia najwyższe standardy. Używamy go podczas zawodów międzynarodowych i treningów. Jakość wykonania jest niezrównana.",
+      name: "Sportpferde Team Roubal",
+      role: "",
+      quote: "Dzięki Reiterwelt, ciężkie przeszkody to już przeszłość! Jesteśmy bardzo zadowoleni z obsługi klienta i sprawnego działania!",
       rating: 5
     },
     {
-      name: "Stajnia Parkur",
-      role: "Ośrodek Jeździecki",
-      quote: "Współpracujemy ze Świat Jeźdźca od lat. Ich przeszkody są nie tylko bezpieczne i trwałe, ale też pięknie się prezentują na naszym parkurze.",
+      name: "Anna van Doremalen",
+      role: "",
+      quote: "Po prostu idealne! Super lekkie i wiatroodporne. Niezawodna firma z szybką dostawą.",
       rating: 5
     },
     {
-      name: "Marek Nowicki",
-      role: "Organizator Zawodów",
-      quote: "Profesjonalne podejście i terminowość to znaki rozpoznawcze tej firmy. Sprzęt zawsze dociera na czas i spełnia wszystkie wymogi FEI.",
+      name: "Reitgut Kronberghof",
+      role: "",
+      quote: "Stajnia bardzo zadowolona z lekkiego i wytrzymałego materiału, stabilnego nawet przy silnym wietrze!",
       rating: 5
     },
     {
-      name: "KJ Grand",
-      role: "Klub Jeździecki",
-      quote: "Przeszkody treningowe od Świat Jeźdźca sprawdzają się doskonale w codziennej pracy. Świetny stosunek jakości do ceny.",
-      rating: 5
-    },
-    // Additional testimonials
-    {
-      name: "Centrum Hippiki",
-      role: "Ośrodek Szkoleniowy",
-      quote: "Przeszkody od Świat Jeźdźca są nieodłącznym elementem naszych treningów. Ich jakość i design są na najwyższym poziomie.",
+      name: "Jennifer Jaritz",
+      role: "",
+      quote: "Jestem bardzo podekscytowana przeszkodami. Materiał i jakość są świetne, a cena odpowiednia. Duży wybór!",
       rating: 5
     },
     {
-      name: "Jan Wiśniewski",
-      role: "Trener Skoków",
-      quote: "Współpraca ze Świat Jeźdźca to czysta przyjemność. Profesjonalne podejście i zrozumienie potrzeb jeźdźca to ich mocne strony.",
+      name: "Sophie L.",
+      role: "",
+      quote: "Niedawno kupiliśmy przeszkody i jesteśmy bardzo zadowoleni! Jakość wykonania jest niesamowita, a design profesjonalny. Polecam!",
       rating: 5
     },
     {
-      name: "Stajnia Victoria",
-      role: "Klub Jeździecki",
-      quote: "Nasze przeszkody treningowe służą nam już kilka lat i wciąż wyglądają jak nowe. Świetna inwestycja w rozwój klubu.",
+      name: "Jonathan D.",
+      role: "",
+      quote: "Używamy przeszkód Reiterwelt od miesięcy i wyglądają jak nowe! Odporne na warunki atmosferyczne i łatwe w regulacji. Doskonała jakość!",
       rating: 5
     },
     {
-      name: "Akademia Jeździecka",
-      role: "Szkoła Jazdy Konnej",
-      quote: "Sprzęt idealnie sprawdza się w codziennej pracy z młodymi jeźdźcami. Bezpieczeństwo i jakość na pierwszym miejscu.",
+      name: "Melissa Ahrenberg",
+      role: "",
+      quote: "Jestem bardzo zadowolona z moich przeszkód reklamowych. Świetny materiał, wysoka jakość wykonania. Polecam ReiterWelt!",
       rating: 5
     },
     {
-      name: "Tomasz Kowalczyk",
-      role: "Zawodnik Międzynarodowy",
-      quote: "Trenując na sprzęcie od Świat Jeźdźca, czuję się pewnie podczas najważniejszych zawodów. To sprzęt najwyższej klasy.",
+      name: "Katarzyna S.",
+      role: "",
+      quote: "Przeszkody są solidne i pięknie wyglądają. Idealne na zawody i treningi!",
       rating: 5
     },
     {
-      name: "Stajnia Galop",
-      role: "Ośrodek Jeździecki",
-      quote: "Przeszkody sponsorskie wykonane przez Świat Jeźdźca przyciągają uwagę podczas każdych zawodów. Jakość i estetyka idą w parze.",
+      name: "Adam N.",
+      role: "",
+      quote: "Świetna jakość w dobrej cenie. Polecam każdemu jeźdźcowi!",
+      rating: 4
+    },
+    {
+      name: "Ewa K.",
+      role: "",
+      quote: "Bardzo szybka dostawa i profesjonalna obsługa. Przeszkody są super!",
       rating: 5
     }
   ]
