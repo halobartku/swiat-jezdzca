@@ -39,10 +39,10 @@ const Footer: React.FC = () => {
           </p>
           <span className="hidden md:inline text-secondary-border">|</span>
           <a 
-            href="mailto:kontakt@swiat-jezdzca.pl"
+            href="mailto:kontakt@swiatjezdzca.pl"
             className="hidden md:inline text-xs text-primary hover:text-accent-hover transition-colors text-center md:text-left cursor-pointer"
           >
-            kontakt@swiat-jezdzca.pl
+            kontakt@swiatjezdzca.pl
           </a>
         </div>
         <nav className="hidden md:block text-center md:text-left pointer-events-auto">
