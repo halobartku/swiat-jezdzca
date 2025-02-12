@@ -50,7 +50,7 @@ const Footer: React.FC = () => {
             to="/privacy" 
             className="text-xs text-primary hover:text-accent-hover transition-colors cursor-pointer"
           >
-            Privacy Policy
+Polityka Prywatności
           </Link>
         </nav>
       </div>
