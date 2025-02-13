@@ -5,7 +5,7 @@ import { Button } from './ui/button';
 
 const Products: React.FC = () => {
   const [hoveredImage, setHoveredImage] = useState<string | null>(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
+  const [, setCurrentImageIndex] = useState<number>(0);
   const [currentProduct, setCurrentProduct] = useState<any | null>(null); // Type 'any' for now, refine later
 
   React.useEffect(() => {
