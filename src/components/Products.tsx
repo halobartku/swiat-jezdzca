@@ -31,7 +31,8 @@ const Products: React.FC = () => {
         'ALV_002 red-min.png',
         'ALV_003 black-min.png',
         'LTS_002 blue plank-min.png'
-      ]
+      ],
+      description: "Profesjonalne przeszkody treningowe dla koni. Idealne do codziennych ćwiczeń i doskonalenia umiejętności jeździeckich."
     },
     {
       icon: Target,
@@ -44,7 +45,8 @@ const Products: React.FC = () => {
         'TJS_509-min.png',
         'TJS_511FIL-min.png',
         'TJS_514FIL-min.png'
-      ]
+      ],
+      description: "Wysokiej jakości przeszkody turniejowe zgodne z normami. Zapewniają bezpieczeństwo i profesjonalny wygląd każdego konkursu."
     },
     {
       icon: Award,
@@ -57,7 +59,8 @@ const Products: React.FC = () => {
         'techniekwebshop 1-min.jpg',
         'techniekwebshop 3-min.jpg',
         'tress-min.jpg'
-      ]
+      ],
+      description: "Przeszkody sponsorskie to doskonały sposób na promocję marki podczas wydarzeń jeździeckich. Personalizacja i wysoka jakość wykonania."
     },
     {
       icon: Package,
@@ -70,9 +73,10 @@ const Products: React.FC = () => {
         'TPF_410-min.jpg',
         'TPF_412-min.jpg',
         'TPF_414-min.jpg'
-      ]
+      ],
+      description: "Szeroki wybór akcesoriów jeździeckich, które uzupełnią każdy zestaw przeszkód i zapewnią dodatkową funkcjonalność."
     }
-  ];
+  ] as const;
 
   const handlePrevImage = () => {
     if (!currentProduct) return;
@@ -117,8 +121,9 @@ const Products: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
             className="bg-primary-bg/90 backdrop-blur-sm rounded-lg shadow-md p-4 hover:shadow-lg transition-all"
+            title={product.description}
           >
-            <div className="flex items-center gap-2 mb-2">
+           <div className="flex items-center gap-2 mb-2">
               <div className="p-1.5 bg-secondary-bg rounded-lg">
                 <product.icon className="w-4 h-4 text-primary" />
               </div>
