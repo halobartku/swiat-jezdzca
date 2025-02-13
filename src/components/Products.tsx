@@ -197,7 +197,7 @@ const Products: React.FC = () => {
         <Button onClick={() => window.open('https://cdn.shopify.com/s/files/1/0731/1966/2406/files/catalogue_2024_November.pdf?v=1732272980', '_blank')}>
           Przeglądaj katalog
         </Button>
-        <Button>
+        <Button onClick={() => window.location.href='/#request-offer'}>
           Zapytaj o ofertę
         </Button>
       </div>
