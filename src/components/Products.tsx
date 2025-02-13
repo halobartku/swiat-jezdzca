@@ -1,10 +1,23 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Flag, Target, Award, Package, X } from 'lucide-react';
+import { Flag, Target, Award, Package, X, ArrowLeft, ArrowRight } from 'lucide-react';
 import { Button } from './ui/button';
 
 const Products: React.FC = () => {
   const [hoveredImage, setHoveredImage] = useState<string | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
+  const [currentProduct, setCurrentProduct] = useState<any | null>(null); // Type 'any' for now, refine later
+
+  React.useEffect(() => {
+    if (hoveredImage) {
+      document.body.classList.add('modal-open');
+    } else {
+      document.body.classList.remove('modal-open');
+    }
+    return () => {
+      document.body.classList.remove('modal-open'); // Cleanup on unmount
+    };
+  }, [hoveredImage]);
 
   const products = [
     {
@@ -61,6 +74,31 @@ const Products: React.FC = () => {
     }
   ];
 
+  const handlePrevImage = () => {
+    if (!currentProduct) return;
+    setCurrentImageIndex((prevIndex) => {
+      let newIndex = prevIndex - 1;
+      if (newIndex < 0) {
+        newIndex = currentProduct.images.length - 1;
+      }
+      setHoveredImage(`${currentProduct.imagePath}/${currentProduct.images[newIndex]}`);
+      return newIndex;
+    });
+  };
+
+  const handleNextImage = () => {
+     if (!currentProduct) return;
+    setCurrentImageIndex((prevIndex) => {
+      let newIndex = prevIndex + 1;
+      if (newIndex >= currentProduct.images.length) {
+        newIndex = 0;
+      }
+      setHoveredImage(`${currentProduct.imagePath}/${currentProduct.images[newIndex]}`);
+      return newIndex;
+    });
+  };
+
+
   return (
     <div className="w-full max-w-[1000px] mx-auto px-4 pt-2 pb-4">
       <motion.div 
@@ -93,7 +131,11 @@ const Products: React.FC = () => {
                 <div
                   key={index}
                   className="relative bg-secondary-bg rounded-md overflow-hidden group"
-                  onClick={() => setHoveredImage(`${product.imagePath}/${imageName}`)}
+                  onClick={() => {
+                    setHoveredImage(`${product.imagePath}/${imageName}`);
+                    setCurrentImageIndex(index);
+                    setCurrentProduct(product); // Store current product
+                  }}
                 >
                   <div className="aspect-square w-full h-full">
                     <img
@@ -133,6 +175,14 @@ const Products: React.FC = () => {
             >
               <X className="w-4 h-4 text-primary" />
             </button>
+            <div className="absolute top-1/2 left-0 right-0 transform -translate-y-1/2 flex justify-between items-center px-4">
+              <button onClick={handlePrevImage} className="p-2 bg-white/20 rounded-full hover:bg-white/40">
+                <ArrowLeft className="w-5 h-5 text-white" />
+              </button>
+              <button onClick={handleNextImage} className="p-2 bg-white/20 rounded-full hover:bg-white/40">
+                <ArrowRight className="w-5 h-5 text-white" />
+              </button>
+            </div>
             <img
               src={hoveredImage}
               alt="Powiększony podgląd"
