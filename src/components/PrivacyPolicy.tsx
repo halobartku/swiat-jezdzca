@@ -57,9 +57,9 @@ const PrivacyPolicy: React.FC = () => {
             <p className="text-secondary-text mb-2">Wykorzystujemy Twoje dane osobowe do:</p>
             <ul className="list-disc pl-6 text-secondary-text">
               <li>Świadczenia i zarządzania naszymi usługami</li>
-              <li>Komunikacji z Tobą</li>
-              <li>Ulepszania naszej strony i usług</li>
-              <li>Marketingu (za Twoją zgodą)</li>
+              <li>Komunikacji z Tobą (na podstawie naszego prawnie uzasadnionego interesu)</li>
+              <li>Ulepszania naszej strony i usług (na podstawie naszego prawnie uzasadnionego interesu)</li>
+              <li>Marketingu (za Twoją zgodą, na podstawie Twojej zgody)</li>
             </ul>
           </section>
 
@@ -111,6 +111,20 @@ const PrivacyPolicy: React.FC = () => {
               <a href="mailto:biuro@swiatjezdzca.pl" className="text-primary hover:text-accent-hover cursor-pointer">
                 biuro@swiatjezdzca.pl
               </a>
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold text-primary-text mb-4">10. Przechowywanie Danych</h2>
+            <p className="text-secondary-text">
+              Będziemy przechowywać Twoje dane osobowe tylko tak długo, jak jest to konieczne do celów określonych w tej polityce prywatności, w tym w celu świadczenia usług, komunikacji, marketingu (jeśli wyraziłeś zgodę) oraz spełnienia wymogów prawnych. Dane kontaktowe w celach marketingowych i ofertowych będą przechowywane przez okres 3 lat od ostatniego kontaktu, chyba że wcześniej wycofasz zgodę lub zgłosisz sprzeciw. Po tym okresie dane zostaną usunięte lub zanonimizowane.
+            </p>
+          </section>
+
+          <section>
+<h2 className="text-2xl font-semibold text-primary-text mb-4">11. Transfers Danych</h2>
+<p className="text-secondary-text">
+                Nie przekazujemy Twoich danych osobowych poza Europejski Obszar Gospodarczy (EOG). Twoje dane są przetwarzane i przechowywane w EOG.
             </p>
           </section>
 
